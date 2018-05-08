@@ -20,4 +20,22 @@
 
   3.3 Data governance guidelines for the management, maintenance and updating of the open procurement data knowledge graph
 
-4. References
+4. Software engineering methodology
+
+  4.1 What is Scrum?
+  
+    4.1.1 The Scrum team
+    
+    4.1.2 Scrum events
+  
+  4.2 How to apply the methodology
+  
+    4.2.1 Organization of the sprints
+    
+    4.2.2 Milestones
+    
+    4.2.3 Organization of the projects
+    
+  4.3 Responsibilities
+
+5. References
