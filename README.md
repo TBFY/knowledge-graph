@@ -9,4 +9,4 @@ This is the repository where all the work towards the creation of the TheyBuyFor
 # References
 
 * [TheyBuyForYou project website](http://theybuyforyou.eu)
-* [Ontology documentation generated using LODE])(https://rawgit.com/TBFY/knowledge-graph/master/ontology/index.html)
+* [Ontology documentation generated using LODE](https://rawgit.com/TBFY/knowledge-graph/master/ontology/index.html)
