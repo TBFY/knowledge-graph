@@ -1,0 +1,373 @@
+@prefix : <http://www.semanticweb.org/philipt/ontologies/2018/10/untitled-ontology-27#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ocds: <http://data.theybuyforyou.eu/ontology#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/philipt/ontologies/2018/10/untitled-ontology-27> .
+
+<http://www.semanticweb.org/philipt/ontologies/2018/10/untitled-ontology-27> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://data.theybuyforyou.eu/ontology#hasAddress
+ocds:hasAddress rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain ocds:Organisation ;
+                rdfs:range ocds:Address .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasAmendment
+ocds:hasAmendment rdf:type owl:ObjectProperty ,
+                           owl:FunctionalProperty ;
+                  rdfs:domain ocds:Award ,
+                              ocds:Contract ,
+                              ocds:Tender ;
+                  rdfs:range ocds:Amendment .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasAward
+ocds:hasAward rdf:type owl:ObjectProperty ,
+                       owl:FunctionalProperty ;
+              rdfs:domain ocds:ContractingProcess ;
+              rdfs:range ocds:Award .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasAwardPeriod
+ocds:hasAwardPeriod rdf:type owl:ObjectProperty ,
+                             owl:FunctionalProperty ;
+                    rdfs:domain ocds:Award ,
+                                ocds:Tender ;
+                    rdfs:range ocds:Period .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasBudget
+ocds:hasBudget rdf:type owl:ObjectProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain ocds:Plan ;
+               rdfs:range ocds:Budget .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasContactPoint
+ocds:hasContactPoint rdf:type owl:ObjectProperty ,
+                              owl:FunctionalProperty ;
+                     rdfs:domain ocds:Organisation ;
+                     rdfs:range ocds:ContactPoint .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasContract
+ocds:hasContract rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain ocds:ContractingProcess ;
+                 rdfs:range ocds:Contract .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasContractPeriod
+ocds:hasContractPeriod rdf:type owl:ObjectProperty ,
+                                owl:FunctionalProperty ;
+                       rdfs:domain ocds:Award ,
+                                   ocds:Contract ;
+                       rdfs:range ocds:Period .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasDocument
+ocds:hasDocument rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain ocds:Award ,
+                             ocds:Contract ,
+                             ocds:Implementation ,
+                             ocds:Plan ;
+                 rdfs:range ocds:Document .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasEnquiryPeriod
+ocds:hasEnquiryPeriod rdf:type owl:ObjectProperty ,
+                               owl:FunctionalProperty ;
+                      rdfs:domain ocds:Tender ;
+                      rdfs:range ocds:Period .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasEvaluationPeriod
+ocds:hasEvaluationPeriod rdf:type owl:ObjectProperty ,
+                                  owl:FunctionalProperty ;
+                         rdfs:domain ocds:Tender ;
+                         rdfs:range ocds:Period .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasImplementation
+ocds:hasImplementation rdf:type owl:ObjectProperty ,
+                                owl:FunctionalProperty ;
+                       rdfs:domain ocds:Contract ;
+                       rdfs:range ocds:Implementation .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasItem
+ocds:hasItem rdf:type owl:ObjectProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain ocds:Award ,
+                         ocds:Contract ,
+                         ocds:Tender ;
+             rdfs:range ocds:Item .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasMilestone
+ocds:hasMilestone rdf:type owl:ObjectProperty ,
+                           owl:FunctionalProperty ;
+                  rdfs:domain ocds:Plan ;
+                  rdfs:range ocds:Milestone .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasPlan
+ocds:hasPlan rdf:type owl:ObjectProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain ocds:ContractingProcess ;
+             rdfs:range ocds:Plan .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasPlanningPeriod
+ocds:hasPlanningPeriod rdf:type owl:ObjectProperty ,
+                                owl:FunctionalProperty ;
+                       rdfs:domain ocds:Plan ;
+                       rdfs:range ocds:Period .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasTender
+ocds:hasTender rdf:type owl:ObjectProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain ocds:ContractingProcess ;
+               rdfs:range ocds:Tender .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasTenderPeriod
+ocds:hasTenderPeriod rdf:type owl:ObjectProperty ,
+                              owl:FunctionalProperty ;
+                     rdfs:domain ocds:Tender ;
+                     rdfs:range ocds:Period .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasTransaction
+ocds:hasTransaction rdf:type owl:ObjectProperty ,
+                             owl:FunctionalProperty ;
+                    rdfs:domain ocds:Implementation ;
+                    rdfs:range ocds:Transaction .
+
+
+###  http://data.theybuyforyou.eu/ontology#hasValue
+ocds:hasValue rdf:type owl:ObjectProperty ,
+                       owl:FunctionalProperty ;
+              rdfs:domain ocds:Budget ,
+                          ocds:Transaction ;
+              rdfs:range ocds:Value .
+
+
+###  http://data.theybuyforyou.eu/ontology#isBuyerFor
+ocds:isBuyerFor rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain ocds:Organisation ;
+                rdfs:range ocds:Tender .
+
+
+###  http://data.theybuyforyou.eu/ontology#isIssuedFor
+ocds:isIssuedFor rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain ocds:Contract ;
+                 rdfs:range ocds:Award .
+
+
+###  http://data.theybuyforyou.eu/ontology#isPayeeFor
+ocds:isPayeeFor rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain ocds:Organisation ;
+                rdfs:range ocds:Transaction .
+
+
+###  http://data.theybuyforyou.eu/ontology#isPayerFor
+ocds:isPayerFor rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain ocds:Organisation ;
+                rdfs:range ocds:Transaction .
+
+
+###  http://data.theybuyforyou.eu/ontology#isProcuringEntityFor
+ocds:isProcuringEntityFor rdf:type owl:ObjectProperty ,
+                                   owl:FunctionalProperty ;
+                          rdfs:domain ocds:Organisation ;
+                          rdfs:range ocds:Tender .
+
+
+###  http://data.theybuyforyou.eu/ontology#isReceivingEntityFor
+ocds:isReceivingEntityFor rdf:type owl:ObjectProperty ,
+                                   owl:FunctionalProperty ;
+                          rdfs:domain ocds:Organisation ;
+                          rdfs:range ocds:Transaction .
+
+
+###  http://data.theybuyforyou.eu/ontology#isSupplierFor
+ocds:isSupplierFor rdf:type owl:ObjectProperty ,
+                            owl:FunctionalProperty ;
+                   rdfs:domain ocds:Organisation ;
+                   rdfs:range ocds:Award ,
+                              ocds:Tender ,
+                              ocds:Transaction .
+
+
+###  http://data.theybuyforyou.eu/ontology#isTendererFor
+ocds:isTendererFor rdf:type owl:ObjectProperty ,
+                            owl:FunctionalProperty ;
+                   rdfs:domain ocds:Organisation ;
+                   rdfs:range ocds:Tender .
+
+
+###  http://data.theybuyforyou.eu/ontology#playsRoleIn
+ocds:playsRoleIn rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain ocds:Organisation ;
+                 rdfs:range ocds:ContractingProcess .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://data.theybuyforyou.eu/ontology#amount
+ocds:amount rdf:type owl:DatatypeProperty ;
+            rdfs:domain ocds:Value ;
+            rdfs:range xsd:decimal .
+
+
+###  http://data.theybuyforyou.eu/ontology#country
+ocds:country rdf:type owl:DatatypeProperty ;
+             rdfs:domain ocds:Address ;
+             rdfs:range xsd:string .
+
+
+###  http://data.theybuyforyou.eu/ontology#currency
+ocds:currency rdf:type owl:DatatypeProperty ;
+              rdfs:domain ocds:Value ;
+              rdfs:range xsd:string .
+
+
+###  http://data.theybuyforyou.eu/ontology#email
+ocds:email rdf:type owl:DatatypeProperty ;
+           rdfs:domain ocds:ContactPoint ;
+           rdfs:range xsd:string .
+
+
+###  http://data.theybuyforyou.eu/ontology#endDate
+ocds:endDate rdf:type owl:DatatypeProperty ;
+             rdfs:domain ocds:Period ;
+             rdfs:range xsd:dateTime .
+
+
+###  http://data.theybuyforyou.eu/ontology#name
+ocds:name rdf:type owl:DatatypeProperty ;
+          rdfs:domain ocds:ContactPoint ;
+          rdfs:range xsd:string .
+
+
+###  http://data.theybuyforyou.eu/ontology#phoneNumber
+ocds:phoneNumber rdf:type owl:DatatypeProperty ;
+                 rdfs:domain ocds:ContactPoint ;
+                 rdfs:range xsd:string .
+
+
+###  http://data.theybuyforyou.eu/ontology#postalCode
+ocds:postalCode rdf:type owl:DatatypeProperty ;
+                rdfs:domain ocds:Address ;
+                rdfs:range xsd:string .
+
+
+###  http://data.theybuyforyou.eu/ontology#region
+ocds:region rdf:type owl:DatatypeProperty ;
+            rdfs:domain ocds:Address ;
+            rdfs:range xsd:string .
+
+
+###  http://data.theybuyforyou.eu/ontology#startDate
+ocds:startDate rdf:type owl:DatatypeProperty ;
+               rdfs:domain ocds:Period ;
+               rdfs:range xsd:dateTime .
+
+
+###  http://data.theybuyforyou.eu/ontology#street
+ocds:street rdf:type owl:DatatypeProperty ;
+            rdfs:domain ocds:Address ;
+            rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://data.theybuyforyou.eu/ontology#Address
+ocds:Address rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Amendment
+ocds:Amendment rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Award
+ocds:Award rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Budget
+ocds:Budget rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#ContactPoint
+ocds:ContactPoint rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Contract
+ocds:Contract rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#ContractingProcess
+ocds:ContractingProcess rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Document
+ocds:Document rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Implementation
+ocds:Implementation rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Item
+ocds:Item rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Milestone
+ocds:Milestone rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Organisation
+ocds:Organisation rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Period
+ocds:Period rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Plan
+ocds:Plan rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Tender
+ocds:Tender rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Transaction
+ocds:Transaction rdf:type owl:Class .
+
+
+###  http://data.theybuyforyou.eu/ontology#Value
+ocds:Value rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi
