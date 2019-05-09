@@ -18,6 +18,7 @@ from datetime import timedelta
 # Global variables
 # ****************
 
+openopps_page_size = config.openopps["page_size"]
 openopps_sleep = config.openopps["sleep"]
 
 
@@ -66,7 +67,7 @@ def authenticate_token(token):
 # **************************************
 # Get releases by date from OpenOpps API
 # **************************************
-def get_releases(date, username, password, token, page_size):
+def get_releases(date, username, password, token):
     # Authenticate token
     if not authenticate_token(token):
         token = acquire_token(username, password)
@@ -74,7 +75,7 @@ def get_releases(date, username, password, token, page_size):
     # Get releases
     url = "https://api.openopps.com/api/tbfy/ocds/"
     params = {
-        "page_size": page_size,
+        "page_size": openopps_page_size,
         "min_releasedate": date,
         "max_releasedate": date,
         "ordering": "releasedate",
@@ -90,7 +91,7 @@ def get_releases(date, username, password, token, page_size):
 # *******************************************************************************
 # Get next releases by date from OpenOpps API (limitation of count 1000 per page)
 # *******************************************************************************
-def get_next_releases(url, token, page_size):
+def get_next_releases(url, token):
     headers = {
         "Authorization": token
     }
@@ -115,16 +116,16 @@ def write_releases(response_releases, output_folder):
 # **********************
 # Get and write releases 
 # **********************
-def get_and_write_releases(date, username, password, token, page_size, output_folder):
-    response_releases_first_page = get_releases(date, username, password, token, page_size)
+def get_and_write_releases(date, username, password, token, output_folder):
+    response_releases_first_page = get_releases(date, username, password, token)
     write_releases(response_releases_first_page, output_folder)
 
     response_releases_first_page_data = json.loads(json.dumps(response_releases_first_page.json()))
 
     next_page_url = response_releases_first_page_data['next']
     while next_page_url != None:
-        time.sleep(openopps_sleep) # Sleep to not stresss max retries
-        response_releases_next_page = get_next_releases(next_page_url, token, page_size)
+        time.sleep(openopps_sleep) # Sleep to not stress max retries
+        response_releases_next_page = get_next_releases(next_page_url, token)
         write_releases(response_releases_next_page, output_folder)
 
         response_releases_next_page_data = json.loads(json.dumps(response_releases_next_page.json()))
@@ -161,7 +162,6 @@ def main(argv):
         elif opt in ("-o"):
             output_folder = arg
 
-    page_size = config.openopps["page_size"]
     token = acquire_token(username, password)
 
     print("username = " + username)
@@ -177,7 +177,7 @@ def main(argv):
     while start <= stop:
         release_date = datetime.strftime(start, "%Y-%m-%d")
         print("release_date = " + release_date)
-        get_and_write_releases(release_date, username, password, token, page_size, output_folder + "\\" + release_date)
+        get_and_write_releases(release_date, username, password, token, output_folder + "\\" + release_date)
         start = start + timedelta(days=1)  # increase day one by one
 
 
