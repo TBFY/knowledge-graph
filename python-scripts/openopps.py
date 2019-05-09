@@ -136,11 +136,11 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "hu:p:s:e:o:")
     except getopt.GetoptError:
-        print('openopps.py -i <inputfile> -o <outputfile>')
+        print("openopps.py -u <username> -p <password> -s <start_date> -e <end_date> -o <output_folder>")
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("'openopps.py -u <username> -p <password> -s <start_date> -e <end_date> -o <output_folder>")
+            print("openopps.py -u <username> -p <password> -s <start_date> -e <end_date> -o <output_folder>")
             sys.exit()
         elif opt in ("-u"):
             username = arg
