@@ -9,9 +9,16 @@ import os
 import sys
 import getopt
 
+import time
 import datetime
 from datetime import datetime
 from datetime import timedelta
+
+# ****************
+# Global variables
+# ****************
+
+openopps_sleep = config.openopps["sleep"]
 
 
 # *******************************
@@ -116,6 +123,7 @@ def get_and_write_releases(date, username, password, token, page_size, output_fo
 
     next_page_url = response_releases_first_page_data['next']
     while next_page_url != None:
+        time.sleep(openopps_sleep) # Sleep to not stresss max retries
         response_releases_next_page = get_next_releases(next_page_url, token, page_size)
         write_releases(response_releases_next_page, output_folder)
 
