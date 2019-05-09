@@ -117,6 +117,7 @@ def write_releases(response_releases, output_folder):
 # Get and write releases 
 # **********************
 def get_and_write_releases(date, username, password, token, output_folder):
+    time.sleep(openopps_sleep) # Sleep to not stress max retries
     response_releases_first_page = get_releases(date, username, password, token)
     write_releases(response_releases_first_page, output_folder)
 
