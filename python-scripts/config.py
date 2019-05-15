@@ -9,3 +9,7 @@ opencorporates = {
     "reconcile_score": 50,   
     "companies_api_url": "http://api.opencorporates.com/companies"
 }
+
+logging = {
+    "level": "INFO"
+}

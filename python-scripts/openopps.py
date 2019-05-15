@@ -2,6 +2,8 @@
 
 import config
 
+import logging
+
 import requests
 import json
 
@@ -13,6 +15,7 @@ import time
 import datetime
 from datetime import datetime
 from datetime import timedelta
+
 
 # ****************
 # Global variables
@@ -137,6 +140,8 @@ def get_and_write_releases(date, username, password, token, output_folder):
 # Main function
 # *************
 def main(argv):
+    logging.basicConfig(level=config.logging["level"])
+
     username = ""
     password = ""
     start_date = ""
@@ -165,19 +170,19 @@ def main(argv):
 
     token = acquire_token(username, password)
 
-    print("username = " + username)
-    print("password = " + password)
-    print("token = " + token)
-    print("start_date = " + start_date)
-    print("end_date = " + end_date)
-    print("output_folder = " + output_folder)
+    logging.info("main(): username = " + username)
+    logging.info("main(): password = " + password)
+    logging.info("main(): token = " + token)
+    logging.info("main(): start_date = " + start_date)
+    logging.info("main(): end_date = " + end_date)
+    logging.info("main(): output_folder = " + output_folder)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")
 
     while start <= stop:
         release_date = datetime.strftime(start, "%Y-%m-%d")
-        print("release_date = " + release_date)
+        logging.info("main(): release_date = " + release_date)
         get_and_write_releases(release_date, username, password, token, output_folder + "\\" + release_date)
         start = start + timedelta(days=1)  # increase day one by one
 
