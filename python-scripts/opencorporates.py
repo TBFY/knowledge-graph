@@ -133,20 +133,21 @@ def process_suppliers(api_token, release_data, filename, output_folder):
 #    print(json.dumps(suppliers_data, indent=4))
 
     # Try to reconcile each supplier
-    for supplier_data in suppliers_data:
-        supplier_name = get_supplier_name(supplier_data)
+    if suppliers_data:
+        for supplier_data in suppliers_data:
+            supplier_name = get_supplier_name(supplier_data)
 
-        # Get reconcile results
-        response_reconcile_results = reconcile_company(supplier_name)
-        reconcile_results_data = json.loads(json.dumps(response_reconcile_results.json()))
-        for reconcile_result in reconcile_results_data['result']:
-            result_score = reconcile_result['score']
-            if is_candidate_company(buyer_data, supplier_data, reconcile_result):
-                logging.info("process_suppliers(): result_score = " + str(result_score))
-                release_ocid = release_data['ocid']
-                company_id = reconcile_result['id']
-                response_company = get_company(company_id, api_token)
-                write_company(release_ocid, response_company, output_folder)
+            # Get reconcile results
+            response_reconcile_results = reconcile_company(supplier_name)
+            reconcile_results_data = json.loads(json.dumps(response_reconcile_results.json()))
+            for reconcile_result in reconcile_results_data['result']:
+                result_score = reconcile_result['score']
+                if is_candidate_company(buyer_data, supplier_data, reconcile_result):
+                    logging.info("process_suppliers(): result_score = " + str(result_score))
+                    release_ocid = release_data['ocid']
+                    company_id = reconcile_result['id']
+                    response_company = get_company(company_id, api_token)
+                    write_company(release_ocid, response_company, output_folder)
 
 
 # ****************************************************
@@ -159,7 +160,10 @@ def get_buyer(release_data):
     return release_data['json']['releases'][0]['buyer']
 
 def get_suppliers(release_data):
-    return release_data['json']['releases'][0]['awards'][0]['suppliers']
+    try:
+        return release_data['json']['releases'][0]['awards'][0]['suppliers']
+    except KeyError:
+        return None
 
 def is_award(release_data):
     tag_value = get_tag(release_data)
