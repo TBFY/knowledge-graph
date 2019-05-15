@@ -39,13 +39,13 @@ def acquire_token(username, password):
     }
     response = requests.post(url, headers=headers, data=json.dumps(data))
 
-    data = json.loads(json.dumps(response.json()))
     if response.status_code != 200:
-        print("ERROR: " + json.dumps(data))
-        sys.exit(2)
-
-    token = "JWT " + data["token"]
-    return token
+        logging.info("acquire_token(): ERROR: " + json.dumps(response.json()))
+        return None
+    else:
+        data = json.loads(json.dumps(response.json()))
+        token = "JWT " + data["token"]
+        return token
 
 
 # ************************************
@@ -88,7 +88,12 @@ def get_releases(date, username, password, token):
         "Authorization": token
     }
     response = requests.get(url, params=params, headers=headers)
-    return response
+
+    if response.status_code != 200:
+        logging.info("acquire_token(): ERROR: " + json.dumps(response.json()))
+        return None
+    else:
+        return response
 
 
 # *******************************************************************************
@@ -99,7 +104,12 @@ def get_next_releases(url, token):
         "Authorization": token
     }
     response = requests.get(url, headers=headers)
-    return response
+
+    if response.status_code != 200:
+        logging.info("acquire_token(): ERROR: " + json.dumps(response.json()))
+        return None
+    else:
+        return response
 
 
 # *******************************************
@@ -109,11 +119,12 @@ def write_releases(response_releases, output_folder):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
-    data = json.loads(json.dumps(response_releases.json()))
-    for element in data['results']:
-        jfile = open(output_folder + '\\' + element['ocid'] + '-release.json', 'w+')
-        jfile.write(json.dumps(element, indent=4).replace('null', '""'))
-        jfile.close
+    if response_releases:
+        data = json.loads(json.dumps(response_releases.json()))
+        for element in data['results']:
+            jfile = open(output_folder + '\\' + element['ocid'] + '-release.json', 'w+')
+            jfile.write(json.dumps(element, indent=4).replace('null', '""'))
+            jfile.close
 
 
 # **********************

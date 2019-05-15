@@ -7,7 +7,7 @@ openopps = {
 opencorporates = {
     "reconcile_api_url": "https://opencorporates.com/reconcile",
     "reconcile_score": 50,   
-    "companies_api_url": "http://api.opencorporates.com/companies"
+    "companies_api_url": "http://api.opencorporates.com"
 }
 
 logging = {
