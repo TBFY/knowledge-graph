@@ -51,10 +51,10 @@ def reconcile_company(company_name):
 # ***********
 # Get company
 # ***********
-def get_company(company_id):
+def get_company(company_id, api_token):
     url = opencorporates_companies_api_url + company_id
     params = {
-        "query": company_id
+        "api_token": api_token
     }
     headers = {
         "Content-Type": "application/json"
@@ -121,7 +121,7 @@ def write_company(ocid, response_company, output_folder):
 # *****************************************************************************
 # Loop through suppliers, reconcile and and write file for each candidate match
 # *****************************************************************************
-def process_suppliers(release_data, filename, output_folder):
+def process_suppliers(api_token, release_data, filename, output_folder):
     logging.info("process_suppliers(): tag_value = " + str(get_tag(release_data)))
     buyer_data = get_buyer(release_data)
     buyer_name = get_buyer_name(buyer_data)
@@ -145,7 +145,7 @@ def process_suppliers(release_data, filename, output_folder):
                 logging.info("process_suppliers(): result_score = " + str(result_score))
                 release_ocid = release_data['ocid']
                 company_id = reconcile_result['id']
-                response_company = get_company(company_id)
+                response_company = get_company(company_id, api_token)
                 write_company(release_ocid, response_company, output_folder)
 
 
@@ -213,18 +213,21 @@ def is_jurisdiction_match(buyer_data, supplier_data, result_data):
 def main(argv):
     logging.basicConfig(level=config.logging["level"])
     
+    api_token = ""
     input_folder = ""
     output_folder = ""
 
     try:
-        opts, args = getopt.getopt(argv, "hi:o:")
+        opts, args = getopt.getopt(argv, "ha:i:o:")
     except getopt.GetoptError:
-        print("opencorporates.py -i <input_folder> -o <output_folder>")
+        print("opencorporates.py -a <api_token> -i <input_folder> -o <output_folder>")
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("opencorporates.py -i <input_folder> -o <output_folder>")
+            print("opencorporates.py -a <api_token> -i <input_folder> -o <output_folder>")
             sys.exit()
+        elif opt in ("-a"):
+            api_token = arg
         elif opt in ("-i"):
             input_folder = arg
         elif opt in ("-o"):
@@ -238,7 +241,7 @@ def main(argv):
         lines = f.read()
         release_data = json.loads(lines)
         if is_award(release_data):
-            process_suppliers(release_data, filename, output_folder)
+            process_suppliers(api_token, release_data, filename, output_folder)
         f.close()
  
 
