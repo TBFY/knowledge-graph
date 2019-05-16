@@ -111,6 +111,8 @@ def is_matching_company(supplier_data, company_data):
 
     if (supplier_postal_code == "") and (supplier_street_address == ""):
         return False
+    elif not company_registered_address_in_full:
+        return False
     elif (supplier_postal_code in company_registered_address_in_full) and (supplier_street_address in company_registered_address_in_full):
         return True
     else:
@@ -293,6 +295,7 @@ def main(argv):
         lines = f.read()
         release_data = json.loads(lines)
         if is_award(release_data):
+            logging.info("main(): filename = " + f.name)
             process_suppliers(api_token, release_data, filename, output_folder)
         f.close()
  
