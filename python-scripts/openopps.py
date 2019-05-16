@@ -123,8 +123,8 @@ def write_releases(response_releases, output_folder):
         data = json.loads(json.dumps(response_releases.json()))
         for element in data['results']:
             jfile = open(output_folder + '\\' + element['ocid'] + '-release.json', 'w+')
-            jfile.write(json.dumps(element, indent=4).replace('null', '""'))
-            jfile.close
+            jfile.write(json.dumps(element, indent=4).replace(': null', ': ""'))
+            jfile.close()
 
 
 # **********************
