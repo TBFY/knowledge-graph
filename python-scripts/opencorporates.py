@@ -22,6 +22,27 @@ opencorporates_reconcile_api_url = config.opencorporates["reconcile_api_url"]
 opencorporates_companies_api_url = config.opencorporates["companies_api_url"]
 
 
+# **********
+# Statistics
+# **********
+
+stat_no_awards = 0
+stat_no_suppliers = 0
+stat_no_candidate_companies = 0
+stat_no_matching_companies = 0
+
+def write_stats(output_folder):
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    sfile = open(output_folder + '\\' + 'STATISTICS.TXT', 'w+')
+    sfile.write("stat_no_awards             : " + str(stat_no_awards) +'\n')
+    sfile.write("stat_no_suppliers          : " + str(stat_no_suppliers) +'\n')
+    sfile.write("stat_no_candidate_companies: " + str(stat_no_candidate_companies) +'\n')
+    sfile.write("stat_no_matching_companies : " + str(stat_no_matching_companies) +'\n')
+    sfile.close()
+
+
 # ****************
 # Lookup functions
 # ****************
@@ -95,6 +116,8 @@ def is_candidate_company(buyer_data, supplier_data, result_data):
         logging.info("is_candidate_company(): supplier_name = " + supplier_name)
         logging.info("is_candidate_company(): result_id = " + result_id)
         logging.info("is_candidate_company(): result_score = " + str(result_score))
+        global stat_no_candidate_companies
+        stat_no_candidate_companies += 1
         return True
     else:
         return False
@@ -114,6 +137,11 @@ def is_matching_company(supplier_data, company_data):
     elif not company_registered_address_in_full:
         return False
     elif (supplier_postal_code in company_registered_address_in_full) and (supplier_street_address in company_registered_address_in_full):
+        logging.info("is_matching_company(): supplier_postal_code = " + supplier_postal_code)
+        logging.info("is_matching_company(): supplier_street_address = " + supplier_street_address)
+        logging.info("is_matching_company(): company_registered_address_in_full = " + company_registered_address_in_full)
+        global stat_no_matching_companies
+        stat_no_matching_companies += 1
         return True
     else:
         return False
@@ -132,8 +160,8 @@ def write_company(ocid, response_company, output_folder):
         company_jurisdiction = data['results']['company']['jurisdiction_code']
 
         jfile = open(output_folder + '\\' + str(ocid) + '-supplier-' + str(company_jurisdiction) + '-' + str(company_number) + '.json', 'w+')
-        jfile.write(json.dumps(data, indent=4).replace('null', '""'))
-        jfile.close
+        jfile.write(json.dumps(data, indent=4).replace(': null', ': ""'))
+        jfile.close()
 
 
 # *****************************************************************************
@@ -147,12 +175,12 @@ def process_suppliers(api_token, release_data, filename, output_folder):
     logging.info("process_suppliers(): buyer_name = " + buyer_name)
     logging.info("process_suppliers(): buyer_country_code = " + buyer_country_code)
 
-    suppliers_data = get_suppliers(release_data)
-#    print(json.dumps(suppliers_data, indent=4))
-
     # Try to reconcile each supplier
+    suppliers_data = get_suppliers(release_data)
     if suppliers_data:
         for supplier_data in suppliers_data:
+            global stat_no_suppliers
+            stat_no_suppliers += 1
             supplier_name = get_supplier_name(supplier_data)
 
             # Get reconcile results
@@ -190,6 +218,8 @@ def get_suppliers(release_data):
 def is_award(release_data):
     tag_value = get_tag(release_data)
     if ("award" in tag_value) or ("awardUpdate" in tag_value):
+        global stat_no_awards
+        stat_no_awards += 1
         return True
     else:
         return False
@@ -298,7 +328,9 @@ def main(argv):
             logging.info("main(): filename = " + f.name)
             process_suppliers(api_token, release_data, filename, output_folder)
         f.close()
- 
+
+    write_stats(output_folder)
+
 
 # *****************
 # Run main function
