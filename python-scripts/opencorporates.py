@@ -44,7 +44,6 @@ def reconcile_company(company_name):
         "Content-Type": "application/json"
     }
     response = requests.get(url, params=params, headers=headers)
-#    print(response.json())
     return response
 
 
@@ -101,6 +100,23 @@ def is_candidate_company(buyer_data, supplier_data, result_data):
         return False
 
 
+# *******************
+# Is matching company
+# *******************
+
+def is_matching_company(supplier_data, company_data): 
+    supplier_postal_code = get_supplier_postal_code(supplier_data)
+    supplier_street_address = get_supplier_street_address(supplier_data)
+    company_registered_address_in_full = get_company_registered_address_in_full(company_data)
+
+    if (supplier_postal_code == "") and (supplier_street_address == ""):
+        return False
+    elif (supplier_postal_code in company_registered_address_in_full) and (supplier_street_address in company_registered_address_in_full):
+        return True
+    else:
+        return False
+
+
 # *************
 # Write company
 # *************
@@ -142,12 +158,16 @@ def process_suppliers(api_token, release_data, filename, output_folder):
             reconcile_results_data = json.loads(json.dumps(response_reconcile_results.json()))
             for reconcile_result in reconcile_results_data['result']:
                 result_score = reconcile_result['score']
+                
                 if is_candidate_company(buyer_data, supplier_data, reconcile_result):
                     logging.info("process_suppliers(): result_score = " + str(result_score))
                     release_ocid = release_data['ocid']
                     company_id = reconcile_result['id']
                     response_company = get_company(company_id, api_token)
-                    write_company(release_ocid, response_company, output_folder)
+                    company_data = json.loads(json.dumps(response_company.json()))
+
+                    if is_matching_company(supplier_data, company_data):
+                        write_company(release_ocid, response_company, output_folder)
 
 
 # ****************************************************
@@ -178,37 +198,65 @@ def is_award(release_data):
 # *************************************************************
 
 def get_buyer_name(buyer_data):
-    name = buyer_data['name']
-    return name
+    try:
+        name = buyer_data['name']
+        return name
+    except KeyError:
+        return ""
 
 def get_buyer_country_code(buyer_data):
-    country_name = buyer_data['address']['countryName']
-    return country_name_2_code_jurisdiction(country_name)
+    try:
+        country_name = buyer_data['address']['countryName']
+        return country_name_2_code_jurisdiction(country_name)
+    except KeyError:
+        return ""
 
 def get_supplier_name(supplier_data):
-    supplier_name = supplier_data['name']
-    supplier_legal_name = supplier_data['identifier']['legalName']
-    if supplier_legal_name != "":
-        return supplier_legal_name
-    else:
-        return supplier_name
+    try:
+        supplier_name = supplier_data['name']
+        supplier_legal_name = supplier_data['identifier']['legalName']
+        if supplier_legal_name != "":
+            return supplier_legal_name
+        else:
+            return supplier_name
+    except KeyError:
+        return ""
 
 def get_supplier_country_code(supplier_data):
-    country_name = supplier_data['address']['countryName']
-    return country_name_2_code_jurisdiction(country_name)
+    try:
+        country_name = supplier_data['address']['countryName']
+        return country_name_2_code_jurisdiction(country_name)
+    except KeyError:
+        return ""
 
-#def map_country_name_2_jurisdiction(country_name):
-#    return country_name_2_code_jurisdiction(country_name)
+def get_supplier_postal_code(supplier_data):
+    try:
+        postal_code = supplier_data['address']['postalCode']
+        return postal_code
+    except KeyError:
+        return ""
+
+def get_supplier_street_address(supplier_data):
+    try:
+        street_address = supplier_data['address']['streetAddress']
+        return street_address
+    except KeyError:
+        return ""
 
 def get_result_jurisdiction(result_data):
-    result_id = str(result_data['id']).replace("/companies/", "")
-    result_jurisdiction = result_id[0:result_id.find("/")]
-#    logging.info("get_jurisdiction_from_result(): result_id = " + result_id)
-#    logging.info("get_jurisdiction_from_result(): result_jurisdiction = " + result_jurisdiction)
-    return result_jurisdiction
+    try:
+        result_id = str(result_data['id']).replace("/companies/", "")
+        result_jurisdiction = result_id[0:result_id.find("/")]
+        return result_jurisdiction
+    except KeyError:
+        return ""
 
-def is_jurisdiction_match(buyer_data, supplier_data, result_data):
-    return False
+def get_company_registered_address_in_full(company_data):
+    try:
+        registered_address_in_full = company_data['results']['company']['registered_address_in_full']
+        return registered_address_in_full
+    except KeyError:
+        return ""
 
 
 # *************
