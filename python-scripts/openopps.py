@@ -122,7 +122,7 @@ def write_releases(response_releases, output_folder):
     if response_releases:
         data = json.loads(json.dumps(response_releases.json()))
         for element in data['results']:
-            jfile = open(output_folder + '\\' + element['ocid'] + '-release.json', 'w+')
+            jfile = open(os.path.join(output_folder, element['ocid'] + '-release.json'), 'w+')
             jfile.write(json.dumps(element, indent=4).replace(': null', ': ""'))
             jfile.close()
 
@@ -194,7 +194,7 @@ def main(argv):
     while start <= stop:
         release_date = datetime.strftime(start, "%Y-%m-%d")
         logging.info("main(): release_date = " + release_date)
-        get_and_write_releases(release_date, username, password, token, output_folder + "\\" + release_date)
+        get_and_write_releases(release_date, username, password, token, os.path.join(output_folder, release_date))
         start = start + timedelta(days=1)  # increase day one by one
 
 
