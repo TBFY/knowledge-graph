@@ -60,7 +60,7 @@ def main(argv):
     logging.info("main(): output_folder = " + output_folder)
 
     rmlOpenOppsInputFilePath = os.path.join(rml_folder, "openopps.json")
-    rmlOpenCorporatesInputFilePath = os.path.join(rml_folder, "opencorporates.json")
+    rmlOpenCorporatesInputFilePath = os.path.join(rml_folder, "opencorp.json")
     rmlOutputFilePath = os.path.join(rml_folder, "out.ttl")
 
     for dirname in os.listdir(input_folder):
@@ -70,6 +70,7 @@ def main(argv):
             os.makedirs(outputDirPath)
         if os.path.isdir(dirPath):
             for filename in os.listdir(dirPath):
+                logging.info("main(): filename = " + filename)
                 filePath = os.path.join(dirPath, filename)
                 outputFilePath = os.path.join(outputDirPath, str(filename).replace(".json", ".ttl"))
                 rmlInputFilePath = os.path.join(rml_folder, filename)
@@ -83,7 +84,7 @@ def main(argv):
                     os.system('copy ' + filePath + ' ' + rml_folder)
                     os.replace(rmlInputFilePath, rmlOpenCorporatesInputFilePath)
                     os.chdir(rml_folder)
-                    os.system('java -jar RML-Mapper-v3.0.2.jar -m opencorporates.rml -o out.ttl')
+                    os.system('java -jar RML-Mapper-v3.0.2.jar -m opencorp.rml -o out.ttl')
                     os.replace(rmlOutputFilePath, outputFilePath)
 
 
