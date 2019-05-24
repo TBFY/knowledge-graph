@@ -384,23 +384,27 @@ def main(argv):
                 outputFilePath = os.path.join(outputDirPath, filename)
                 f = open(filePath)
                 lines = f.read()
-                release_data = json.loads(lines)
-                f.close()
+                
+                try:
+                    release_data = json.loads(lines)
+                    f.close()
 
-                if is_award(release_data):
-                    logging.info("main(): filename = " + f.name)
+                    if is_award(release_data):
+                        logging.info("main(): filename = " + f.name)
 
-                    awards_data = get_awards(release_data)
-                    if awards_data:
-                        award_index = 0
-                        for award_data in awards_data:
-                            process_suppliers(api_token, release_data, award_index, filename, outputDirPath)
-                            award_index += 1
+                        awards_data = get_awards(release_data)
+                        if awards_data:
+                            award_index = 0
+                            for award_data in awards_data:
+                                process_suppliers(api_token, release_data, award_index, filename, outputDirPath)
+                                award_index += 1
 
-                        if award_index > 1:
-                            logging.info("main(): award_count = " + str(award_index))
-                else:
-                    os.system('copy ' + filePath + ' ' + outputFilePath)
+                            if award_index > 1:
+                                logging.info("main(): award_count = " + str(award_index))
+                    else:
+                        os.system('copy ' + filePath + ' ' + outputFilePath)
+                except:
+                    pass
 
             write_stats(outputDirPath)
 
