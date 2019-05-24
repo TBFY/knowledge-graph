@@ -80,12 +80,14 @@ def main(argv):
                     os.chdir(rml_folder)
                     os.system('java -jar RML-Mapper-v3.0.2.jar -m openopps.rml -o out.ttl')
                     os.replace(rmlOutputFilePath, outputFilePath)
+                    os.remove(rmlOpenOppsInputFilePath)
                 if is_opencorporates_json(filename):
                     os.system('copy ' + filePath + ' ' + rml_folder)
                     os.replace(rmlInputFilePath, rmlOpenCorporatesInputFilePath)
                     os.chdir(rml_folder)
                     os.system('java -jar RML-Mapper-v3.0.2.jar -m opencorp.rml -o out.ttl')
                     os.replace(rmlOutputFilePath, outputFilePath)
+                    os.remove(rmlOpenCorporatesInputFilePath)
 
 
 # *****************
