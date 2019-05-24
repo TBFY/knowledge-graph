@@ -14,6 +14,6 @@ java -jar RML-Mapper-v3.0.2.jar -m opencorp.rml -o out.ttl
 
 # Prerequisites
 
-You need to download the RML Mapper from https://github.com/RMLio/rmlmapper-java and store it in the same repository as the RML mappings and JSON files. We currently use Version 3.0.2 here, but later versions will probably work just as well. 
+You need to download the RML Mapper from https://github.com/RMLio/RML-Mapper/releases and store it in the same repository as the RML mappings and JSON files. We currently use Version 3.0.2 here, but later versions will probably work just as well. 
 
 The RML mapper runs on Java, so you also need to have Java installed on your machine.
