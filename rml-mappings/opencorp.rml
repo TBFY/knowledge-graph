@@ -53,9 +53,15 @@
     ]
   ];
   rr:predicateObjectMap [
-    rr:predicate rov:identifier;
+    rr:predicate adms:identifier;
     rr:objectMap [
       rr:template "http://data.businessgraph.io/company/{$.results.company.jurisdiction_code}/{$.results.company.company_number}/id" 
+    ]
+  ];
+  rr:predicateObjectMap [
+    rr:predicate adms:identifier;
+    rr:objectMap [
+      rr:template "http://data.businessgraph.io/company/tbfyOpenCorporatesId{$.results.company.tbfyOpenCorporatesId}" 
     ]
   ].
 
@@ -112,3 +118,4 @@
       rml:reference "$.results.company.company_number"  
     ]
   ].
+

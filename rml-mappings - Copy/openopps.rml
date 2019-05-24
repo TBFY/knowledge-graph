@@ -1,0 +1,1249 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+
+@prefix wgs84_pos: <http://www.w3.org/2003/01/geo/wgs84_pos#lat>.
+@prefix gn: <http://www.geonames.org/ontology#>.
+
+@prefix ocds: <http://www.sintef.no/ontology/tbfy/>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix xsd: <http://www.w3.org/2004/02/skos/core#>.
+@prefix schema: <http://schema.org/>.
+@prefix dc: <http://purl.org/dc/terms/>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+
+<#Source> a rml:logicalSource;
+    rml:source "openopps.json";
+    rml:referenceFormulation ql:JSONPath;
+    rml:iterator "$.json.releases.[*]".
+
+<#awSource> a rml:logicalSource;
+    rml:source "openopps.json";
+    rml:referenceFormulation ql:JSONPath;
+    rml:iterator "$.json.releases.[*].awards.[*]".
+
+<#supSource> a rml:logicalSource;
+    rml:source "openopps.json";
+    rml:referenceFormulation ql:JSONPath;
+    rml:iterator "$.json.releases.[*].awards.[*].suppliers.[*]".
+
+
+<#BAddressMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Buyer_Address";
+    rr:class ocds:Address
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:addressLocality;
+    rr:objectMap [
+      rml:reference "$.buyer.address.locality" 
+    ]
+  ];
+  rr:predicateObjectMap [
+    rr:predicate schema:postalCode;
+    rr:objectMap [
+      rml:reference "$.buyer.address.postalCode" 
+    ]
+  ];
+  rr:predicateObjectMap [
+    rr:predicate schema:addressCountry;
+    rr:objectMap [
+      rml:reference "$.buyer.address.countryName" 
+    ]
+  ];
+  rr:predicateObjectMap [
+    rr:predicate schema:streetAddress;
+    rr:objectMap [
+      rml:reference "$.buyer.address.streetAddress" 
+    ]
+  ].
+
+<#SAddressMapping>
+  rml:logicalSource <#supSource>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}_Address";
+    rr:class ocds:Address
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:addressLocality;
+    rr:objectMap [
+      rml:reference "$.address.locality" 
+    ]
+  ];
+  rr:predicateObjectMap [
+    rr:predicate schema:postalCode;
+    rr:objectMap [
+      rml:reference "$.address.postalCode" 
+    ]
+  ];
+  rr:predicateObjectMap [
+    rr:predicate schema:addressCountry;
+    rr:objectMap [
+      rml:reference "$.address.countryName" 
+    ]
+  ];
+  rr:predicateObjectMap [
+    rr:predicate schema:streetAddress;
+    rr:objectMap [
+      rml:reference "$.address.streetAddress" 
+    ]
+  ].
+
+<#AwAmendmentMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Amendment";
+    rr:class ocds:Amendment 
+  ].
+
+<#ConAmendmentMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Amendment";
+    rr:class ocds:Amendment 
+  ].
+
+<#TenAmendmentMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Amendment";
+    rr:class ocds:Amendment 
+  ].
+
+<#AwardMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}";
+    rr:class ocds:Award
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasAwardedContractPeriod;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Contract_Period"
+    ]
+  ];
+  
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasAwardedItem;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Item_{$.tender.items.[*].classification.id}"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasAwardPeriod;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Period"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasAwardValue;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Value"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasDocument;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Document"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:isIssuedForTender;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{tender.id}"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:awardDate;
+    rr:objectMap [
+      rml:reference "$.awards.[*].date"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:awardId;
+    rr:objectMap [
+      rml:reference "$.awards.[*].id"^^xsd:string
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate dc:title;
+    rr:objectMap [
+      rml:reference "$.awards.[*].title"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:awardStatus;
+    rr:objectMap [
+      rml:reference "$.awards.[*].status"
+    ]
+  ].
+
+<#BidMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Bid";
+    rr:class ocds:Bid
+  ];
+  
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasBidValue;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Bid_Value"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasDocument;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Bid_Document"
+    ]
+  ].
+
+<#BudgetMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Budget";
+    rr:class ocds:Budget
+  ];
+  
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasAmount;
+    rr:objectMap [
+      rml:reference "$.planning.budget.amount.amount"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasCurrency;
+    rr:objectMap [
+      rml:reference "$.planning.budget.amount.currency"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasReservedValue;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Budget_ReservedValue"
+    ]
+  ].
+
+<#BContactpointMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Buyer_ContactPoint";
+    rr:class ocds:ContactPoint;
+    rr:class ocds:Person
+  ];
+  
+  rr:predicateObjectMap [
+    rr:predicate schema:addressLocality;
+    rr:objectMap [
+      rml:reference "$.buyer.address.locality"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:postalCode;
+    rr:objectMap [
+      rml:reference "$.buyer.address.postalCode"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:addressCountry;
+    rr:objectMap [
+      rml:reference "$.buyer.address.countryName"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:streetAddress;
+    rr:objectMap [
+      rml:reference "$.buyer.address.streetAddress"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:email;
+    rr:objectMap [
+      rml:reference "$.buyer.contactPoint.email"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:name;
+    rr:objectMap [
+      rml:reference "$.buyer.contactPoint.name"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:telephone;
+    rr:objectMap [
+      rml:reference "$.buyer.contactPoint.telephone"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:URL;
+    rr:objectMap [
+      rml:reference "$.buyer.contactPoint.url"
+    ]
+  ].
+
+   
+<#SContactpointMapping>
+  rml:logicalSource <#supSource>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}_ContactPoint";
+    rr:class ocds:ContactPoint;
+    rr:class ocds:Person
+  ];
+  
+  rr:predicateObjectMap [
+    rr:predicate schema:addressLocality;
+    rr:objectMap [
+      rml:reference "$..address.locality"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:postalCode;
+    rr:objectMap [
+      rml:reference "$.address.postalCode"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:addressCountry;
+    rr:objectMap [
+      rml:reference "$.address.countryName"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:streetAddress;
+    rr:objectMap [
+      rml:reference "$.address.streetAddress"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:email;
+    rr:objectMap [
+      rml:reference "$.contactPoint.email"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:name;
+    rr:objectMap [
+      rml:reference "$.contactPoint.name"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:telephone;
+    rr:objectMap [
+      rml:reference "$.contactPoint.telephone"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:faxNumber;
+    rr:objectMap [
+      rml:reference "$.contactPoint.faxNumber"
+    ]
+  ].
+
+
+<#ContractMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract";
+    rr:class ocds:Contract
+  ];
+  
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasContractedItem;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Item_{$.tender.items.[*].classification.id}"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasContractImplementation;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Implementation"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasContractPeriod;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Period"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasContractValue;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Value"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasMilestone;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Milestone"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:isIssuedForAward;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}"
+    ]
+  ].
+
+
+<#ContractingProcessMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_ContractingProcess";
+    rr:class ocds:ContractingProcess
+  ];
+  
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasAward;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasContract;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasPlan;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Plan"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasTender;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}"
+    ]
+  ].
+
+<#DiscussionMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Discussion";
+    rr:class ocds:Discussion
+  ].
+
+
+<#AwDocumentMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Document";
+    rr:class ocds:Document
+  ].
+
+<#BidDocumentMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Bid_Document";
+    rr:class ocds:Document
+  ].
+
+<#ContrDocumentMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Document";
+    rr:class ocds:Document
+  ].
+
+<#ImplDocumentMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Implementation_Document";
+    rr:class ocds:Document
+  ].
+
+<#ConMilDocumentMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Milestone_Document";
+    rr:class ocds:Document
+  ].
+
+<#ImplMilDocumentMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Implementation_Milestone_Document";
+    rr:class ocds:Document
+  ].
+
+<#PlMilDocumentMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Plan_Milestone_Document";
+    rr:class ocds:Document
+  ].
+
+<#TenMilDocumentMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Milestone_{$.tender.milestones.[*].title}_Document";
+    rr:class ocds:Document
+  ].
+
+
+<#PlDocumentMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Plan_Document_{$.planning.documents.[*].id}";
+    rr:class ocds:Document
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:documentId;
+    rr:objectMap [
+      rml:reference "$.planning.documents.[*].id"^^xsd:string
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:documentType;
+    rr:objectMap [
+      rml:reference "$.planning.documents.[*].documentType"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate dc:language;
+    rr:objectMap [
+      rml:reference "$.planning.documents.[*].language"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate schema:URL;
+    rr:objectMap [
+      rml:reference "$.planning.documents.[*].url"
+    ]
+  ].
+
+
+<#TenDocumentMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Document_{$.tender.documents.[*].id}";
+    rr:class ocds:Document
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:documentId;
+    rr:objectMap [
+      rml:reference "$.tender.documents.[*].id"^^xsd:string
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:documentType;
+    rr:objectMap [
+      rml:reference "$.tender.documents.[*].documentType"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate dc:language;
+    rr:objectMap [
+      rml:reference "$.tender.documents.[*].language"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate schema:URL;
+    rr:objectMap [
+      rml:reference "$.tender.documents.[*].url"
+    ]
+  ].
+
+    
+<#TenEnquriyMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Enquiry";
+    rr:class ocds:Enquiry
+  ].
+
+<#ImplementationMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Implementation";
+    rr:class ocds:Implementation
+  ];
+   
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasMilestone;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Implementation_Milestone"
+    ]
+  ];
+     
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasTransaction;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Transaction"
+    ]
+  ].
+
+<#ItemMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Item_{$.tender.items.[*].classification.id}";
+    rr:class ocds:Item
+  ];
+     
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasClassificaton;
+    rr:objectMap [
+      rml:reference "$.tender.items.[*].classification.id"^^xsd:string
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:classificatonScheme;
+    rr:objectMap [
+      rml:reference "$.tender.items.[*].classification.scheme"
+    ]
+  ];
+   
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasRelatedEnquiry;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Item_{$.tender.items.[*].classification.id}_Enquiry"
+    ]
+  ];
+     
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasAdditionalItemClassificaton;
+    rr:objectMap [
+      rml:reference "$.tender.items.[*].additionalClassifications.[*].id"^^xsd:string
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:additionalItemClassificatonScheme;
+    rr:objectMap [
+      rml:reference "$.tender.items.[*].additionalClassifications.[*].scheme"
+    ]
+  ];
+     
+  rr:predicateObjectMap [
+    rr:predicate ocds:itemId;
+    rr:objectMap [
+      rml:reference "$.tender.items.[*].classification.id"^^xsd:string
+    ]
+  ];
+          
+  rr:predicateObjectMap [
+    rr:predicate ocds:isRelatedToLot;
+    rr:objectMap [
+      rml:reference "$.tender.items.[*].relatedLot"
+    ]
+  ].
+  
+
+<#LotMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Lot_{$.tender.lots.[*].id}";
+    rr:class ocds:Lot
+  ];
+     
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasLotValue;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Lot_Value"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasRelatedEnquiry;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Lot_Enquiry"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate dc:title;
+    rr:objectMap [
+      rml:reference "$.tender.lots.[*].title"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate dc:description;
+    rr:objectMap [
+      rml:reference "$.tender.lots.[*].description"
+    ]
+  ].
+
+  
+<#ConMilestoneMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Milestone";
+    rr:class ocds:Milestone
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasDocument;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Milestone_Document"
+    ]
+  ].
+
+
+ 
+<#ImplMilestoneMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Implementation_Milestone";
+    rr:class ocds:Milestone
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasDocument;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Implementation_Milestone_{$.tender.milestones.[*].title}_Document"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:milestoneDueDate;
+    rr:objectMap [
+      rml:reference "$.tender.milestones.[*].dueDate"
+    ]
+  ].
+
+ 
+<#PlMilestoneMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Planning_Milestone";
+    rr:class ocds:Milestone
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasDocument;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Planning_Milestone_Document"
+    ]
+  ].
+
+ 
+<#TenMilestoneMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Milestone";
+    rr:class ocds:Milestone
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasDocument;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Implementation_Milestone_{$.tender.milestones.[*].title}_Document"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:milestoneDueDate;
+    rr:objectMap [
+      rml:reference "$.tender.milestones.[*].dueDate"
+    ]
+  ];
+
+      
+  rr:predicateObjectMap [
+    rr:predicate dc:description;
+    rr:objectMap [
+      rml:reference "$.tender.milestones.[*].description"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate dc:title;
+    rr:objectMap [
+      rml:reference "$.tender.milestones.[*].title"
+    ]
+  ].
+
+ 
+<#BuyerMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Buyer";
+    rr:class ocds:Organisation
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasName;
+    rr:objectMap [
+      rml:reference "$.buyer.name"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasContactPoint;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Buyer_ContactPoint"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasAddress;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Buyer_Address"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:isBuyerFor;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract"
+    ]
+  ];
+        
+  rr:predicateObjectMap [
+    rr:predicate ocds:isBuyerFor;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_ContractingProcess"
+    ]
+  ];
+          
+  rr:predicateObjectMap [
+    rr:predicate ocds:playsRoleIn;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_ContractingProcess"
+    ]
+  ].
+
+ 
+<#SupplierMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Supplier_{$.awards.[*].suppliers.[*].name}";
+    rr:class ocds:Organisation
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:isSupplierFor;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract"
+    ]
+  ];
+          
+  rr:predicateObjectMap [
+    rr:predicate ocds:playsRoleIn;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_ContractingProcess"
+    ]
+  ].
+
+<#Supplier2Mapping>  
+  rml:logicalSource <#supSource>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}";
+    rr:class ocds:Organisation
+  ];
+
+        
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasContactPoint;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}_ContactPoint"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasAddress;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}_Address"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate owl:sameAs;
+    rr:objectMap [
+      rml:reference  "$.tbfyOpenCorporatesId"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:legalName;
+    rr:objectMap [
+      rml:reference "$.name"
+    ]
+  ].
+
+<#Supplier3Mapping>
+  rml:logicalSource <#awSource>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.id}_Supplier_{$.suppliers.[*].name}";
+    rr:class ocds:Organisation
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:isSupplierFor;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.id}"
+    ]
+  ].
+
+
+ 
+<#TenderMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}";
+    rr:class ocds:Tender
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasDocument;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Document_{$.tender.documents.[*].id}"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasEnquiry;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Enquiry"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasEnquiryPeriod;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_EnquiryPeriod"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasEstimatedContractPeriod;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_EstimatedContractPeriod"
+    ]
+  ];
+        
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasItemToBeProcured;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Item_{$.tender.items.[*].classification.id}"
+    ]
+  ];
+          
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasLot;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Lot_{$.tender.lots.[*].id}"
+    ]
+  ];
+ 
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasMaxEstimatedValue;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_MaxEstimatedValue"
+    ]
+  ];
+ 
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasMinEstimatedValue;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_MinEstimatedValue"
+    ]
+  ];
+ 
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasMilestone;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Milestone_{$.tender.milestones.[*].title}"
+    ]
+  ];
+ 
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasReceivedBid;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Bid"
+    ]
+  ];
+ 
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasRequirement;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Requirement"
+    ]
+  ];
+ 
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasTenderPeriod;
+    rr:objectMap [
+      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Period"
+    ]
+  ];
+ 
+  rr:predicateObjectMap [
+    rr:predicate ocds:procurementMethodRationale;
+    rr:objectMap [
+      rml:reference "$.tender.procurementMethodRationale"
+    ]
+  ];
+ 
+  rr:predicateObjectMap [
+    rr:predicate ocds:tenderId;
+    rr:objectMap [
+      rml:reference "$.tender.id"^^xsd:string
+    ]
+  ];
+ 
+  rr:predicateObjectMap [
+    rr:predicate ocds:tenderStatus;
+    rr:objectMap [
+      rml:reference "$.tender.status"
+    ]
+  ];
+ 
+  rr:predicateObjectMap [
+    rr:predicate dc:description;
+    rr:objectMap [
+      rml:reference "$.tender.description"
+    ]
+  ];
+ 
+  rr:predicateObjectMap [
+    rr:predicate dc:language;
+    rr:objectMap [
+      rml:reference "$.tender.language"
+    ]
+  ].
+
+
+<#TenPeriodMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Period";
+    rr:class ocds:Period
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:durationInDays;
+    rr:objectMap [
+      rml:reference "$.tender.tenderPeriod.durationInDays"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:endDate;
+    rr:objectMap [
+      rml:reference "$.tender.tenderPeriod.endDate"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:startDate;
+    rr:objectMap [
+      rml:reference "$.tender.tenderPeriod.startDate"
+    ]
+  ].
+
+<#ConPeriodMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_contractPeriod";
+    rr:class ocds:Period
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:durationInDays;
+    rr:objectMap [
+      rml:reference "$.awards.[*].contractPeriod.durationInDays"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:endDate;
+    rr:objectMap [
+      rml:reference "$.awards.[*].contractPeriod.endDate"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:startDate;
+    rr:objectMap [
+      rml:reference "$.awards.[*].contractPeriod.startDate"
+    ]
+  ].
+
+
+<#TenValueMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Value";
+    rr:class ocds:Value
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:valueAmount;
+    rr:objectMap [
+      rml:reference "$.tender.value.amount"^^xsd:decimal
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:valueCurrency;
+    rr:objectMap [
+      rml:reference "$.tender.value.currency"
+    ]
+  ].
+  
+<#TrValueMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Transaction_Value";
+    rr:class ocds:Value
+  ].
+
+<#AwValueMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Value";
+    rr:class ocds:Value
+  ].
+  
+<#ConValueMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Value";
+    rr:class ocds:Value
+  ].
+
+    
+<#LotValueMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Lot_{$.tender.lots.[*].id}_Value";
+    rr:class ocds:Value
+  ].
+
+    
+<#MaxEstValueMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_MaxEstimatedValue";
+    rr:class ocds:Value
+  ].
+
+    
+<#MinEstValueMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_MinEstimatedValue";
+    rr:class ocds:Value
+  ].
+
+    
+<#ResValueMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Budget_ReservedValue";
+    rr:class ocds:Value
+  ].
+
+    
+<#BidValueMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Bid_Value";
+    rr:class ocds:Value
+  ].
+      
+<#BudValueMapping>
+  rml:logicalSource <#Source>;
+
+  rr:subjectMap [
+    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Budget_Value";
+    rr:class ocds:Value
+  ].
