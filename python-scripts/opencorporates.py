@@ -207,7 +207,9 @@ def process_suppliers(api_token, release_data, filename, output_folder):
                     if is_matching_company(supplier_data, company_data):
                         write_company(release_ocid, response_company, output_folder)
                         # Add specific TBFY property for OpenCorporates Id
-                        release_data['json']['releases'][0]['awards'][0]['suppliers'][supplier_index]['tbfyOpenCorporatesUrl'] = company_data['results']['company']['opencorporates_url']
+                        company_jurisdiction = company_data['results']['company']['jurisdiction_code']
+                        company_number = company_data['results']['company']['company_number']
+                        release_data['json']['releases'][0]['awards'][0]['suppliers'][supplier_index]['tbfyOpenCorporatesId'] = "/" + company_jurisdiction + "/" + company_number
 
             supplier_index += 1
 
