@@ -30,16 +30,18 @@ stat_no_awards = 0
 stat_no_suppliers = 0
 stat_no_candidate_companies = 0
 stat_no_matching_companies = 0
+stat_highest_result_score = 0
 
 def write_stats(output_folder):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
-    sfile = open(output_folder + '\\' + 'STATISTICS.TXT', 'w+')
+    sfile = open(os.path.join(output_folder, 'STATISTICS.TXT'), 'w+')
     sfile.write("stat_no_awards             : " + str(stat_no_awards) +'\n')
     sfile.write("stat_no_suppliers          : " + str(stat_no_suppliers) +'\n')
     sfile.write("stat_no_candidate_companies: " + str(stat_no_candidate_companies) +'\n')
     sfile.write("stat_no_matching_companies : " + str(stat_no_matching_companies) +'\n')
+    sfile.write("stat_highest_result_score  : " + str(stat_highest_result_score) + '\n')
     sfile.close()
 
 
@@ -52,6 +54,7 @@ def country_name_2_code_jurisdiction(country_name):
         return opencorporates_lookup.country_name_codes[country_name.lower()]
     except KeyError:
         return ""
+
 
 # *****************
 # Reconcile company
@@ -99,6 +102,10 @@ def is_candidate_company(buyer_data, supplier_data, result_data):
     # If score lower than configured score then return false
     if float(result_score) < float(opencorporates_reconcile_score):
         return False
+
+    global stat_highest_result_score
+    if float(result_score) > float(stat_highest_result_score):
+        stat_highest_result_score = result_score
 
     # If buyer jurisdiction is empty then return false
     buyer_jurisdiction = get_buyer_country_code(buyer_data)
@@ -178,26 +185,48 @@ def process_suppliers(api_token, release_data, filename, output_folder):
     # Try to reconcile each supplier
     suppliers_data = get_suppliers(release_data)
     if suppliers_data:
+        supplier_index = 0
         for supplier_data in suppliers_data:
             global stat_no_suppliers
             stat_no_suppliers += 1
             supplier_name = get_supplier_name(supplier_data)
+
+            release_ocid = release_data['ocid']
 
             # Get reconcile results
             response_reconcile_results = reconcile_company(supplier_name)
             reconcile_results_data = json.loads(json.dumps(response_reconcile_results.json()))
             for reconcile_result in reconcile_results_data['result']:
                 result_score = reconcile_result['score']
-                
+
+
                 if is_candidate_company(buyer_data, supplier_data, reconcile_result):
                     logging.info("process_suppliers(): result_score = " + str(result_score))
-                    release_ocid = release_data['ocid']
+#                    release_ocid = release_data['ocid']
                     company_id = reconcile_result['id']
                     response_company = get_company(company_id, api_token)
                     company_data = json.loads(json.dumps(response_company.json()))
 
                     if is_matching_company(supplier_data, company_data):
                         write_company(release_ocid, response_company, output_folder)
+                        # Add specific TBFY property for OpenCorporates Id
+                        company_jurisdiction = company_data['results']['company']['jurisdiction_code']
+                        company_number = company_data['results']['company']['company_number']
+                        release_data['json']['releases'][0]['awards'][0]['suppliers'][supplier_index]['tbfyOpenCorporatesId'] = "/" + company_jurisdiction + "/" + company_number
+
+            # Add specific TBFY properties for OpenOpps
+            award_id = release_data['json']['releases'][0]['awards'][0]['id']
+            release_data['json']['releases'][0]['awards'][0]['suppliers'][supplier_index]['tbfyOcid'] = release_ocid
+            release_data['json']['releases'][0]['awards'][0]['suppliers'][supplier_index]['tbfyAwardId'] = award_id
+            
+            supplier_index += 1
+
+        release_data['json']['releases'][0]['awards'][0]['tbfyOcid'] = release_ocid
+
+    # Write award release to output folder
+    jfile = open(os.path.join(output_folder, release_data['ocid'] + '-release.json'), 'w+')
+    jfile.write(json.dumps(release_data, indent=4).replace(': null', ': ""'))
+    jfile.close()
 
 
 # ****************************************************
@@ -320,14 +349,24 @@ def main(argv):
     logging.info("main(): input_folder = " + input_folder)
     logging.info("main(): output_folder = " + output_folder)
 
-    for filename in os.listdir(input_folder):
-        f = open(input_folder + '\\' + filename)
-        lines = f.read()
-        release_data = json.loads(lines)
-        if is_award(release_data):
-            logging.info("main(): filename = " + f.name)
-            process_suppliers(api_token, release_data, filename, output_folder)
-        f.close()
+    for dirname in os.listdir(input_folder):
+        dirPath = os.path.join(input_folder, dirname)
+        outputDirPath = os.path.join(output_folder, dirname)
+        if not os.path.exists(outputDirPath):
+            os.makedirs(outputDirPath)
+        if os.path.isdir(dirPath):
+            for filename in os.listdir(dirPath):
+                filePath = os.path.join(dirPath, filename)
+                outputFilePath = os.path.join(outputDirPath, filename)
+                f = open(filePath)
+                lines = f.read()
+                release_data = json.loads(lines)
+                f.close()
+                if is_award(release_data):
+                    logging.info("main(): filename = " + f.name)
+                    process_suppliers(api_token, release_data, filename, outputDirPath)
+                else:
+                    os.system('copy ' + filePath + ' ' + outputFilePath)
 
     write_stats(output_folder)
 
