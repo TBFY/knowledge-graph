@@ -29,7 +29,7 @@ python opencorporates.py -a <api_key> -i <input_folder> -o <output_folder>
 
 Example:
 ```
-python opencorporates.py -a 'api_key' -i 'C:\TBFY\1_JSON_OpenOpps' -o 'C:\TBFY\2_JSON_OpenCorporates'
+python opencorporates.py -a 'secret' -i 'C:\TBFY\1_JSON_OpenOpps' -o 'C:\TBFY\2_JSON_OpenCorporates'
 ```
 
 #### json2rdf.py
@@ -40,5 +40,5 @@ python json2rdf.py -r <rml_folder> -i <input_folder> -o <output_folder>
 
 Example:
 ```
-python json2rdf.py -r 'C:\TBFY\3_RML_Mapper' -i 'C:\TBFY\2_JSON_OpenCorporates' -o 'C:\TBFY\4_RFD_TBFY'
+python json2rdf.py -r 'C:\TBFY\RML_Mapper_Scripts' -i 'C:\TBFY\2_JSON_OpenCorporates' -o 'C:\TBFY\3_RFD_TBFY'
 ```
