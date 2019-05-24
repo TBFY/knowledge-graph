@@ -191,15 +191,18 @@ def process_suppliers(api_token, release_data, filename, output_folder):
             stat_no_suppliers += 1
             supplier_name = get_supplier_name(supplier_data)
 
+            release_ocid = release_data['ocid']
+
             # Get reconcile results
             response_reconcile_results = reconcile_company(supplier_name)
             reconcile_results_data = json.loads(json.dumps(response_reconcile_results.json()))
             for reconcile_result in reconcile_results_data['result']:
                 result_score = reconcile_result['score']
-                
+
+
                 if is_candidate_company(buyer_data, supplier_data, reconcile_result):
                     logging.info("process_suppliers(): result_score = " + str(result_score))
-                    release_ocid = release_data['ocid']
+#                    release_ocid = release_data['ocid']
                     company_id = reconcile_result['id']
                     response_company = get_company(company_id, api_token)
                     company_data = json.loads(json.dumps(response_company.json()))
@@ -211,7 +214,14 @@ def process_suppliers(api_token, release_data, filename, output_folder):
                         company_number = company_data['results']['company']['company_number']
                         release_data['json']['releases'][0]['awards'][0]['suppliers'][supplier_index]['tbfyOpenCorporatesId'] = "/" + company_jurisdiction + "/" + company_number
 
+            # Add specific TBFY properties for OpenOpps
+            award_id = release_data['json']['releases'][0]['awards'][0]['id']
+            release_data['json']['releases'][0]['awards'][0]['suppliers'][supplier_index]['tbfyOcid'] = release_ocid
+            release_data['json']['releases'][0]['awards'][0]['suppliers'][supplier_index]['tbfyAwardId'] = award_id
+            
             supplier_index += 1
+
+        release_data['json']['releases'][0]['awards'][0]['tbfyOcid'] = release_ocid
 
     # Write award release to output folder
     jfile = open(os.path.join(output_folder, release_data['ocid'] + '-release.json'), 'w+')
