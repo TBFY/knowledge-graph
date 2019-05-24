@@ -209,7 +209,6 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
             global stat_no_suppliers
             stat_no_suppliers += 1
             supplier_name = get_supplier_name(supplier_data)
-
             release_ocid = release_data['ocid']
 
             # Get reconcile results
@@ -220,7 +219,6 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
 
                 if is_candidate_company(buyer_data, supplier_data, reconcile_result):
                     logging.info("process_suppliers(): result_score = " + str(result_score))
-#                    release_ocid = release_data['ocid']
                     company_id = reconcile_result['id']
                     response_company = get_company(company_id, api_token)
                     company_data = json.loads(json.dumps(response_company.json()))
