@@ -3,7 +3,9 @@ This is the repository where all the work towards the creation of the TheyBuyFor
 
 * Ontology model file that defines the schema for the TBFY knowledge graph  [ [.ttl file](https://github.com/TBFY/knowledge-graph/blob/master/model/tbfy-ontology.ttl) ]
 * UML model with the main concepts of the ontology [ [.mdj file](https://github.com/TBFY/knowledge-graph/blob/master/model/tbfy-ontology-model.mdj) ]
-* Source code for the data ingestion services that are being developed for onboarding data to the knowledge graph [ [repository folder](https://github.com/TBFY/knowledge-graph/tree/master/data-ingestion) ]
+* Python scripts and RML mappings for the data ingestion pipeline developed for onboarding data to the knowledge graph:
+  * Python scripts [ [repository folder](https://github.com/TBFY/knowledge-graph/tree/master/python-scripts) ]
+  * RML mappings [ [repository folder](https://github.com/TBFY/knowledge-graph/tree/master/rml-mappings) ]
 * Modules with references to related ontologies in the public procurement domain.
 * Documentation of the knowledge graph schema (ontology) and related services that is being developed.
 
