@@ -371,6 +371,17 @@ def main(argv):
     logging.info("main(): input_folder = " + input_folder)
     logging.info("main(): output_folder = " + output_folder)
 
+    copy_command = ""
+    if sys.platform.lower().startswith("win"):
+        copy_command = "copy"
+    elif sys.platform.lower().startswith("linux"):
+        copy_command = "cp"
+    else:
+        copy_command = "copy"
+
+    logging.info("main(): platform = " + sys.platform.lower())
+    logging.info("main(): copy_command = " + copy_command)
+
     for dirname in os.listdir(input_folder):
         dirPath = os.path.join(input_folder, dirname)
         outputDirPath = os.path.join(output_folder, dirname)
@@ -399,7 +410,7 @@ def main(argv):
                                 process_suppliers(api_token, release_data, award_index, filename, outputDirPath)
                                 award_index += 1
                     else:
-                        os.system('copy ' + filePath + ' ' + outputFilePath)
+                        os.system(copy_command + ' ' + filePath + ' ' + outputFilePath)
                 except:
                     pass
 
