@@ -93,16 +93,15 @@ def main(argv):
     while start <= stop:
         release_date = datetime.strftime(start, "%Y-%m-%d")
 
-        for dirname in os.listdir(opencorporates_folder):
-            if dirname == release_date:
-                stats_filepath = os.path.join(opencorporates_folder, dirname, 'STATISTICS.TXT')
-                if os.path.isfile(stats_filepath):
-                    file_stats = {}
-                    with open(stats_filepath) as stats_file:
-                        for line in stats_file:
-                            s_key, s_value = line.partition("=")[::2]
-                            file_stats[s_key.strip()] = s_value
-                        update_stats(file_stats)
+        dirname = release_date
+        stats_filepath = os.path.join(opencorporates_folder, dirname, 'STATISTICS.TXT')
+        if os.path.isfile(stats_filepath):
+            file_stats = {}
+            with open(stats_filepath) as stats_file:
+                for line in stats_file:
+                    s_key, s_value = line.partition("=")[::2]
+                    file_stats[s_key.strip()] = s_value
+                update_stats(file_stats)
 
         start = start + timedelta(days=1)  # increase day one by one
 

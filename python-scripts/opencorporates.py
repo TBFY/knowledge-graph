@@ -398,9 +398,6 @@ def main(argv):
                             for award_data in awards_data:
                                 process_suppliers(api_token, release_data, award_index, filename, outputDirPath)
                                 award_index += 1
-
-                            if award_index > 1:
-                                logging.info("main(): award_count = " + str(award_index))
                     else:
                         os.system('copy ' + filePath + ' ' + outputFilePath)
                 except:
