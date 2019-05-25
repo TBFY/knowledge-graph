@@ -59,6 +59,17 @@ def main(argv):
     logging.info("main(): input_folder = " + input_folder)
     logging.info("main(): output_folder = " + output_folder)
 
+    copy_command = ""
+    if sys.platform.lower().startswith("win"):
+        copy_command = "copy"
+    elif sys.platform.lower().startswith("linux"):
+        copy_command = "cp"
+    else:
+        copy_command = "copy"
+
+    logging.info("main(): platform = " + sys.platform.lower())
+    logging.info("main(): copy_command = " + copy_command)
+
     rmlOpenOppsInputFilePath = os.path.join(rml_folder, "openopps.json")
     rmlOpenCorporatesInputFilePath = os.path.join(rml_folder, "opencorp.json")
     rmlOutputFilePath = os.path.join(rml_folder, "out.ttl")
@@ -75,14 +86,14 @@ def main(argv):
                 outputFilePath = os.path.join(outputDirPath, str(filename).replace(".json", ".ttl"))
                 rmlInputFilePath = os.path.join(rml_folder, filename)
                 if is_openopps_json(filename):
-                    os.system('copy ' + filePath + ' ' + rml_folder)
+                    os.system(copy_command + ' ' + filePath + ' ' + rml_folder)
                     os.replace(rmlInputFilePath, rmlOpenOppsInputFilePath)
                     os.chdir(rml_folder)
                     os.system('java -jar RML-Mapper-v3.0.2.jar -m openopps.rml -o out.ttl')
                     os.replace(rmlOutputFilePath, outputFilePath)
                     os.remove(rmlOpenOppsInputFilePath)
                 if is_opencorporates_json(filename):
-                    os.system('copy ' + filePath + ' ' + rml_folder)
+                    os.system(copy_command + ' ' + filePath + ' ' + rml_folder)
                     os.replace(rmlInputFilePath, rmlOpenCorporatesInputFilePath)
                     os.chdir(rml_folder)
                     os.system('java -jar RML-Mapper-v3.0.2.jar -m opencorp.rml -o out.ttl')
