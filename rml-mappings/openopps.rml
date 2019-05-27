@@ -34,7 +34,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Buyer_Address";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Buyer_Address";
     rr:class ocds:Address
   ];
 
@@ -67,7 +67,7 @@
   rml:logicalSource <#supSource>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}_Address";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}_Address";
     rr:class ocds:Address
   ];
 
@@ -100,7 +100,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Amendment";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Award_{$.awards.[*].id}_Amendment";
     rr:class ocds:Amendment 
   ].
 
@@ -108,7 +108,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Amendment";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract_Amendment";
     rr:class ocds:Amendment 
   ].
 
@@ -116,7 +116,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Amendment";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Amendment";
     rr:class ocds:Amendment 
   ].
 
@@ -124,49 +124,49 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Award_{$.awards.[*].id}";
     rr:class ocds:Award
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasAwardedContractPeriod;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Contract_Period"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Award_{$.awards.[*].id}_Contract_Period"
     ]
   ];
   
   rr:predicateObjectMap [
     rr:predicate ocds:hasAwardedItem;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Item_{$.tender.items.[*].classification.id}"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Item_{$.tender.items.[*].classification.id}"
     ]
   ];
     
   rr:predicateObjectMap [
     rr:predicate ocds:hasAwardPeriod;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Period"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Award_{$.awards.[*].id}_Period"
     ]
   ];
     
   rr:predicateObjectMap [
     rr:predicate ocds:hasAwardValue;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Value"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Award_{$.awards.[*].id}_Value"
     ]
   ];
     
   rr:predicateObjectMap [
     rr:predicate ocds:hasDocument;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Document"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Award_{$.awards.[*].id}_Document"
     ]
   ];
     
   rr:predicateObjectMap [
     rr:predicate ocds:isIssuedForTender;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{tender.id}"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{tender.id}"
     ]
   ];
     
@@ -202,21 +202,21 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Bid";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Bid";
     rr:class ocds:Bid
   ];
   
   rr:predicateObjectMap [
     rr:predicate ocds:hasBidValue;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Bid_Value"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Bid_Value"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasDocument;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Bid_Document"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Bid_Document"
     ]
   ].
 
@@ -224,7 +224,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Budget";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Budget";
     rr:class ocds:Budget
   ];
   
@@ -245,7 +245,7 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasReservedValue;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Budget_ReservedValue"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Budget_ReservedValue"
     ]
   ].
 
@@ -253,7 +253,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Buyer_ContactPoint";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Buyer_ContactPoint";
     rr:class ocds:ContactPoint;
     rr:class ocds:Person
   ];
@@ -319,7 +319,7 @@
   rml:logicalSource <#supSource>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}_ContactPoint";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}_ContactPoint";
     rr:class ocds:ContactPoint;
     rr:class ocds:Person
   ];
@@ -385,49 +385,49 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract";
     rr:class ocds:Contract
   ];
   
   rr:predicateObjectMap [
     rr:predicate ocds:hasContractedItem;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Item_{$.tender.items.[*].classification.id}"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Item_{$.tender.items.[*].classification.id}"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasContractImplementation;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Implementation"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract_Implementation"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasContractPeriod;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Period"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract_Period"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasContractValue;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Value"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract_Value"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasMilestone;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Milestone"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract_Milestone"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:isIssuedForAward;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Award_{$.awards.[*].id}"
     ]
   ].
 
@@ -436,35 +436,35 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_ContractingProcess";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_ContractingProcess";
     rr:class ocds:ContractingProcess
   ];
   
   rr:predicateObjectMap [
     rr:predicate ocds:hasAward;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Award_{$.awards.[*].id}"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasContract;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasPlan;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Plan"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Plan"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasTender;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}"
     ]
   ].
 
@@ -472,7 +472,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Discussion";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Discussion";
     rr:class ocds:Discussion
   ].
 
@@ -481,7 +481,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Document";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Award_{$.awards.[*].id}_Document";
     rr:class ocds:Document
   ].
 
@@ -489,7 +489,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Bid_Document";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Bid_Document";
     rr:class ocds:Document
   ].
 
@@ -497,7 +497,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Document";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract_Document";
     rr:class ocds:Document
   ].
 
@@ -505,7 +505,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Implementation_Document";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Implementation_Document";
     rr:class ocds:Document
   ].
 
@@ -513,7 +513,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Milestone_Document";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract_Milestone_Document";
     rr:class ocds:Document
   ].
 
@@ -521,7 +521,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Implementation_Milestone_Document";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Implementation_Milestone_Document";
     rr:class ocds:Document
   ].
 
@@ -529,7 +529,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Plan_Milestone_Document";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Plan_Milestone_Document";
     rr:class ocds:Document
   ].
 
@@ -537,7 +537,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Milestone_{$.tender.milestones.[*].title}_Document";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Milestone_{$.tender.milestones.[*].title}_Document";
     rr:class ocds:Document
   ].
 
@@ -546,7 +546,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Plan_Document_{$.planning.documents.[*].id}";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Plan_Document_{$.planning.documents.[*].id}";
     rr:class ocds:Document
   ];
     
@@ -583,7 +583,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Document_{$.tender.documents.[*].id}";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Document_{$.tender.documents.[*].id}";
     rr:class ocds:Document
   ];
     
@@ -620,7 +620,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Enquiry";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Enquiry";
     rr:class ocds:Enquiry
   ].
 
@@ -628,21 +628,21 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Implementation";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Implementation";
     rr:class ocds:Implementation
   ];
    
   rr:predicateObjectMap [
     rr:predicate ocds:hasMilestone;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Implementation_Milestone"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Implementation_Milestone"
     ]
   ];
      
   rr:predicateObjectMap [
     rr:predicate ocds:hasTransaction;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Transaction"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Transaction"
     ]
   ].
 
@@ -650,7 +650,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Item_{$.tender.items.[*].classification.id}";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Item_{$.tender.items.[*].classification.id}";
     rr:class ocds:Item
   ];
      
@@ -671,7 +671,7 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasRelatedEnquiry;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Item_{$.tender.items.[*].classification.id}_Enquiry"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Item_{$.tender.items.[*].classification.id}_Enquiry"
     ]
   ];
      
@@ -708,21 +708,21 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Lot_{$.tender.lots.[*].id}";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Lot_{$.tender.lots.[*].id}";
     rr:class ocds:Lot
   ];
      
   rr:predicateObjectMap [
     rr:predicate ocds:hasLotValue;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Lot_Value"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Lot_Value"
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasRelatedEnquiry;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Lot_Enquiry"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Lot_Enquiry"
     ]
   ];
       
@@ -745,14 +745,14 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Milestone";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract_Milestone";
     rr:class ocds:Milestone
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasDocument;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Milestone_Document"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract_Milestone_Document"
     ]
   ].
 
@@ -762,14 +762,14 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Implementation_Milestone";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Implementation_Milestone";
     rr:class ocds:Milestone
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasDocument;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Implementation_Milestone_{$.tender.milestones.[*].title}_Document"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Implementation_Milestone_{$.tender.milestones.[*].title}_Document"
     ]
   ];
       
@@ -785,14 +785,14 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Planning_Milestone";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Planning_Milestone";
     rr:class ocds:Milestone
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasDocument;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Planning_Milestone_Document"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Planning_Milestone_Document"
     ]
   ].
 
@@ -801,14 +801,14 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Milestone";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Milestone";
     rr:class ocds:Milestone
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasDocument;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Implementation_Milestone_{$.tender.milestones.[*].title}_Document"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Implementation_Milestone_{$.tender.milestones.[*].title}_Document"
     ]
   ];
       
@@ -839,7 +839,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Buyer";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Buyer";
     rr:class ocds:Organisation
   ];
       
@@ -853,35 +853,35 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasContactPoint;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Buyer_ContactPoint"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Buyer_ContactPoint"
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasAddress;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Buyer_Address"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Buyer_Address"
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:isBuyerFor;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract"
     ]
   ];
         
   rr:predicateObjectMap [
     rr:predicate ocds:isBuyerFor;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_ContractingProcess"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_ContractingProcess"
     ]
   ];
           
   rr:predicateObjectMap [
     rr:predicate ocds:playsRoleIn;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_ContractingProcess"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_ContractingProcess"
     ]
   ].
 
@@ -890,21 +890,21 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Supplier_{$.awards.[*].suppliers.[*].name}";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Award_{$.awards.[*].id}_Supplier_{$.awards.[*].suppliers.[*].name}";
     rr:class ocds:Organisation
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:isSupplierFor;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract"
     ]
   ];
           
   rr:predicateObjectMap [
     rr:predicate ocds:playsRoleIn;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_ContractingProcess"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_ContractingProcess"
     ]
   ].
 
@@ -912,7 +912,7 @@
   rml:logicalSource <#supSource>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}";
     rr:class ocds:Organisation
   ];
 
@@ -920,14 +920,14 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasContactPoint;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}_ContactPoint"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}_ContactPoint"
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasAddress;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}_Address"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{$.tbfyOcid}_Award_{$.tbfyAwardId}_Supplier_{$.name}_Address"
     ]
   ];
 
@@ -949,14 +949,14 @@
   rml:logicalSource <#awSource>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.id}_Supplier_{$.suppliers.[*].name}";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{$.tbfyOcid}_Award_{$.id}_Supplier_{$.suppliers.[*].name}";
     rr:class ocds:Organisation
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:isSupplierFor;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{$.tbfyOcid}_Award_{$.id}"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{$.tbfyOcid}_Award_{$.id}"
     ]
   ].
 
@@ -966,91 +966,91 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}";
     rr:class ocds:Tender
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasDocument;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Document_{$.tender.documents.[*].id}"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Document_{$.tender.documents.[*].id}"
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasEnquiry;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Enquiry"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Enquiry"
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasEnquiryPeriod;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_EnquiryPeriod"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_EnquiryPeriod"
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasEstimatedContractPeriod;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_EstimatedContractPeriod"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_EstimatedContractPeriod"
     ]
   ];
         
   rr:predicateObjectMap [
     rr:predicate ocds:hasItemToBeProcured;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Item_{$.tender.items.[*].classification.id}"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Item_{$.tender.items.[*].classification.id}"
     ]
   ];
           
   rr:predicateObjectMap [
     rr:predicate ocds:hasLot;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Lot_{$.tender.lots.[*].id}"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Lot_{$.tender.lots.[*].id}"
     ]
   ];
  
   rr:predicateObjectMap [
     rr:predicate ocds:hasMaxEstimatedValue;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_MaxEstimatedValue"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_MaxEstimatedValue"
     ]
   ];
  
   rr:predicateObjectMap [
     rr:predicate ocds:hasMinEstimatedValue;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_MinEstimatedValue"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_MinEstimatedValue"
     ]
   ];
  
   rr:predicateObjectMap [
     rr:predicate ocds:hasMilestone;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Milestone_{$.tender.milestones.[*].title}"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Milestone_{$.tender.milestones.[*].title}"
     ]
   ];
  
   rr:predicateObjectMap [
     rr:predicate ocds:hasReceivedBid;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Bid"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Bid"
     ]
   ];
  
   rr:predicateObjectMap [
     rr:predicate ocds:hasRequirement;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Requirement"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Requirement"
     ]
   ];
  
   rr:predicateObjectMap [
     rr:predicate ocds:hasTenderPeriod;
     rr:objectMap [
-      rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Period"
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Period"
     ]
   ];
  
@@ -1094,7 +1094,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Period";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Period";
     rr:class ocds:Period
   ];
       
@@ -1123,7 +1123,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_contractPeriod";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Award_{$.awards.[*].id}_contractPeriod";
     rr:class ocds:Period
   ];
       
@@ -1153,7 +1153,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Value";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Value";
     rr:class ocds:Value
   ];
       
@@ -1175,7 +1175,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Transaction_Value";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Transaction_Value";
     rr:class ocds:Value
   ].
 
@@ -1183,7 +1183,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Award_{$.awards.[*].id}_Value";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Award_{$.awards.[*].id}_Value";
     rr:class ocds:Value
   ].
   
@@ -1191,7 +1191,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Contract_Value";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Contract_Value";
     rr:class ocds:Value
   ].
 
@@ -1200,7 +1200,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_Lot_{$.tender.lots.[*].id}_Value";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_Lot_{$.tender.lots.[*].id}_Value";
     rr:class ocds:Value
   ].
 
@@ -1209,7 +1209,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_MaxEstimatedValue";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_MaxEstimatedValue";
     rr:class ocds:Value
   ].
 
@@ -1218,7 +1218,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Tender_{$.tender.id}_MinEstimatedValue";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Tender_{$.tender.id}_MinEstimatedValue";
     rr:class ocds:Value
   ].
 
@@ -1227,7 +1227,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Budget_ReservedValue";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Budget_ReservedValue";
     rr:class ocds:Value
   ].
 
@@ -1236,7 +1236,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Bid_Value";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Bid_Value";
     rr:class ocds:Value
   ].
       
@@ -1244,6 +1244,6 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://www.sintef.no/ontology/tbfy/{ocid}_Budget_Value";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{ocid}_Budget_Value";
     rr:class ocds:Value
   ].

@@ -30,7 +30,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://data.businessgraph.io/company/{$.results.company.jurisdiction_code}/{$.results.company.company_number}";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{$.results.company.jurisdiction_code}/{$.results.company.company_number}";
     rr:class rov:RegisteredOrganization
   ];
 
@@ -55,13 +55,13 @@
   rr:predicateObjectMap [
     rr:predicate adms:identifier;
     rr:objectMap [
-      rr:template "http://data.businessgraph.io/company/{$.results.company.jurisdiction_code}/{$.results.company.company_number}/id" 
+      rr:template "https://theybuyforyou.eu/ontology/ocds/{$.results.company.jurisdiction_code}/{$.results.company.company_number}/id" 
     ]
   ];
   rr:predicateObjectMap [
     rr:predicate adms:identifier;
     rr:objectMap [
-      rr:template "http://data.businessgraph.io/company/tbfyOpenCorporatesId{$.results.company.tbfyOpenCorporatesId}" 
+      rr:template "https://theybuyforyou.eu/ontology/ocds/tbfyOpenCorporatesId{$.results.company.tbfyOpenCorporatesId}" 
     ]
   ].
 
@@ -69,7 +69,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://data.businessgraph.io/company/{$.results.company.jurisdiction_code}/{$.results.company.company_number}/address";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{$.results.company.jurisdiction_code}/{$.results.company.company_number}/address";
     rr:class locn:Address
   ];
 
@@ -108,7 +108,7 @@
   rml:logicalSource <#Source>;
 
   rr:subjectMap [
-    rr:template "http://data.businessgraph.io/company/{$.results.company.jurisdiction_code}/{$.results.company.company_number}/id";
+    rr:template "https://theybuyforyou.eu/ontology/ocds/{$.results.company.jurisdiction_code}/{$.results.company.company_number}/id";
     rr:class adms:Identifier
   ];
 
