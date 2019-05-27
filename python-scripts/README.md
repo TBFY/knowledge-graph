@@ -24,21 +24,39 @@ python openopps.py -u 'johndoe@tbfy.eu' -p 'secret' -s '2019-01-01' -e '2019-01-
 #### opencorporates.py
 Command line:
 ```
-python opencorporates.py -a <api_key> -i <input_folder> -o <output_folder>
+python opencorporates.py -a <api_key> -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>
 ```
 
 Example:
 ```
-python opencorporates.py -a 'secret' -i 'C:\TBFY\1_JSON_OpenOpps' -o 'C:\TBFY\2_JSON_OpenCorporates'
+python opencorporates.py -a 'secret' -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\1_JSON_OpenOpps' -o 'C:\TBFY\2_JSON_OpenCorporates'
 ```
 
 #### json2rdf.py
 Command line:
 ```
-python json2rdf.py -r <rml_folder> -i <input_folder> -o <output_folder>
+python json2rdf.py -s <start_date> -e <end_date> -r <rml_folder> -i <input_folder> -o <output_folder>
 ```
 
 Example:
 ```
-python json2rdf.py -r 'C:\TBFY\RML_Mapper_Scripts' -i 'C:\TBFY\2_JSON_OpenCorporates' -o 'C:\TBFY\3_RFD_TBFY'
+python json2rdf.py -s '2019-01-01' -e '2019-01-31' -r 'C:\TBFY\RML_Mapper_Scripts' -i 'C:\TBFY\2_JSON_OpenCorporates' -o 'C:\TBFY\3_RFD_TBFY'
+```
+
+## Statistics
+Scripts for processing statistics:
+
+* `statistics.py`: Script that aggregates and prints out the statistics from the 'STATISTICS.TXT' file that are written in each release-date subfolder in the OpenCorporates output folder when running the `opencorporates.py` script.
+
+### Runnings the scripts
+
+#### statistics.py
+Command line:
+```
+python statistics.py -s <start_date> -e <end_date> -o <opencorporates_folder>
+```
+
+Example:
+```
+python statistics.py -s '2019-01-01' -e '2019-01-31' -o 'C:\TBFY\2_JSON_OpenCorporates'
 ```

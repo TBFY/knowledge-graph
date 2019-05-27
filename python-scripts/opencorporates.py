@@ -12,6 +12,11 @@ import os
 import sys
 import getopt
 
+import time
+import datetime
+from datetime import datetime
+from datetime import timedelta
+
 
 # ****************
 # Global variables
@@ -33,17 +38,36 @@ stat_no_matching_companies = 0
 stat_highest_result_score = 0
 
 def write_stats(output_folder):
+    global stat_no_awards
+    global stat_no_suppliers
+    global stat_no_candidate_companies
+    global stat_no_matching_companies
+    global stat_highest_result_score
+
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
     sfile = open(os.path.join(output_folder, 'STATISTICS.TXT'), 'w+')
-    sfile.write("stat_no_awards             : " + str(stat_no_awards) +'\n')
-    sfile.write("stat_no_suppliers          : " + str(stat_no_suppliers) +'\n')
-    sfile.write("stat_no_candidate_companies: " + str(stat_no_candidate_companies) +'\n')
-    sfile.write("stat_no_matching_companies : " + str(stat_no_matching_companies) +'\n')
-    sfile.write("stat_highest_result_score  : " + str(stat_highest_result_score) + '\n')
+    sfile.write("stat_no_awards = " + str(stat_no_awards) +'\n')
+    sfile.write("stat_no_suppliers = " + str(stat_no_suppliers) +'\n')
+    sfile.write("stat_no_candidate_companies = " + str(stat_no_candidate_companies) +'\n')
+    sfile.write("stat_no_matching_companies = " + str(stat_no_matching_companies) +'\n')
+    sfile.write("stat_highest_result_score = " + str(stat_highest_result_score) + '\n')
     sfile.close()
 
+def reset_stats():
+    global stat_no_awards
+    global stat_no_suppliers
+    global stat_no_candidate_companies
+    global stat_no_matching_companies
+    global stat_highest_result_score
+
+    stat_no_awards = 0
+    stat_no_suppliers = 0
+    stat_no_candidate_companies = 0
+    stat_no_matching_companies = 0
+    stat_highest_result_score = 0
+    
 
 # ****************
 # Lookup functions
@@ -174,7 +198,7 @@ def write_company(ocid, response_company, output_folder):
 # *****************************************************************************
 # Loop through suppliers, reconcile and and write file for each candidate match
 # *****************************************************************************
-def process_suppliers(api_token, release_data, filename, output_folder):
+def process_suppliers(api_token, release_data, award_index, filename, output_folder):
     logging.info("process_suppliers(): tag_value = " + str(get_tag(release_data)))
     buyer_data = get_buyer(release_data)
     buyer_name = get_buyer_name(buyer_data)
@@ -183,14 +207,13 @@ def process_suppliers(api_token, release_data, filename, output_folder):
     logging.info("process_suppliers(): buyer_country_code = " + buyer_country_code)
 
     # Try to reconcile each supplier
-    suppliers_data = get_suppliers(release_data)
+    suppliers_data = get_suppliers(release_data, award_index)
     if suppliers_data:
         supplier_index = 0
         for supplier_data in suppliers_data:
             global stat_no_suppliers
             stat_no_suppliers += 1
             supplier_name = get_supplier_name(supplier_data)
-
             release_ocid = release_data['ocid']
 
             # Get reconcile results
@@ -199,10 +222,8 @@ def process_suppliers(api_token, release_data, filename, output_folder):
             for reconcile_result in reconcile_results_data['result']:
                 result_score = reconcile_result['score']
 
-
                 if is_candidate_company(buyer_data, supplier_data, reconcile_result):
                     logging.info("process_suppliers(): result_score = " + str(result_score))
-#                    release_ocid = release_data['ocid']
                     company_id = reconcile_result['id']
                     response_company = get_company(company_id, api_token)
                     company_data = json.loads(json.dumps(response_company.json()))
@@ -212,12 +233,12 @@ def process_suppliers(api_token, release_data, filename, output_folder):
                         # Add specific TBFY property for OpenCorporates Id
                         company_jurisdiction = company_data['results']['company']['jurisdiction_code']
                         company_number = company_data['results']['company']['company_number']
-                        release_data['json']['releases'][0]['awards'][0]['suppliers'][supplier_index]['tbfyOpenCorporatesId'] = "/" + company_jurisdiction + "/" + company_number
+                        release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOpenCorporatesId'] = "/" + company_jurisdiction + "/" + company_number
 
             # Add specific TBFY properties for OpenOpps
-            award_id = release_data['json']['releases'][0]['awards'][0]['id']
-            release_data['json']['releases'][0]['awards'][0]['suppliers'][supplier_index]['tbfyOcid'] = release_ocid
-            release_data['json']['releases'][0]['awards'][0]['suppliers'][supplier_index]['tbfyAwardId'] = award_id
+            award_id = release_data['json']['releases'][0]['awards'][award_index]['id']
+            release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOcid'] = release_ocid
+            release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyAwardId'] = award_id
             
             supplier_index += 1
 
@@ -238,9 +259,15 @@ def get_tag(release_data):
 def get_buyer(release_data):
     return release_data['json']['releases'][0]['buyer']
 
-def get_suppliers(release_data):
+def get_awards(release_data):
     try:
-        return release_data['json']['releases'][0]['awards'][0]['suppliers']
+        return release_data['json']['releases'][0]['awards']
+    except KeyError:
+        return None
+
+def get_suppliers(release_data, award_index):
+    try:
+        return release_data['json']['releases'][0]['awards'][award_index]['suppliers']
     except KeyError:
         return None
 
@@ -327,48 +354,90 @@ def main(argv):
     logging.basicConfig(level=config.logging["level"])
     
     api_token = ""
+    start_date = ""
+    end_date = ""
     input_folder = ""
     output_folder = ""
 
     try:
-        opts, args = getopt.getopt(argv, "ha:i:o:")
+        opts, args = getopt.getopt(argv, "ha:s:e:i:o:")
     except getopt.GetoptError:
-        print("opencorporates.py -a <api_token> -i <input_folder> -o <output_folder>")
+        print("opencorporates.py -a <api_token> -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>")
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("opencorporates.py -a <api_token> -i <input_folder> -o <output_folder>")
+            print("opencorporates.py -a <api_token> -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>")
             sys.exit()
         elif opt in ("-a"):
             api_token = arg
+        elif opt in ("-s"):
+            start_date = arg
+        elif opt in ("-e"):
+            end_date = arg
         elif opt in ("-i"):
             input_folder = arg
         elif opt in ("-o"):
             output_folder = arg
 
+    logging.info("main(): api_token = " + api_token)
+    logging.info("main(): start_date = " + start_date)
+    logging.info("main(): end_date = " + end_date)
     logging.info("main(): input_folder = " + input_folder)
     logging.info("main(): output_folder = " + output_folder)
 
-    for dirname in os.listdir(input_folder):
+    copy_command = ""
+    if sys.platform.lower().startswith("win"):
+        copy_command = "copy"
+    elif sys.platform.lower().startswith("linux"):
+        copy_command = "cp"
+    else:
+        copy_command = "copy"
+
+    logging.info("main(): platform = " + sys.platform.lower())
+    logging.info("main(): copy_command = " + copy_command)
+
+    start = datetime.strptime(start_date, "%Y-%m-%d")
+    stop = datetime.strptime(end_date, "%Y-%m-%d")
+
+    while start <= stop:
+        release_date = datetime.strftime(start, "%Y-%m-%d")
+
+        dirname = release_date
+#    for dirname in os.listdir(input_folder):
         dirPath = os.path.join(input_folder, dirname)
         outputDirPath = os.path.join(output_folder, dirname)
-        if not os.path.exists(outputDirPath):
-            os.makedirs(outputDirPath)
         if os.path.isdir(dirPath):
+            if not os.path.exists(outputDirPath):
+                os.makedirs(outputDirPath)
+            reset_stats()
+
             for filename in os.listdir(dirPath):
                 filePath = os.path.join(dirPath, filename)
                 outputFilePath = os.path.join(outputDirPath, filename)
                 f = open(filePath)
                 lines = f.read()
-                release_data = json.loads(lines)
-                f.close()
-                if is_award(release_data):
-                    logging.info("main(): filename = " + f.name)
-                    process_suppliers(api_token, release_data, filename, outputDirPath)
-                else:
-                    os.system('copy ' + filePath + ' ' + outputFilePath)
+                
+                try:
+                    release_data = json.loads(lines)
+                    f.close()
 
-    write_stats(output_folder)
+                    if is_award(release_data):
+                        logging.info("main(): filename = " + f.name)
+
+                        awards_data = get_awards(release_data)
+                        if awards_data:
+                            award_index = 0
+                            for award_data in awards_data:
+                                process_suppliers(api_token, release_data, award_index, filename, outputDirPath)
+                                award_index += 1
+                    else:
+                        os.system(copy_command + ' ' + filePath + ' ' + outputFilePath)
+                except:
+                    pass
+
+            write_stats(outputDirPath)
+
+        start = start + timedelta(days=1)  # increase day one by one
 
 
 # *****************
