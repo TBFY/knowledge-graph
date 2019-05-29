@@ -233,6 +233,8 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
                         # Add specific TBFY property for OpenCorporates Id
                         company_jurisdiction = company_data['results']['company']['jurisdiction_code']
                         company_number = company_data['results']['company']['company_number']
+                        release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOpenCorporatesJurisdiction'] = company_jurisdiction
+                        release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOpenCorporatesCompanyNumber'] = company_number
                         release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOpenCorporatesId'] = "/" + company_jurisdiction + "/" + company_number
 
             # Add specific TBFY properties for OpenOpps
