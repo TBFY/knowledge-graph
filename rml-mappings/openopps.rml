@@ -934,7 +934,7 @@
   rr:predicateObjectMap [
     rr:predicate owl:sameAs;
     rr:objectMap [
-      rr:template  "http://data.businessgraph.io/company{$.tbfyOpenCorporatesId}"
+      rr:template  "http://data.businessgraph.io/company/{$.tbfyOpenCorporatesJurisdiction}/{$.tbfyOpenCorporatesCompanyNumber}"
     ]
   ];
 
