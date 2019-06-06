@@ -5,7 +5,7 @@ This module contains Python scripts for downloading procurement data from the Op
 The data ingestion process consists of the following steps:
 
 1. `openopps.py`: Batch download of procurement data (tenders and awards) from OpenOpps. The output folder of this script is input to the 2nd step.
-2. `opencorporates.py`: Company matching of supplier records in awards with OpenCorporates. The output folder of this script is input to 3rd step.
+2. `opencorporates.py`: Company matching of supplier records in awards with OpenCorporates. The output folder of this script is input to the 3rd step.
 3. `json2rdf.py`: JSON 2 RDF that runs RML Mapper on release and supplier JSON files and produces TTL files. The script requires an RML folder which contains the RML Mapper v3.0.2 release (https://github.com/RMLio/RML-Mapper/releases/tag/v3.0.2) and the RML mapping files (https://github.com/TBFY/knowledge-graph/tree/master/rml-mappings).
 
 ### Running the scripts
