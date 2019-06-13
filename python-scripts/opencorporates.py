@@ -190,7 +190,7 @@ def write_company(ocid, response_company, output_folder):
         company_number = data['results']['company']['company_number']
         company_jurisdiction = data['results']['company']['jurisdiction_code']
 
-        jfile = open(output_folder + '\\' + str(ocid) + '-supplier-' + str(company_jurisdiction) + '-' + str(company_number) + '.json', 'w+')
+        jfile = open(os.path.join(output_folder, str(ocid) + '-supplier-' + str(company_jurisdiction) + '-' + str(company_number) + '.json'), 'w+')
         jfile.write(json.dumps(data, indent=4).replace(': null', ': ""'))
         jfile.close()
 
