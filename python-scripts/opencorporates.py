@@ -392,6 +392,8 @@ def main(argv):
         copy_command = "copy"
     elif sys.platform.lower().startswith("linux"):
         copy_command = "cp"
+    elif sys.platform.lower().startswith("darwin"):
+        copy_command = "cp"
     else:
         copy_command = "copy"
 
