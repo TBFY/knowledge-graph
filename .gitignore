@@ -1,2 +1,3 @@
 model/catalog-v001.xml
 python-scripts/__pycache__/
+.vscode/settings.json
