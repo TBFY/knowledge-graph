@@ -13,7 +13,9 @@ opencorporates = {
 rml = {
     "rml_filename": "rmlmapper-4.5.1-r142.jar",
     "openopps_mapping_filename": "openopps_mapping.ttl",
-    "opencorporates_mapping_filename": "opencorporates_mapping.ttl"
+    "opencorporates_mapping_filename": "opencorporates_mapping.ttl",
+    "rml_input_filename": "input.json",
+    "rml_output_filename": "output.nt"
 }
 
 logging = {
