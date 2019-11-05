@@ -10,6 +10,12 @@ opencorporates = {
     "companies_api_url": "http://api.opencorporates.com"
 }
 
+rml = {
+    "rml_filename": "rmlmapper-4.5.1-r142.jar",
+    "openopps_mapping_filename": "openopps_mapping.ttl",
+    "opencorporates_mapping_filename": "opencorporates_mapping.ttl"
+}
+
 logging = {
     "level": "INFO"
 }
