@@ -1,6 +1,0 @@
-[submodule "sector-publico-subvenciones-ayudas"]
-	path = sector-publico-subvenciones-ayudas
-	url = https://github.com/opencitydata/sector-publico-subvenciones-ayudas
-[submodule "sector-publico-facturas"]
-	path = sector-publico-facturas
-	url = https://github.com/opencitydata/sector-publico-facturas
