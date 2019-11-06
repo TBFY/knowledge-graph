@@ -7,7 +7,9 @@ The data ingestion process consists of the following steps:
 1. `openopps.py`: Batch download of procurement data (tenders and awards) from OpenOpps. The output folder of this script is input to the 2nd step.
 2. `opencorporates.py`: Company matching of supplier records in awards with OpenCorporates. The output folder of this script is input to the 3rd step.
 3. `enrich_json.py`: Enrichment of the JSON data files downloaded in steps 1 and 2, e.g. adding new properties to support the mapping to RDF. The output folder of this script is input to the 4th step.
-4. `json2rdf.py`: JSON 2 RDF that runs RML Mapper on the enriched JSON data files and produces NT files. The script requires an RML folder which contains the RML Mapper v4.5.1 release file (https://github.com/RMLio/rmlmapper-java/releases/tag/v4.5.1) and the RML mapping files (https://github.com/TBFY/knowledge-graph/tree/master/rml-mappings). Configuration parameters for RML Mapper can be set in the `config.py` file.
+4. `json2rdf.py`: JSON 2 RDF that runs RML Mapper on the enriched JSON data files and produces N-Triples files. The script requires an RML folder which contains the RML Mapper v4.5.1 release file (https://github.com/RMLio/rmlmapper-java/releases/tag/v4.5.1) and the RML mapping files (https://github.com/TBFY/knowledge-graph/tree/master/rml-mappings).
+
+Configuration parameters for the four scripts are set in the `config.py` file.
 
 ### Running the scripts
 
