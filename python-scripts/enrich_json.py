@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
 import config
+import openopps_enrich
 import opencorporates_enrich
 
 import logging
 
-import requests
 import json
 
 import os
@@ -91,7 +91,6 @@ def main(argv):
         release_date = datetime.strftime(start, "%Y-%m-%d")
 
         dirname = release_date
-#    for dirname in os.listdir(input_folder):
         dirPath = os.path.join(input_folder, dirname)
         outputDirPath = os.path.join(output_folder, dirname)
         if os.path.isdir(dirPath):
@@ -102,9 +101,8 @@ def main(argv):
                 filePath = os.path.join(dirPath, filename)
                 outputFilePath = os.path.join(outputDirPath, filename)
                 if is_openopps_json(filename):
-                    os.system(copy_command + ' ' + filePath + ' ' + outputFilePath)
+                    openopps_enrich.process_release(filePath, outputFilePath)
                 if is_opencorporates_json(filename):
-#                    os.system(copy_command + ' ' + filePath + ' ' + outputFilePath)
                     opencorporates_enrich.process_company(filePath, outputFilePath)
 
         start = start + timedelta(days=1)  # increase day one by one

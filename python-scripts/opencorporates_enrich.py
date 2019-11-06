@@ -1,30 +1,14 @@
 #!/usr/bin/python
 
 import config
-import opencorporates_lookup
 
 import logging
 
-import requests
 import json
 
 import os
 import sys
 import getopt
-
-import time
-import datetime
-from datetime import datetime
-from datetime import timedelta
-
-
-# ****************
-# Global variables
-# ****************
-
-opencorporates_reconcile_score = config.opencorporates["reconcile_score"]
-opencorporates_reconcile_api_url = config.opencorporates["reconcile_api_url"]
-opencorporates_companies_api_url = config.opencorporates["companies_api_url"]
 
 
 # ************
@@ -39,7 +23,7 @@ def read_company(input_filePath):
         company_data = json.loads(lines)
         f.close()   
         return company_data
-    except KeyError:
+    except:
         return None
 
 
@@ -48,12 +32,11 @@ def read_company(input_filePath):
 # **************
 
 def enrich_company(company_data):
-    officers_data = company_data['results']['company']['officers']
-    officer_index = 0
-
     company_jurisdiction_code = company_data['results']['company']['jurisdiction_code']
     company_company_number = company_data['results']['company']['company_number']
 
+    officers_data = company_data['results']['company']['officers']
+    officer_index = 0
     for officer in officers_data:
         company_data['results']['company']['officers'][officer_index]['officer']['tbfy_company_jurisdiction_code'] = company_jurisdiction_code
         company_data['results']['company']['officers'][officer_index]['officer']['tbfy_company_company_number'] = company_company_number
@@ -107,17 +90,8 @@ def main(argv):
 
     logging.info("main(): input_filename = " + input_filename)
     logging.info("main(): output_filename = " + output_filename)
-    input_data = read_company(input_filename)
-    enriched_company_data = enrich_company(input_data)
-    write_company(enriched_company_data, output_filename)
-#    input_file = open(input_filename)
-#    lines = input_file.read()
-#    input_data = json.loads(lines)
-#    input_file.close()
 
-#    output_file = open(output_filename, 'w+')
-#    output_file.write(json.dumps(input_data, indent=4).replace(': null', ': ""'))
-#    output_file.close()
+    process_company(input_filename, output_filename)
 
 
 # *****************
