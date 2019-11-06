@@ -1,19 +1,27 @@
 # RML mappings
 This is the folder for all the RML mappings that are part of the ingestion pipeline. Currently, these are the following two:
 
+## Mapping files
 * `openopps_mapping.ttl`: Mapping rules for transforming JSON data from OpenOpps into RDF format according to the OCDS ontology.
-The mapping accepts one JSON file named openopps.json from the same repository and produces one output file in the N-Triples format (.nt). To run it, use 
+The mapping accepts one JSON file named openopps.json from the same repository and produces one output file in the N-Triples format (.nt).
+*  `opencorporates_mapping.ttl`: Mapping rules for transforming JSON data from OpenCorporates into RDF format according to the euBusinessGraph ontology.
+The mapping accepts one JSON file named opencorp.json from the same repository and produces one output file in the N-Triples format (.nt).
+
+## Running the mappings
+
+### openopps_mapping.ttl
+Command line:
 ```
 java -jar rmlmapper-4.5.1.jar -m openopps_mapping.ttl -o output.nt
 ```
-*  `opencorporates_mapping.ttl`: Mapping rules for transforming JSON data from OpenCorporates into RDF format according to the euBusinessGraph ontology.
-The mapping accepts one JSON file named opencorp.json from the same repository and produces one output file in the N-Triples format (.nt). To run it, use 
+
+### opencorporates_mapping.ttl
+Command line: 
 ```
 java -jar rmlmapper-v4.5.1.jar -m opencorporates_mapping.ttl -o output.nt
 ```
 
-# Prerequisites
-
+## Prerequisites
 You need to download the RML Mapper from https://github.com/RMLio/rmlmapper-java/releases and store it in the same repository as the RML mappings and JSON files. We currently use version 4.5.1 here, but later versions will probably work just as well. 
 
 The RML mapper runs on Java, so you also need to have Java installed on your machine.
