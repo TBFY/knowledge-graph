@@ -1,8 +1,10 @@
 #!/usr/bin/python
 
 import config
-import openopps_enrich
-import opencorporates_enrich
+
+import tbfy.json_utils
+import tbfy.openopps_enrich
+import tbfy.opencorporates_enrich
 
 import logging
 
@@ -16,23 +18,6 @@ import time
 import datetime
 from datetime import datetime
 from datetime import timedelta
-
-
-# ****************
-# Helper functions
-# ****************
-
-def is_openopps_json(filename):
-    if "-release" in str(filename):
-        return True
-    else:
-        return False
-
-def is_opencorporates_json(filename):
-    if "-supplier" in str(filename):
-        return True
-    else:
-        return False
 
 
 # *************
@@ -100,10 +85,10 @@ def main(argv):
                 logging.info("main(): filename = " + filename)
                 filePath = os.path.join(dirPath, filename)
                 outputFilePath = os.path.join(outputDirPath, filename)
-                if is_openopps_json(filename):
-                    openopps_enrich.process_release(filePath, outputFilePath)
-                if is_opencorporates_json(filename):
-                    opencorporates_enrich.process_company(filePath, outputFilePath)
+                if tbfy.json_utils.is_openopps_json(filename):
+                    tbfy.openopps_enrich.process_release(filePath, outputFilePath)
+                if tbfy.json_utils.is_opencorporates_json(filename):
+                    tbfy.opencorporates_enrich.process_company(filePath, outputFilePath)
 
         start = start + timedelta(days=1)  # increase day one by one
 

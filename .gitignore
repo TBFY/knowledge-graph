@@ -1,3 +1,7 @@
 model/catalog-v001.xml
 python-scripts/__pycache__/
 .vscode/settings.json
+python-scripts/.editorconfig
+python-scripts/tbfy/__pycache__
+.editorconfig
+rml-mappings/rmlmapper-4.5.1.jar
