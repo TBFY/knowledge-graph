@@ -50,6 +50,7 @@ def enrich_award(release_data):
         j = 0
         for supplier in suppliers_data:
             supplier_path = award_path + '.suppliers.[' + str(j) + ']'
+            tbfy.json_utils.add_property_to_single_node2(release_data, supplier_path, "tbfy_ocid", ocid)
             tbfy.json_utils.add_property_to_single_node2(release_data, supplier_path, "tbfy_id", j)
             tbfy.json_utils.add_property_to_single_node2(release_data, supplier_path, "tbfy_award_id", award_id)
             j += 1

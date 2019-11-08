@@ -781,14 +781,28 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasContactPoint ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{id}/contactPoint"
+      rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{tbfy_id}/contactPoint"
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasAddress ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{id}/address"
+      rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{tbfy_id}/address"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:isSupplierFor ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/award/{tbfy_award_id}"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:playsRoleIn ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/contractingProcess/{tbfy_ocid}"
     ]
   ];
 
@@ -1443,55 +1457,6 @@
     rr:predicate ocds:hasDocument ;
     rr:objectMap [
       rr:template "http://data.tbfy.eu/ocds/{ocid}/planning/milestone/document"
-    ]
-  ].
-  
-<SupplierMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.json" ; 
-    rml:referenceFormulation ql:JSONPath ;
-    rml:iterator "$.json.releases.[*]"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/ocds/{ocid}/award/{awards.[*].id}/supplier/{awards.[*].suppliers.[*].name}" ;
-    rr:class ocds:Organisation
-  ];
-      
-  rr:predicateObjectMap [
-    rr:predicate ocds:isSupplierFor ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/ocds/{ocid}/contract"
-    ]
-  ];
-          
-  rr:predicateObjectMap [
-    rr:predicate ocds:playsRoleIn ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/ocds/{ocid}/contractingProcess"
-    ]
-  ].
-
-<Supplier3Map>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.json" ; 
-    rml:referenceFormulation ql:JSONPath ;
-    rml:iterator "$.json.releases.[*].awards.[*]"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/ocds/{tbfyOcid}/award/{id}/supplier/{suppliers.[*].name}" ;
-    rr:class ocds:Organisation
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate ocds:isSupplierFor ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/ocds/{tbfyOcid}/award/{id}"
     ]
   ].
 
