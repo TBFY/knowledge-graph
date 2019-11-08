@@ -46,10 +46,19 @@ def get_value(json_dict, path):
 
 
 def add_property_to_single_node(json_dict, node_path, new_prop, val):
-    new_path = node_path + '.' + new_prop
-    new_path.replace('[', '').replace(']', '')
-    dpath.util.new(json_dict, new_path, val, separator='.')
+    try:
+        value = get_value(json_dict, node_path)
+        new_path = node_path + '.' + new_prop
+        new_path = new_path.replace('[', '').replace(']', '')
+        dpath.util.new(json_dict, new_path, val, separator='.')
+    except KeyError:
+        None
 
+
+def add_property_to_single_node2(json_dict, node_path, new_prop, val):
+    new_path = node_path + '.' + new_prop
+    new_path = new_path.replace('[', '').replace(']', '')
+    dpath.util.new(json_dict, new_path, val, separator='.')
 
 def add_property_to_array_node(json_dict, array_path, new_prop, val):
     array_nodes = dpath.util.get(json_dict, array_path, separator='.')
