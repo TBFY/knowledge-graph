@@ -94,6 +94,14 @@
   ];
 
   rr:predicateObjectMap [
+    rr:predicate ebg:numberOfEmployees ;
+    rr:objectMap [ 
+      rml:reference "company.number_of_employees" ;
+      rr:datatype xsd:integer
+    ];
+  ];
+
+  rr:predicateObjectMap [
     rr:predicate ebg:orgTypeText ;
     rr:objectMap [ 
       rml:reference "company.company_type"
