@@ -47,6 +47,7 @@ def enrich_award(release_data):
         award_id = tbfy.json_utils.get_value(release_data, award_path + ".id")
 
         tbfy.json_utils.add_property_to_single_node(release_data, "json.releases.[0].awards.[" + str(i) + "].value", "tbfy_award_id", award_id)
+        tbfy.json_utils.add_property_to_single_node(release_data, "json.releases.[0].awards.[" + str(i) + "].contractPeriod", "tbfy_award_id", award_id)
 
         suppliers_data = release_data['json']['releases'][0]['awards'][i]['suppliers']
         j = 0

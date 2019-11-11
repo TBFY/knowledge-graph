@@ -862,7 +862,6 @@
     ]
   ].
 
-
 <AwardSupplierContactpointMap>
   a rr:TriplesMap ;
 
@@ -903,6 +902,41 @@
     rr:predicate schema:telephone ;
     rr:objectMap [
       rml:reference "contactPoint.telephone"
+    ]
+  ].
+
+<AwardContractPeriodMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.json" ; 
+    rml:referenceFormulation ql:JSONPath ;
+    rml:iterator "$.json.releases.[0].awards.[*].contractPeriod"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/contractPeriod" ;
+    rr:class ocds:Period
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:durationInDays ;
+    rr:objectMap [
+      rml:reference "durationInDays"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:endDate ;
+    rr:objectMap [
+      rml:reference "endDate"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:startDate ;
+    rr:objectMap [
+      rml:reference "startDate"
     ]
   ].
 
@@ -1440,41 +1474,6 @@
     rr:predicate ocds:hasDocument ;
     rr:objectMap [
       rr:template "http://data.tbfy.eu/ocds/{ocid}/planning/milestone/document"
-    ]
-  ].
-
-<ContractPeriodMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.json" ; 
-    rml:referenceFormulation ql:JSONPath ;
-    rml:iterator "$.json.releases.[*].contract"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/ocds/{ocid}/award/{awards.[*].id}/contractPeriod" ;
-    rr:class ocds:Period
-  ];
-      
-  rr:predicateObjectMap [
-    rr:predicate ocds:durationInDays ;
-    rr:objectMap [
-      rml:reference "awards.[*].contractPeriod.durationInDays"
-    ]
-  ];
-      
-  rr:predicateObjectMap [
-    rr:predicate ocds:endDate ;
-    rr:objectMap [
-      rml:reference "awards.[*].contractPeriod.endDate"
-    ]
-  ];
-      
-  rr:predicateObjectMap [
-    rr:predicate ocds:startDate ;
-    rr:objectMap [
-      rml:reference "awards.[*].contractPeriod.startDate"
     ]
   ].
   
