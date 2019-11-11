@@ -477,10 +477,10 @@ def main(argv):
 
             write_stats(outputDirPath)
 
-        if config.opencorporates["country_name_codes_simulation"]:
-            write_country_name_codes_errors(output_folder)
-
         start = start + timedelta(days=1)  # increase day one by one
+
+    if config.opencorporates["country_name_codes_simulation"]:
+        write_country_name_codes_errors(output_folder)
 
 
 # *****************
