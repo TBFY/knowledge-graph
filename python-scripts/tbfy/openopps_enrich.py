@@ -59,9 +59,8 @@ def enrich_award(release_data):
 
         i += 1
 
-#    tbfy.json_utils.add_property_to_array_node(release_data, suppliers_path, "tbfy_id", i)
-
     return release_data
+
 
 # **********************************
 # Process release (procurement data)

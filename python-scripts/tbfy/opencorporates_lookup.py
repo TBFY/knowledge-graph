@@ -1,4 +1,7 @@
+# *******************************************************************************************************
 # Lookup/conversion table to be used for country names according https://en.wikipedia.org/wiki/ISO_3166-1
+# *******************************************************************************************************
+
 country_name_codes = {
     "afghanistan": "af",
     "af": "af",
@@ -344,6 +347,7 @@ country_name_codes = {
     "nu": "nu",
     "norfolk island": "nf",
     "nf": "nf",
+    "macedonia": "mk",
     "north macedonia": "mk",
     "mk": "mk",
     "northern mariana islands": "mp",

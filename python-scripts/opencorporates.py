@@ -1,7 +1,9 @@
 #!/usr/bin/python
 
 import config
-import opencorporates_lookup
+
+import tbfy.json_utils
+import tbfy.opencorporates_lookup
 
 import logging
 
@@ -69,14 +71,38 @@ def reset_stats():
     stat_highest_result_score = 0
     
 
+# *****************************
+# Country name codes key errors
+# *****************************
+
+country_name_codes_no_errors = 0
+country_name_codes_key_errors = []
+
+def write_country_name_codes_errors(output_folder):
+    global country_name_codes_no_errors
+    global country_name_codes_key_errors
+
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    sfile = open(os.path.join(output_folder, 'COUNTRY_NAME_CODES_ERRORS.TXT'), 'w+')
+    sfile.write("country_name_codes_no_errors = " + str(country_name_codes_no_errors) +'\n')
+    sfile.write("country_name_codes_key_errors = " + str(country_name_codes_key_errors) +'\n')
+    sfile.close()
+
+
 # ****************
 # Lookup functions
 # ****************
 
 def country_name_2_code_jurisdiction(country_name):
     try:
-        return opencorporates_lookup.country_name_codes[country_name.lower()]
+        return tbfy.opencorporates_lookup.country_name_codes[country_name.lower()]
     except KeyError:
+        global country_name_codes_no_errors
+        global country_name_codes_key_errors
+        country_name_codes_no_errors += 1
+        country_name_codes_key_errors.append(country_name)
         return ""
 
 
@@ -84,6 +110,9 @@ def country_name_2_code_jurisdiction(country_name):
 # Reconcile company
 # *****************
 def reconcile_company(company_name):
+    if config.opencorporates["country_name_codes_simulation"]:
+        return None
+
     url = opencorporates_reconcile_api_url
     params = {
         "query": company_name
@@ -99,6 +128,9 @@ def reconcile_company(company_name):
 # Get company
 # ***********
 def get_company(company_id, api_token):
+    if config.opencorporates["country_name_codes_simulation"]:
+        return None
+
     url = opencorporates_companies_api_url + company_id
     params = {
         "api_token": api_token
@@ -236,11 +268,14 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
                         release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOpenCorporatesJurisdiction'] = company_jurisdiction
                         release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOpenCorporatesCompanyNumber'] = company_number
                         release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOpenCorporatesId'] = "/" + company_jurisdiction + "/" + company_number
+                        tbfy.json_utils.add_property_to_array_node(release_data, "json.releases.[0].awards.[" + str(supplier_index) + "]", "tbfy_company_jurisdiction_code", company_jurisdiction)
+                        tbfy.json_utils.add_property_to_array_node(release_data, "json.releases.[0].awards.[" + str(supplier_index) + "]", "tbfy_company_company_number", company_number)
+                        tbfy.json_utils.add_property_to_array_node(release_data, "json.releases.[0].awards.[" + str(supplier_index) + "]", "tbfy_opencorporates_identifier", company_jurisdiction + "/" + company_number)
 
             # Add specific TBFY properties for OpenOpps
-            award_id = release_data['json']['releases'][0]['awards'][award_index]['id']
-            release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOcid'] = release_ocid
-            release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyAwardId'] = award_id
+#            award_id = release_data['json']['releases'][0]['awards'][award_index]['id']
+#            release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOcid'] = release_ocid
+#            release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyAwardId'] = award_id
             
             supplier_index += 1
 
@@ -435,11 +470,15 @@ def main(argv):
                                 process_suppliers(api_token, release_data, award_index, filename, outputDirPath)
                                 award_index += 1
                     else:
-                        os.system(copy_command + ' ' + filePath + ' ' + outputFilePath)
+                        if not config.opencorporates["country_name_codes_simulation"]:
+                            os.system(copy_command + ' ' + filePath + ' ' + outputFilePath)
                 except:
                     pass
 
             write_stats(outputDirPath)
+
+        if config.opencorporates["country_name_codes_simulation"]:
+            write_country_name_codes_errors(output_folder)
 
         start = start + timedelta(days=1)  # increase day one by one
 
