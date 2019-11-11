@@ -174,34 +174,6 @@
   ];
   
   rr:predicateObjectMap [
-    rr:predicate schema:addressLocality ;
-    rr:objectMap [
-      rml:reference "buyer.address.locality"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:postalCode ;
-    rr:objectMap [
-      rml:reference "buyer.address.postalCode"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:addressCountry ;
-    rr:objectMap [
-      rml:reference "buyer.address.countryName"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:streetAddress ;
-    rr:objectMap [
-      rml:reference "buyer.address.streetAddress"
-    ]
-  ];
-
-  rr:predicateObjectMap [
     rr:predicate schema:email ;
     rr:objectMap [
       rml:reference "buyer.contactPoint.email"
@@ -212,6 +184,13 @@
     rr:predicate schema:name ;
     rr:objectMap [
       rml:reference "buyer.contactPoint.name"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:faxNumber ;
+    rr:objectMap [
+      rml:reference "buyer.contactPoint.faxNumber"
     ]
   ];
 
@@ -757,6 +736,34 @@
     ]
   ].
    
+<AwardValueMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.json" ; 
+    rml:referenceFormulation ql:JSONPath ;
+    rml:iterator "$.json.releases.[0].awards.[*].value"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/value" ;
+    rr:class ocds:Value
+  ];
+
+    rr:predicateObjectMap [
+    rr:predicate ocds:valueAmount ;
+    rr:objectMap [
+      rml:reference "amount"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:valueCurrency ;
+    rr:objectMap [
+      rml:reference "currency"
+    ]
+  ].
+
 <AwardSupplierMap>  
   a rr:TriplesMap ;
 
@@ -777,18 +784,18 @@
       rml:reference "name"
     ]
   ];
-
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasContactPoint ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{tbfy_id}/contactPoint"
-    ]
-  ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasAddress ;
     rr:objectMap [
       rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{tbfy_id}/address"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasContactPoint ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{tbfy_id}/contactPoint"
     ]
   ];
 
@@ -810,6 +817,92 @@
     rr:predicate owl:sameAs ;
     rr:objectMap [
       rr:template  "http://data.tbfy.eu/company/{tbfyOpenCorporatesJurisdiction}/{tbfyOpenCorporatesCompanyNumber}"
+    ]
+  ].
+
+<AwardSupplierAddressMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.json" ; 
+    rml:referenceFormulation ql:JSONPath ;
+    rml:iterator "$.json.releases.[0].awards.[*].suppliers.[*]"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{tbfy_id}/address" ;
+    rr:class ocds:Address
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:addressLocality ;
+    rr:objectMap [
+      rml:reference "address.locality" 
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:postalCode ;
+    rr:objectMap [
+      rml:reference "address.postalCode" 
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:addressCountry ;
+    rr:objectMap [
+      rml:reference "address.countryName" 
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:streetAddress ;
+    rr:objectMap [
+      rml:reference "address.streetAddress" 
+    ]
+  ].
+
+
+<AwardSupplierContactpointMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.json" ; 
+    rml:referenceFormulation ql:JSONPath ;
+    rml:iterator "$.json.releases.[0].awards.[*].suppliers.[*]"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{tbfy_id}/contactPoint" ;
+    rr:class ocds:ContactPoint ;
+    rr:class ocds:Person
+  ];
+  
+  rr:predicateObjectMap [
+    rr:predicate schema:name ;
+    rr:objectMap [
+      rml:reference "contactPoint.name"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:email ;
+    rr:objectMap [
+      rml:reference "contactPoint.email"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:faxNumber ;
+    rr:objectMap [
+      rml:reference "contactPoint.faxNumber"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:telephone ;
+    rr:objectMap [
+      rml:reference "contactPoint.telephone"
     ]
   ].
 
@@ -844,45 +937,6 @@
   rr:subjectMap [
     rr:template "http://data.tbfy.eu/tender/{tender.id}/milestone/{tender.milestones.[*].id}/document/{document.id}" ;
     rr:class ocds:Document
-  ].
-
-<SupplierAddressMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.json" ; 
-    rml:referenceFormulation ql:JSONPath ;
-    rml:iterator "$.json.releases.[*]"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/ocds/{tbfyOcid}/award/{tbfyAwardId}/supplier/{name}/address" ;
-    rr:class ocds:Address
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:addressLocality ;
-    rr:objectMap [
-      rml:reference "address.locality" 
-    ]
-  ];
-  rr:predicateObjectMap [
-    rr:predicate schema:postalCode ;
-    rr:objectMap [
-      rml:reference "address.postalCode" 
-    ]
-  ];
-  rr:predicateObjectMap [
-    rr:predicate schema:addressCountry ;
-    rr:objectMap [
-      rml:reference "address.countryName" 
-    ]
-  ];
-  rr:predicateObjectMap [
-    rr:predicate schema:streetAddress ;
-    rr:objectMap [
-      rml:reference "address.streetAddress" 
-    ]
   ].
 
 <AwardAmendmentMap>
@@ -1044,78 +1098,7 @@
     rr:objectMap [
       rr:template "http://data.tbfy.eu/ocds/{ocid}/budget/reservedValue"
     ]
-  ].
-   
-<SupplierContactpointMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.json" ; 
-    rml:referenceFormulation ql:JSONPath ;
-    rml:iterator "$.json.releases.[*].supplier"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/ocds/{tbfyOcid}/award/{tbfyAwardId}/supplier/{name}/contactPoint";
-    rr:class ocds:ContactPoint ;
-    rr:class ocds:Person
-  ];
-  
-  rr:predicateObjectMap [
-    rr:predicate schema:addressLocality ;
-    rr:objectMap [
-      rml:reference "address.locality"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:postalCode ;
-    rr:objectMap [
-      rml:reference "address.postalCode"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:addressCountry;
-    rr:objectMap [
-      rml:reference "$.address.countryName"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:streetAddress ;
-    rr:objectMap [
-      rml:reference "address.streetAddress"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:email ;
-    rr:objectMap [
-      rml:reference "contactPoint.email"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:name ;
-    rr:objectMap [
-      rml:reference "contactPoint.name"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:telephone ;
-    rr:objectMap [
-      rml:reference "contactPoint.telephone"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:faxNumber ;
-    rr:objectMap [
-      rml:reference "contactPoint.faxNumber"
-    ]
-  ].
+  ].  
 
 <DiscussionMap>
   a rr:TriplesMap ;
@@ -1302,7 +1285,7 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasClassificaton ;
     rr:objectMap [
-      rml:reference "tender.items.[*].classification.id"^^xsd:string
+      rml:reference "tender.items.[*].classification.id"
     ]
   ];
       
@@ -1506,20 +1489,6 @@
 
   rr:subjectMap [
     rr:template "http://data.tbfy.eu/transaction/value" ;
-    rr:class ocds:Value
-  ].
-
-<AwardValueMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.json" ; 
-    rml:referenceFormulation ql:JSONPath ;
-    rml:iterator "$.json.releases.[*].award"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/award/{awards.[*].id}/value" ;
     rr:class ocds:Value
   ].
   
