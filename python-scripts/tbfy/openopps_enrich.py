@@ -16,12 +16,26 @@ import getopt
 # *********************************
 
 def enrich_release(release_data):
-    if release_data['json']['releases'][0]['tag'][0] == "tender":
+    if release_data['json']['releases'][0]['tag'][0] == "planning":
+        return enrich_plan(release_data)
+    elif release_data['json']['releases'][0]['tag'][0] == "tender":
         return enrich_tender(release_data)
     elif release_data ['json']['releases'][0]['tag'][0] == "award":
         return enrich_award(release_data)
     else:
         return release_data
+
+
+def enrich_plan(release_data):
+    ocid = tbfy.json_utils.get_value(release_data, "ocid")
+
+    tbfy.json_utils.add_property_to_single_node(release_data, "json.releases.[0].planning", "tbfy_ocid", ocid)
+    tbfy.json_utils.add_property_to_array_node(release_data, "json.releases.[0].planning.documents", "tbfy_ocid", ocid)
+
+    tender_id = tbfy.json_utils.get_value(release_data, "json.releases.[0].tender.id")
+    tbfy.json_utils.add_property_to_array_node(release_data, "json.releases.[0].tender.items", "tbfy_tender_id", tender_id)
+
+    return release_data
 
 
 def enrich_tender(release_data):
