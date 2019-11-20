@@ -121,10 +121,27 @@ def write_releases(response_releases, output_folder):
 
     if response_releases:
         data = json.loads(json.dumps(response_releases.json()))
+
         for element in data['results']:
-            jfile = open(os.path.join(output_folder, element['ocid'] + '-release.json'), 'w+')
-            jfile.write(json.dumps(element, indent=4).replace(': null', ': ""'))
-            jfile.close()
+            release_data = element['json']
+            release_id = element['json']['releases'][0]['id']
+            release_ocid = element['json']['releases'][0]['ocid']
+
+            try:
+                release_tag = element['json']['releases'][0]['tag'][0]
+
+                if len(release_tag) > 1:
+                    jfile = open(os.path.join(output_folder, release_ocid + '-' + release_tag + '-release.json'), 'w+')
+                    jfile.write(json.dumps(release_data, indent=4).replace(': null', ': ""'))
+                    jfile.close()
+                else:
+                    jfile = open(os.path.join(output_folder, release_ocid + '-' + 'ignore' + '-release.json'), 'w+')
+                    jfile.write(json.dumps(release_data, indent=4).replace(': null', ': ""'))
+                    jfile.close()
+            except KeyError:
+                jfile = open(os.path.join(output_folder, release_ocid + '-' + 'ignore' + '-release.json'), 'w+')
+                jfile.write(json.dumps(release_data, indent=4).replace(': null', ': ""'))
+                jfile.close()
 
 
 # **********************

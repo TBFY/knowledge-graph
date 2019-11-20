@@ -7,7 +7,7 @@ import dpath.util
 # ****************
 
 def is_openopps_json(filename):
-    if "-release" in str(filename):
+    if ("-release" in str(filename)) and (("ignore-release") not in str(filename)):
         return True
     else:
         return False
@@ -40,9 +40,12 @@ def write_jsonfile(dictionary_data, output_filePath):
 
 
 def get_value(json_dict, path):
-    new_path = path.replace('[', '').replace(']', '')
-    value = dpath.util.get(json_dict, path, separator='.')
-    return value
+    try:
+        new_path = path.replace('[', '').replace(']', '')
+        value = dpath.util.get(json_dict, path, separator='.')
+        return value
+    except KeyError:
+        return None
 
 
 def add_property_to_single_node(json_dict, node_path, new_prop, val):
@@ -52,21 +55,28 @@ def add_property_to_single_node(json_dict, node_path, new_prop, val):
         new_path = new_path.replace('[', '').replace(']', '')
         dpath.util.new(json_dict, new_path, val, separator='.')
     except KeyError:
-        None
+        return None
 
 
 def add_property_to_single_node2(json_dict, node_path, new_prop, val):
-    new_path = node_path + '.' + new_prop
-    new_path = new_path.replace('[', '').replace(']', '')
-    dpath.util.new(json_dict, new_path, val, separator='.')
+    try:
+        new_path = node_path + '.' + new_prop
+        new_path = new_path.replace('[', '').replace(']', '')
+        dpath.util.new(json_dict, new_path, val, separator='.')
+    except KeyError:
+        return None
 
 
 def add_property_to_array_node(json_dict, array_path, new_prop, val):
-    array_nodes = dpath.util.get(json_dict, array_path, separator='.')
-    new_path = array_path.replace('[', '').replace(']', '')
+    try:
+        array_nodes = dpath.util.get(json_dict, array_path, separator='.')
+        new_path = array_path.replace('[', '').replace(']', '')
 
-    i = 0
-    for item in array_nodes:
-        item_path = new_path + '.' + str(i) + '.' + new_prop
-        dpath.util.new(json_dict, item_path, val, separator='.')
-        i += 1
+        i = 0
+        for item in array_nodes:
+            item_path = new_path + '.' + str(i) + '.' + new_prop
+            dpath.util.new(json_dict, item_path, val, separator='.')
+            i += 1
+    
+    except KeyError:
+        return None
