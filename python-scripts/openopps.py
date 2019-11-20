@@ -1,3 +1,14 @@
+#########################################################################################################
+# Data ingestion script for OCDS 1.0 releases from the OpenOpps API (https://openopps.com/api/tbfy/ocds/)
+# 
+# Copyright: SINTEF 2017-2019
+# Author   : Brian Elvesæter (brian.elvesater@sintef.no)
+# License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+# Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)
+# Funding  : TheyBuyForYou has received funding from the European Union's Horizon 2020
+#            research and innovation programme under grant agreement No 780247
+#########################################################################################################
+
 #!/usr/bin/python
 
 import config
