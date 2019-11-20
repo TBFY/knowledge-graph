@@ -6,9 +6,10 @@ openopps = {
 
 opencorporates = {
     "reconcile_api_url": "https://opencorporates.com/reconcile",
-    "reconcile_score": 50,   
+    "reconcile_score": 70,   
     "companies_api_url": "http://api.opencorporates.com",
-    "country_name_codes_simulation": True
+    "smart_address_check": False,
+    "country_name_codes_simulation": False
 }
 
 rml = {
