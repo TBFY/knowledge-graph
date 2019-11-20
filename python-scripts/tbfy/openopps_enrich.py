@@ -1,3 +1,14 @@
+##########################################################################################################
+# JSON enrichment script for OCDS 1.0 releases from the OpenOpps API (https://openopps.com/api/tbfy/ocds/)
+# 
+# Copyright: SINTEF 2017-2019
+# Author   : Brian Elvesæter (brian.elvesater@sintef.no)
+# License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+# Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)
+# Funding  : TheyBuyForYou has received funding from the European Union's Horizon 2020
+#            research and innovation programme under grant agreement No 780247
+##########################################################################################################
+
 import config
 
 import tbfy.json_utils
@@ -19,7 +30,7 @@ def enrich_release(release_data):
     try:
         if release_data['releases'][0]['tag'][0] == "planning":
             return enrich_plan(release_data)
-        elif release_data['releases'][0]['tag'][0] == "tender":
+        elif (release_data['releases'][0]['tag'][0] == "tender") or (release_data['releases'][0]['tag'][0] == "tenderUpdate") or (release_data['releases'][0]['tag'][0] == "tenderAmendment"):
             return enrich_tender(release_data)
         elif release_data['releases'][0]['tag'][0] == "award":
             return enrich_award(release_data)
@@ -30,25 +41,33 @@ def enrich_release(release_data):
 
 
 def enrich_plan(release_data):
-    ocid = tbfy.json_utils.get_value(release_data, "ocid")
+    ocid = tbfy.json_utils.get_value(release_data, "releases.[0].ocid")
+    release_id = tbfy.json_utils.get_value(release_data, "releases.[0].id")
 
     tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].planning", "tbfy_ocid", ocid)
+    tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].planning", "tbfy_release_id", release_id)
     tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].planning.documents", "tbfy_ocid", ocid)
+    tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].planning.documents", "tbfy_release_id", release_id)
 
-    tender_id = tbfy.json_utils.get_value(release_data, "releases.[0].tender.id")
-    tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].tender.items", "tbfy_tender_id", tender_id)
+    enrich_tender(release_data)
 
     return release_data
 
 
 def enrich_tender(release_data):
-    ocid = tbfy.json_utils.get_value(release_data, "ocid")
+    ocid = tbfy.json_utils.get_value(release_data, "releases.[0].ocid")
     tender_id = tbfy.json_utils.get_value(release_data, "releases.[0].tender.id")
 
+    tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].tender", "tbfy_ocid", ocid)
+    tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].tender.items", "tbfy_ocid", ocid)
     tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].tender.items", "tbfy_tender_id", tender_id)
+    tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].tender.maxValue", "tbfy_ocid", ocid)
     tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].tender.maxValue", "tbfy_tender_id", tender_id)
+    tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].tender.minValue", "tbfy_ocid", ocid)
     tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].tender.minValue", "tbfy_tender_id", tender_id)
+    tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].tender.documents", "tbfy_ocid", ocid)
     tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].tender.documents", "tbfy_tender_id", tender_id)
+    tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].tender.milestones", "tbfy_ocid", ocid)
     tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].tender.milestones", "tbfy_tender_id", tender_id)
 
     return release_data
