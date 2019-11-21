@@ -90,6 +90,20 @@
   ];
 
   rr:predicateObjectMap [
+    rr:predicate ocds:license ;
+    rr:objectMap [
+      rml:reference "license"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:publicationPolicy ;
+    rr:objectMap [
+      rml:reference "publicationPolicy"
+    ]
+  ];
+
+  rr:predicateObjectMap [
     rr:predicate ocds:releaseId ;
     rr:objectMap [
       rml:reference "releases.[0].id"
