@@ -39,198 +39,88 @@
   rml:logicalSource [
     rml:source "input.json" ; 
     rml:referenceFormulation ql:JSONPath ;
-    rml:iterator "$.releases.[0]"
+    rml:iterator "$"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/release/{ocid}" ;
+    rr:template "http://data.tbfy.eu/contractingProcess/{releases.[0].ocid}/release/{releases.[0].id}" ;
     rr:class ocds:Release
   ];
   
   rr:predicateObjectMap [
+    rr:predicate ocds:releaseURI ;
+    rr:objectMap [
+      rml:reference "uri"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:publishedDate ;
+    rr:objectMap [
+      rml:reference "publishedDate"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:publisherUID ;
+    rr:objectMap [
+      rml:reference "publisher.uid"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:publisherURI ;
+    rr:objectMap [
+      rml:reference "publisher.uri"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:publisherName ;
+    rr:objectMap [
+      rml:reference "publisher.name"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:publisherScheme ;
+    rr:objectMap [
+      rml:reference "publisher.scheme"
+    ]
+  ];
+
+  rr:predicateObjectMap [
     rr:predicate ocds:releaseId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "releases.[0].id"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:releaseDate ;
     rr:objectMap [
-      rml:reference "date"
+      rml:reference "releases.[0].date"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:releaseTag ;
     rr:objectMap [
-      rml:reference "tag.[0]"
+      rml:reference "releases.[0].tag"
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:hasPlan ;
+    rr:predicate dc:language ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/plan/{ocid}_{tbfy_release_id}"
+      rml:reference "releases.[0].language"
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:hasTender ;
+    rr:predicate ocds:initiationType ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/tender/{ocid}_{tender.id}"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasAward ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/award/{ocid}_{awards.[*].id}"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasContract ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/contract/{ocid}_{contracts.[*].id}"
-    ]
-  ].
-
-<ReleaseBuyerMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.json" ; 
-    rml:referenceFormulation ql:JSONPath ;
-    rml:iterator "$.releases.[0]"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/release/{ocid}/buyer" ;
-    rr:class ocds:Organisation
-  ];
-      
-  rr:predicateObjectMap [
-    rr:predicate ocds:legalName ;
-    rr:objectMap [
-      rml:reference "buyer.name"
-    ]
-  ];
-      
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasContactPoint ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/release/{ocid}/buyer/contactPoint"
-    ]
-  ];
-      
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasAddress ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/release/{ocid}/buyer/address"
-    ]
-  ];
-      
-  rr:predicateObjectMap [
-    rr:predicate ocds:isBuyerFor ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/release/{ocid}"
-    ]
-  ];
-          
-  rr:predicateObjectMap [
-    rr:predicate ocds:playsRoleIn ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/release/{ocid}"
-    ]
-  ].
-
-<ReleaseBuyerAddressMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.json" ; 
-    rml:referenceFormulation ql:JSONPath ;
-    rml:iterator "$.releases.[0]"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/release/{ocid}/buyer/address";
-    rr:class ocds:Address
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:addressLocality ;
-    rr:objectMap [
-      rml:reference "buyer.address.locality" 
-    ]
-  ];
-  rr:predicateObjectMap [
-    rr:predicate schema:postalCode ;
-    rr:objectMap [
-      rml:reference "buyer.address.postalCode" 
-    ]
-  ];
-  rr:predicateObjectMap [
-    rr:predicate schema:addressCountry ;
-    rr:objectMap [
-      rml:reference "buyer.address.countryName" 
-    ]
-  ];
-  rr:predicateObjectMap [
-    rr:predicate schema:streetAddress ;
-    rr:objectMap [
-      rml:reference "buyer.address.streetAddress" 
-    ]
-  ].
-
-<ReleaseBuyerContactpointMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.json" ; 
-    rml:referenceFormulation ql:JSONPath ;
-    rml:iterator "$.releases.[0]"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/release/{ocid}/buyer/contactPoint" ;
-    rr:class ocds:ContactPoint ;
-    rr:class ocds:Person
-  ];
-  
-  rr:predicateObjectMap [
-    rr:predicate schema:email ;
-    rr:objectMap [
-      rml:reference "buyer.contactPoint.email"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:name ;
-    rr:objectMap [
-      rml:reference "buyer.contactPoint.name"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:faxNumber ;
-    rr:objectMap [
-      rml:reference "buyer.contactPoint.faxNumber"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:telephone ;
-    rr:objectMap [
-      rml:reference "buyer.contactPoint.telephone"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate schema:URL ;
-    rr:objectMap [
-      rml:reference "buyer.contactPoint.url"
+      rml:reference "releases.[0].initiationType"
     ]
   ].
 
@@ -253,6 +143,13 @@
     rr:class ocds:ContractingProcess
   ];
   
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasRelease ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/contractingProcess/{ocid}/release/{id}"
+    ]
+  ];
+
   rr:predicateObjectMap [
     rr:predicate ocds:hasPlan ;
     rr:objectMap [
@@ -529,7 +426,7 @@
     ]
   ].
 
-<PlanDocumentMap2>
+<PlanDocumentMap>
   a rr:TriplesMap ;
 
   rml:logicalSource [
@@ -1032,9 +929,44 @@
   ];
 
   rr:predicateObjectMap [
+    rr:predicate ocds:hasChange ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/amendment/change/{amendment.changes.[*].property}"
+    ]
+  ];
+
+  rr:predicateObjectMap [
     rr:predicate ocds:amendmentRationale ;
     rr:objectMap [
       rml:reference "amendment.rationale"
+    ]
+  ].
+
+<TenderAmendmentChangePropertyMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.json" ; 
+    rml:referenceFormulation ql:JSONPath ;
+    rml:iterator "$.releases.[0].tender.amendment.changes.[*]"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{tbfy_tender_id}/amendment/change/{property}" ;
+    rr:class ocds:Change 
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:changeProperty ;
+    rr:objectMap [
+      rml:reference "property"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:changeFormerValue ;
+    rr:objectMap [
+      rml:reference "former_value"
     ]
   ].
 

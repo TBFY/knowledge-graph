@@ -69,6 +69,8 @@ def enrich_tender(release_data):
     tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].tender.documents", "tbfy_tender_id", tender_id)
     tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].tender.milestones", "tbfy_ocid", ocid)
     tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].tender.milestones", "tbfy_tender_id", tender_id)
+    tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].tender.amendment.changes", "tbfy_ocid", ocid)
+    tbfy.json_utils.add_property_to_array_node(release_data, "releases.[0].tender.amendment.changes", "tbfy_tender_id", tender_id)
 
     return release_data
 
