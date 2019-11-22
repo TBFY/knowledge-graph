@@ -921,6 +921,49 @@
     ]
   ].
 
+<TenderMilestoneDocumentMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.json" ; 
+    rml:referenceFormulation ql:JSONPath ;
+    rml:iterator "$.releases.[0].tender.milestones.[*].documents.[*]"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{tbfy_tender_id}/milestone/{tbfy_milestone_id}/document/{id}" ;
+    rr:class ocds:Document
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:documentId ;
+    rr:objectMap [
+      rml:reference "id"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:documentType ;
+    rr:objectMap [
+      rml:reference "documentType"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate dc:language ;
+    rr:objectMap [
+      rml:reference "language"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate schema:URL ;
+    rr:objectMap [
+      rml:reference "url"
+    ]
+  ].
+
+
 <TenderAmendmentMap>
   a rr:TriplesMap ;
 
@@ -1288,20 +1331,6 @@
 # *************************************************************************
 # ALL MAPPING RULES BELOW NEED TO BE CHECKED AND UPDATED (WORK IN PROGRESS)
 # *************************************************************************
-
-<TenderMilestoneDocumentMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.json" ; 
-    rml:referenceFormulation ql:JSONPath ;
-    rml:iterator "$.releases.[0].tender"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/tender/{tender.id}/milestone/{tender.milestones.[*].id}/document/{document.id}" ;
-    rr:class ocds:Document
-  ].
 
 <AwardAmendmentMap>
   a rr:TriplesMap ;
