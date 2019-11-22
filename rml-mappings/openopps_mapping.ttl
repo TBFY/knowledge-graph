@@ -55,49 +55,49 @@
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:publishedDate ;
+    rr:predicate ocds:dateReleasePublished ;
     rr:objectMap [
       rml:reference "publishedDate"
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:publisherUID ;
+    rr:predicate ocds:releasePublisherUID ;
     rr:objectMap [
       rml:reference "publisher.uid"
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:publisherURI ;
+    rr:predicate ocds:releasePublisherURI ;
     rr:objectMap [
       rml:reference "publisher.uri"
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:publisherName ;
+    rr:predicate ocds:releasePublisherName ;
     rr:objectMap [
       rml:reference "publisher.name"
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:publisherScheme ;
+    rr:predicate ocds:releasePublisherScheme ;
     rr:objectMap [
       rml:reference "publisher.scheme"
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:license ;
+    rr:predicate ocds:releaseLicense ;
     rr:objectMap [
       rml:reference "license"
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:publicationPolicy ;
+    rr:predicate ocds:releasePublicationPolicy ;
     rr:objectMap [
       rml:reference "publicationPolicy"
     ]
@@ -132,7 +132,7 @@
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:initiationType ;
+    rr:predicate ocds:releaseInitiationType ;
     rr:objectMap [
       rml:reference "releases.[0].initiationType"
     ]
