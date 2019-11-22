@@ -1,5 +1,19 @@
+#####################################################################################################
+# Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
+#
+# This file contains helper functions for processing JSON documents.
+# 
+# Copyright: SINTEF 2017-2019
+# Author   : Brian Elvesæter (brian.elvesater@sintef.no)
+# License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+# Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)
+# Funding  : TheyBuyForYou has received funding from the European Union's Horizon 2020
+#            research and innovation programme under grant agreement No 780247
+#####################################################################################################
+
 import json
 import dpath.util
+import xmltodict
 
 
 # ****************
@@ -34,7 +48,7 @@ def read_jsonfile(input_filePath):
 
 def write_jsonfile(dictionary_data, output_filePath):
     if dictionary_data:
-        jfile = open(output_filePath, 'w+')
+        jfile = open(output_filePath, 'w+', encoding='utf8', errors='ignore')
         jfile.write(json.dumps(dictionary_data, indent=4).replace(': null', ': ""'))
         jfile.close()
 
@@ -80,3 +94,17 @@ def add_property_to_array_node(json_dict, array_path, new_prop, val):
     
     except KeyError:
         return None
+
+
+def convert_to_xml(json_dict):
+    if json_dict:
+        return xmltodict.unparse(json_dict, pretty=True)
+    else:
+        return None
+
+
+def write_xmlfile(xml_string, output_filePath):
+    if xml_string:
+        xfile = open(output_filePath, 'w+', encoding='utf8', errors='ignore')
+        xfile.write(xml_string)
+        xfile.close()
