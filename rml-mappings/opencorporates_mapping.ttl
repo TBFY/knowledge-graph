@@ -118,7 +118,7 @@
   rr:predicateObjectMap [
     rr:predicate rov:hasRegisteredSite ;
     rr:objectMap [ 
-      rr:template "http://data.tbfy.eu/company/{company.jurisdiction_code}/{company.company_number}/address" 
+      rr:template "http://data.tbfy.eu/company/{company.jurisdiction_code}/{company.company_number}/registeredSite/address" 
     ];
   ];
 
@@ -146,8 +146,16 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{company.jurisdiction_code}/{company.company_number}/address" ;
+    rr:template "http://data.tbfy.eu/company/{company.jurisdiction_code}/{company.company_number}/registeredSite/address" ;
+    rr:class org:Site ;
     rr:class locn:Address
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate org:siteAddress ;
+    rr:objectMap [ 
+      rr:template "http://data.tbfy.eu/company/{company.jurisdiction_code}/{company.company_number}/registeredSite/address" 
+    ];
   ];
 
   rr:predicateObjectMap [
