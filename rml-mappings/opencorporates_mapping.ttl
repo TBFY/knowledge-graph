@@ -128,6 +128,13 @@
   ];
 
   rr:predicateObjectMap [
+    rr:predicate rov:hasSite ;
+    rr:objectMap [ 
+      rr:template "http://data.tbfy.eu/company/{company/jurisdiction_code}/{company/company_number}/registeredSite/address" 
+    ];
+  ];
+
+  rr:predicateObjectMap [
     rr:predicate rov:hasRegisteredSite ;
     rr:objectMap [ 
       rr:template "http://data.tbfy.eu/company/{company/jurisdiction_code}/{company/company_number}/registeredSite/address" 
@@ -180,28 +187,28 @@
   rr:predicateObjectMap [
     rr:predicate locn:postCode ;
     rr:objectMap [
-      rml:reference "company/registered_address.postal_code"
+      rml:reference "company/registered_address/postal_code"
     ]
   ];
  
   rr:predicateObjectMap [
     rr:predicate locn:postName ;
     rr:objectMap [
-      rml:reference "company/registered_address.locality"
+      rml:reference "company/registered_address/locality"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate locn:thoroughfare ;
     rr:objectMap [
-      rml:reference "company/registered_address.street_address"
+      rml:reference "company/registered_address/street_address"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:addressCountry ;
     rr:objectMap [
-      rml:reference "company/registered_address.country"
+      rml:reference "company/registered_address/country"
     ]
   ].
 
@@ -271,7 +278,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{officer/tbfy_company_jurisdiction_code}/{officer/tbfy_company_company_number}/officer/{officer/id}" ;
+    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{officer/id}" ;
     rr:class org:Membership ;
   ];
 
@@ -285,14 +292,14 @@
   rr:predicateObjectMap [
     rr:predicate org:memberDuring ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/company/{officer/tbfy_company_jurisdiction_code}/{officer/tbfy_company_company_number}/officer/{officer/id}/interval" 
+      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{officer/id}/interval" 
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate org:organization ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/company/{officer/tbfy_company_jurisdiction_code}/{officer/tbfy_company_company_number}" 
+      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}" 
     ]
   ];
 
@@ -313,7 +320,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{officer/tbfy_company_jurisdiction_code}/{officer/tbfy_company_company_number}/officer/{officer/id}/interval" ;
+    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{officer/id}/interval" ;
     rr:class time:Interval
   ];
 
