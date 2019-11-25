@@ -86,8 +86,8 @@ def main(argv):
     logging.info("main(): output_folder = " + output_folder)
 
     rml_filename = config.rml["rml_filename"]
-    openopps_mapping_filename = config.rml["openopps_xml_mapping_filename"]
-    opencorporates_mapping_filename = config.rml["opencorporates_xml_mapping_filename"]
+    openopps_mapping_filename = config.rml["openopps_mapping_filename"]
+    opencorporates_mapping_filename = config.rml["opencorporates_mapping_filename"]
     rml_input_filename = config.rml["rml_input_filename"]
     rml_output_filename = config.rml["rml_output_filename"]
 

@@ -37,7 +37,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root"
   ];
@@ -147,7 +147,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases"
   ];
@@ -196,7 +196,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases"
   ];
@@ -245,7 +245,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases"
   ];
@@ -284,7 +284,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases"
   ];
@@ -339,7 +339,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/planning"
   ];
@@ -374,7 +374,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/planning"
   ];
@@ -395,7 +395,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/planning"
   ];
@@ -423,7 +423,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/planning"
   ];
@@ -444,7 +444,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/planning/documents"
   ];
@@ -491,7 +491,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/tender"
   ];
@@ -666,7 +666,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/tender/items"
   ];
@@ -729,7 +729,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/tender"
   ];
@@ -757,7 +757,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/tender"
   ];
@@ -785,7 +785,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/tender"
   ];
@@ -813,7 +813,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/tender"
   ];
@@ -841,7 +841,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/tender/documents"
   ];
@@ -883,7 +883,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/tender/milestones"
   ];
@@ -925,7 +925,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/tender/milestones/documents"
   ];
@@ -968,7 +968,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/tender"
   ];
@@ -1003,7 +1003,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/tender/amendment/changes"
   ];
@@ -1036,7 +1036,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/awards"
   ];
@@ -1127,7 +1127,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/awards/value"
   ];
@@ -1155,7 +1155,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/awards/suppliers"
   ];
@@ -1211,7 +1211,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/awards/suppliers"
   ];
@@ -1253,7 +1253,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/awards/suppliers"
   ];
@@ -1296,7 +1296,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/awards/contractPeriod"
   ];
@@ -1336,7 +1336,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/awards"
   ];
@@ -1350,7 +1350,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/award/documents"
   ];
@@ -1364,7 +1364,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/award/items"
   ];
@@ -1427,7 +1427,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/contracts"
   ];
@@ -1441,7 +1441,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/contracts"
   ];
@@ -1511,7 +1511,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/contract/documents"
   ];
@@ -1525,7 +1525,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/contract"
   ];
@@ -1539,7 +1539,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/contracts/milestones"
   ];
@@ -1560,7 +1560,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/contracts/milestones/documents"
   ];
@@ -1574,7 +1574,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/contracts/implementation"
   ];
@@ -1602,7 +1602,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/contracts/implementation/documents"
   ];
@@ -1616,7 +1616,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/contracts/implementation/milestones"
   ];
@@ -1644,7 +1644,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/contracts/implementation/milestones/documents"
   ];
@@ -1658,7 +1658,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/releases/contract/transaction/value"
   ];

@@ -58,7 +58,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/results"
   ];
@@ -152,7 +152,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/results"
   ];
@@ -209,7 +209,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/results"
   ];
@@ -237,7 +237,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/results"
   ];
@@ -265,7 +265,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/results/company/officers" ;
   ];
@@ -307,7 +307,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/results/company/officers"
   ];
@@ -337,7 +337,7 @@
   a rr:TriplesMap ;
 
   rml:logicalSource [
-    rml:source "input.json" ; 
+    rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
     rml:iterator "/root/results/company/officers"
   ];
