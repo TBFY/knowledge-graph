@@ -1,6 +1,16 @@
-# *******************************************************************************************************
-# Lookup/conversion table to be used for country names according https://en.wikipedia.org/wiki/ISO_3166-1
-# *******************************************************************************************************
+# ***************************************************************************************************
+# Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
+# 
+# This file contains a lookup/conversion table to be used for country names according 
+# to https://en.wikipedia.org/wiki/ISO_3166-1
+#
+# Copyright: SINTEF 2017-2019
+# Author   : Brian Elvesæter (brian.elvesater@sintef.no)
+# License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+# Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)
+# Funding  : TheyBuyForYou has received funding from the European Union's Horizon 2020
+#            research and innovation programme under grant agreement No 780247
+# ***************************************************************************************************
 
 country_name_codes = {
     "afghanistan": "af",

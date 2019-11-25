@@ -1,5 +1,8 @@
-##########################################################################################################
-# JSON enrichment script for OCDS 1.0 releases from the OpenOpps API (https://openopps.com/api/tbfy/ocds/)
+#####################################################################################################
+# Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
+#
+# This file contains JSON enrichment methods for OCDS 1.0 releases downloaded from the 
+# OpenOpps OCDS API (https://openopps.com/api/tbfy/ocds/)
 # 
 # Copyright: SINTEF 2017-2019
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
@@ -7,7 +10,7 @@
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)
 # Funding  : TheyBuyForYou has received funding from the European Union's Horizon 2020
 #            research and innovation programme under grant agreement No 780247
-##########################################################################################################
+#####################################################################################################
 
 import config
 

@@ -1,5 +1,8 @@
 #########################################################################################################
-# Data ingestion script for OCDS 1.0 releases from the OpenOpps API (https://openopps.com/api/tbfy/ocds/)
+# Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
+#
+# This file contains a script that downloads OCDS JSON documents from the 
+# OpenOpps OCDS API (https://openopps.com/api/tbfy/ocds/)
 # 
 # Copyright: SINTEF 2017-2019
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
