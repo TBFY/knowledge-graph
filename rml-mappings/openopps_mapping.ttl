@@ -167,7 +167,7 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasPlan ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/plan/{ocid}_{tbfy_release_id}"
+      rr:template "http://data.tbfy.eu/plan/{ocid}_{id}"
     ]
   ];
 
@@ -345,14 +345,14 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/plan/{tbfy_ocid}_{tbfy_release_id}" ;
+    rr:template "http://data.tbfy.eu/plan/{../ocid}_{../id}" ;
     rr:class ocds:Plan
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasBudget ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/plan/{tbfy_ocid}_{tbfy_release_id}/budget/{budget/id}"
+      rr:template "http://data.tbfy.eu/plan/{../ocid}_{../id}/budget/{budget/id}"
     ]
   ];
 
@@ -366,7 +366,7 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasDocument ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/plan/{tbfy_ocid}_{tbfy_release_id}/document/{documents/id}"
+      rr:template "http://data.tbfy.eu/plan/{../ocid}_{../id}/document/{documents/id}"
     ]
   ].
 
@@ -380,14 +380,14 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/plan/{tbfy_ocid}_{tbfy_release_id}/budget/{budget/id}" ;
+    rr:template "http://data.tbfy.eu/plan/{../ocid}_{../id}/budget/{budget/id}" ;
     rr:class ocds:Budget
   ];
   
   rr:predicateObjectMap [
     rr:predicate ocds:hasReservedValue ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/plan/{tbfy_ocid}_{tbfy_release_id}/budget/{budget/id}/reservedValue"
+      rr:template "http://data.tbfy.eu/plan/{../ocid}_{../id}/budget/{budget/id}/reservedValue"
     ]
   ].
 
@@ -401,7 +401,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/plan/{tbfy_ocid}_{tbfy_release_id}/budget/{budget/id}/reservedValue" ;
+    rr:template "http://data.tbfy.eu/plan/{../ocid}_{../id}/budget/{budget/id}/reservedValue" ;
     rr:class ocds:Value
   ];
 
@@ -429,7 +429,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/plan/{tbfy_ocid}_{tbfy_release_id}/budget/{budget/id}/project/{budget/projectID}" ;
+    rr:template "http://data.tbfy.eu/plan/{../ocid}_{../id}/budget/{budget/id}/project/{budget/projectID}" ;
     rr:class ocds:Project
   ];
       
@@ -450,7 +450,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/plan/{tbfy_ocid}_{tbfy_release_id}/document/{id}" ;
+    rr:template "http://data.tbfy.eu/plan/{../../ocid}_{../../id}/document/{id}" ;
     rr:class ocds:Document
   ];
     
