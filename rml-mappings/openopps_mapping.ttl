@@ -158,6 +158,20 @@
   ];
   
   rr:predicateObjectMap [
+    rr:predicate ocds:ocid ;
+    rr:objectMap [
+      rml:reference "ocid" 
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:isFundedBy ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/plan/{ocid}_{id}/project/{planning/budget/projectID}"
+    ]
+  ];
+
+  rr:predicateObjectMap [
     rr:predicate ocds:hasRelease ;
     rr:objectMap [
       rr:template "http://data.tbfy.eu/contractingProcess/{ocid}/release/{id}"
@@ -167,7 +181,7 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasPlan ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/plan/{ocid}_{id}"
+      rr:template "http://data.tbfy.eu/plan/{planning/../ocid}_{planning/../id}"
     ]
   ];
 
@@ -198,46 +212,46 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases"
+    rml:iterator "/root/releases/buyer"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contractingProcess/{ocid}/buyer" ;
+    rr:template "http://data.tbfy.eu/contractingProcess/{../ocid}/buyer" ;
     rr:class ocds:Organisation
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:legalName ;
     rr:objectMap [
-      rml:reference "buyer/name"
+      rml:reference "name"
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasContactPoint ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/contractingProcess/{ocid}/buyer/contactPoint"
+      rr:template "http://data.tbfy.eu/contractingProcess/{../ocid}/buyer/contactPoint"
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:hasAddress ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/contractingProcess/{ocid}/buyer/address"
+      rr:template "http://data.tbfy.eu/contractingProcess/{../ocid}/buyer/address"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:isBuyerFor ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/contractingProcess/{ocid}"
+      rr:template "http://data.tbfy.eu/contractingProcess/{../ocid}"
     ]
   ];
           
   rr:predicateObjectMap [
     rr:predicate ocds:playsRoleIn ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/contractingProcess/{ocid}"
+      rr:template "http://data.tbfy.eu/contractingProcess/{../ocid}"
     ]
   ].
 
@@ -247,36 +261,39 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases"
+    rml:iterator "/root/releases/buyer/address"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contractingProcess/{ocid}/buyer/address";
+    rr:template "http://data.tbfy.eu/contractingProcess/{../../ocid}/buyer/address";
     rr:class ocds:Address
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:addressLocality ;
     rr:objectMap [
-      rml:reference "buyer/address/locality" 
+      rml:reference "locality" 
     ]
   ];
+
   rr:predicateObjectMap [
     rr:predicate schema:postalCode ;
     rr:objectMap [
-      rml:reference "buyer/address/postalCode" 
+      rml:reference "postalCode" 
     ]
   ];
+
   rr:predicateObjectMap [
     rr:predicate schema:addressCountry ;
     rr:objectMap [
-      rml:reference "buyer/address/countryName" 
+      rml:reference "countryName" 
     ]
   ];
+
   rr:predicateObjectMap [
     rr:predicate schema:streetAddress ;
     rr:objectMap [
-      rml:reference "buyer/address/streetAddress" 
+      rml:reference "streetAddress" 
     ]
   ].
 
@@ -286,11 +303,11 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases"
+    rml:iterator "/root/releases/buyer/contactPoint"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contractingProcess/{ocid}/buyer/contactPoint" ;
+    rr:template "http://data.tbfy.eu/contractingProcess/{../../ocid}/buyer/contactPoint" ;
     rr:class ocds:ContactPoint ;
     rr:class ocds:Person
   ];
@@ -298,35 +315,35 @@
   rr:predicateObjectMap [
     rr:predicate schema:email ;
     rr:objectMap [
-      rml:reference "buyer/contactPoint/email"
+      rml:reference "email"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:name ;
     rr:objectMap [
-      rml:reference "buyer/contactPoint/name"
+      rml:reference "name"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:faxNumber ;
     rr:objectMap [
-      rml:reference "buyer/contactPoint/faxNumber"
+      rml:reference "faxNumber"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:telephone ;
     rr:objectMap [
-      rml:reference "buyer/contactPoint/telephone"
+      rml:reference "telephone"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:URL ;
     rr:objectMap [
-      rml:reference "buyer/contactPoint/url"
+      rml:reference "url"
     ]
   ].
 
@@ -376,18 +393,18 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/planning"
+    rml:iterator "/root/releases/planning/budget"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/plan/{../ocid}_{../id}/budget/{budget/id}" ;
+    rr:template "http://data.tbfy.eu/plan/{../../ocid}_{../../id}/budget/{id}" ;
     rr:class ocds:Budget
   ];
   
   rr:predicateObjectMap [
     rr:predicate ocds:hasReservedValue ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/plan/{../ocid}_{../id}/budget/{budget/id}/reservedValue"
+      rr:template "http://data.tbfy.eu/plan/{../../ocid}_{../../id}/budget/{id}/reservedValue"
     ]
   ].
 
@@ -397,46 +414,46 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/planning"
+    rml:iterator "/root/releases/planning/budget/amount"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/plan/{../ocid}_{../id}/budget/{budget/id}/reservedValue" ;
+    rr:template "http://data.tbfy.eu/plan/{../../../ocid}_{../../../id}/budget/{../id}/reservedValue" ;
     rr:class ocds:Value
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:valueAmount ;
     rr:objectMap [
-      rml:reference "budget/amount/amount"
+      rml:reference "amount"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:valueCurrency;
     rr:objectMap [
-      rml:reference "budget/amount/currency"
+      rml:reference "currency"
     ]
   ].
 
-<PlanBudgetProjectMap>
+<PlanProjectMap>
   a rr:TriplesMap ;
 
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/planning"
+    rml:iterator "/root/releases/planning/budget"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/plan/{../ocid}_{../id}/budget/{budget/id}/project/{budget/projectID}" ;
+    rr:template "http://data.tbfy.eu/plan/{../../ocid}_{../../id}/project/{projectID}" ;
     rr:class ocds:Project
   ];
       
   rr:predicateObjectMap [
     rr:predicate dc:title ;
     rr:objectMap [
-      rml:reference "budget/project"
+      rml:reference "project"
     ]
   ].
 
@@ -497,7 +514,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}" ;
+    rr:template "http://data.tbfy.eu/tender/{../ocid}_{id}" ;
     rr:class ocds:Tender
   ];
       
@@ -532,21 +549,21 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasItemToBeProcured ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/item/{items/id}"
+      rr:template "http://data.tbfy.eu/tender/{../ocid}_{id}/item/{items/id}"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasMinEstimatedValue ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/minValue"
+      rr:template "http://data.tbfy.eu/tender/{../ocid}_{minValue/../id}/minValue"
     ]
   ];
 
  rr:predicateObjectMap [
     rr:predicate ocds:hasMaxEstimatedValue ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/maxValue"
+      rr:template "http://data.tbfy.eu/tender/{../ocid}_{value/../id}/maxValue"
     ]
   ];
  
@@ -602,14 +619,14 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasTenderPeriod ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/period"
+      rr:template "http://data.tbfy.eu/tender/{../ocid}_{tenderPeriod/../id}/period"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasEnquiryPeriod ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/enquiryPeriod"
+      rr:template "http://data.tbfy.eu/tender/{../ocid}_{enquiryPeriod/../id}/enquiryPeriod"
     ]
   ];
 
@@ -630,7 +647,7 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasAwardPeriod ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/awardPeriod"
+      rr:template "http://data.tbfy.eu/tender/{../ocid}_{awardPeriod/../id}/awardPeriod"
     ]
   ];
 
@@ -644,21 +661,21 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasDocument ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/document/{documents/id}"
+      rr:template "http://data.tbfy.eu/tender/{../ocid}_{id}/document/{documents/id}"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasMilestone ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/milestone/{milestones/id}"
+      rr:template "http://data.tbfy.eu/tender/{../ocid}_{id}/milestone/{milestones/id}"
     ]
   ];
   
   rr:predicateObjectMap [
     rr:predicate ocds:hasAmendment ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/amendment/"
+      rr:template "http://data.tbfy.eu/tender/{../ocid}_{amendment/../id}/amendment/"
     ]
   ].
 
@@ -672,7 +689,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{tbfy_tender_id}/item/{id}" ;
+    rr:template "http://data.tbfy.eu/tender/{../../ocid}_{../id}/item/{id}" ;
     rr:class ocds:Item
   ];
      
@@ -716,13 +733,6 @@
     rr:objectMap [
       rml:reference "additionalClassifications/scheme"
     ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate ocds:isRelatedToLot ;
-    rr:objectMap [
-      rml:reference "relatedLot"
-    ]
   ].
 
 <TenderMinValueMap>
@@ -731,25 +741,25 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/tender"
+    rml:iterator "/root/releases/tender/minValue"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/minValue" ;
+    rr:template "http://data.tbfy.eu/tender/{../../ocid}_{../id}/minValue" ;
     rr:class ocds:Value
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:valueAmount ;
     rr:objectMap [
-      rml:reference "minValue/amount"
+      rml:reference "amount"
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:valueCurrency ;
     rr:objectMap [
-      rml:reference "minValue/currency"
+      rml:reference "currency"
     ]
   ].
 
@@ -759,25 +769,25 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/tender"
+    rml:iterator "/root/releases/tender/value"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/maxValue" ;
+    rr:template "http://data.tbfy.eu/tender/{../../ocid}_{../id}/maxValue" ;
     rr:class ocds:Value
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:valueAmount ;
     rr:objectMap [
-      rml:reference "value/amount"
+      rml:reference "amount"
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:valueCurrency ;
     rr:objectMap [
-      rml:reference "value/currency"
+      rml:reference "currency"
     ]
   ].
 
@@ -787,25 +797,25 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/tender"
+    rml:iterator "/root/releases/tender/tenderPeriod"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/period" ;
+    rr:template "http://data.tbfy.eu/tender/{../../ocid}_{../id}/period" ;
     rr:class ocds:Period
   ];
      
   rr:predicateObjectMap [
     rr:predicate ocds:startDate;
     rr:objectMap [
-      rml:reference "tenderPeriod/startDate"
+      rml:reference "startDate"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:endDate;
     rr:objectMap [
-      rml:reference "tenderPeriod/endDate"
+      rml:reference "endDate"
     ]
   ].
 
@@ -815,25 +825,25 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/tender"
+    rml:iterator "/root/releases/tender/awardPeriod"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/awardPeriod" ;
+    rr:template "http://data.tbfy.eu/tender/{../../ocid}_{../id}/awardPeriod" ;
     rr:class ocds:Period
   ];
     
   rr:predicateObjectMap [
     rr:predicate ocds:startDate;
     rr:objectMap [
-      rml:reference "awardPeriod/startDate"
+      rml:reference "startDate"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:endDate;
     rr:objectMap [
-      rml:reference "awardPeriod/endDate"
+      rml:reference "endDate"
     ]
   ].      
 
@@ -847,7 +857,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{tbfy_tender_id}/document/{id}" ;
+    rr:template "http://data.tbfy.eu/tender/{../../ocid}_{../id}/document/{id}" ;
     rr:class ocds:Document
   ];
     
@@ -889,7 +899,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{tbfy_tender_id}/milestone/{id}" ;
+    rr:template "http://data.tbfy.eu/tender/{../../ocid}_{../id}/milestone/{id}" ;
     rr:class ocds:Milestone
   ];
 
@@ -931,7 +941,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{tbfy_tender_id}/milestone/{tbfy_milestone_id}/document/{id}" ;
+    rr:template "http://data.tbfy.eu/tender/{../../../ocid}_{../../id}/milestone/{../id}/document/{id}" ;
     rr:class ocds:Document
   ];
 
@@ -963,39 +973,38 @@
     ]
   ].
 
-
 <TenderAmendmentMap>
   a rr:TriplesMap ;
 
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/tender"
+    rml:iterator "/root/releases/tender/amendment"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/amendment" ;
+    rr:template "http://data.tbfy.eu/tender/{../../ocid}_{../id}/amendment" ;
     rr:class ocds:Amendment 
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:amendmentDate ;
     rr:objectMap [
-      rml:reference "amendment/date"
+      rml:reference "date"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasChange ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{id}/amendment/change/{amendment/changes/property}"
+      rr:template "http://data.tbfy.eu/tender/{../../ocid}_{../id}/amendment/change/{changes/property}"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:amendmentRationale ;
     rr:objectMap [
-      rml:reference "amendment/rationale"
+      rml:reference "rationale"
     ]
   ].
 
@@ -1009,7 +1018,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/tender/{tbfy_ocid}_{tbfy_tender_id}/amendment/change/{property}" ;
+    rr:template "http://data.tbfy.eu/tender/{../../../ocid}_{../../id}/amendment/change/{property}" ;
     rr:class ocds:Change 
   ];
 
@@ -1042,7 +1051,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/award/{id}" ;
+    rr:template "http://data.tbfy.eu/award/{../ocid}_{id}" ;
     rr:class ocds:Award
   ];
 
@@ -1070,7 +1079,7 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasAwardValue ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/award/{id}/value"
+      rr:template "http://data.tbfy.eu/award/{../ocid}_{value/../id}/value"
     ]
   ];
 
@@ -1091,35 +1100,35 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasAwardedContractPeriod ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/award/{id}/contractPeriod"
+      rr:template "http://data.tbfy.eu/award/{../ocid}_{contractPeriod/../id}/contractPeriod"
     ]
   ];
   
   rr:predicateObjectMap [
     rr:predicate ocds:hasAwardedItem ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/award/{id}/item/{tender/items/id}"
+      rr:template "http://data.tbfy.eu/award/{../ocid}_{id}/item/{items/id}"
     ]
   ];
     
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasAwardPeriod ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/award/{id}/period"
-    ]
-  ];
-      
   rr:predicateObjectMap [
     rr:predicate ocds:hasDocument ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/award/{id}/document"
+      rr:template "http://data.tbfy.eu/award/{../ocid}_{id}/document/{documents/id}"
     ]
   ];
     
   rr:predicateObjectMap [
+    rr:predicate ocds:hasAmendment ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/award/{../ocid}_{amendment/../id}/amendment/"
+    ]
+  ];
+
+  rr:predicateObjectMap [
     rr:predicate ocds:isIssuedForTender ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/tender/{tbfy_tender_id}"
+      rr:template "http://data.tbfy.eu/tender/{../ocid}_{../tender/id}"
     ]
   ].
    
@@ -1133,7 +1142,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/value" ;
+    rr:template "http://data.tbfy.eu/award/{../../ocid}_{../id}/value" ;
     rr:class ocds:Value
   ];
 
@@ -1161,7 +1170,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{tbfy_id}" ;
+    rr:template "http://data.tbfy.eu/award/{../../ocid}_{../id}/supplier/{tbfy_id}" ;
     rr:class ocds:Organisation
   ];
     
@@ -1175,28 +1184,28 @@
   rr:predicateObjectMap [
     rr:predicate ocds:hasAddress ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{tbfy_id}/address"
+      rr:template "http://data.tbfy.eu/award/{../../ocid}_{../id}/supplier/{tbfy_id}/address"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:hasContactPoint ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{tbfy_id}/contactPoint"
+      rr:template "http://data.tbfy.eu/award/{../../ocid}_{../id}/supplier/{tbfy_id}/contactPoint"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:isSupplierFor ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/award/{tbfy_award_id}"
+      rr:template "http://data.tbfy.eu/award/{../../ocid}_{../id}"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:playsRoleIn ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/contractingProcess/{tbfy_ocid}"
+      rr:template "http://data.tbfy.eu/contractingProcess/{../../ocid}"
     ]
   ];
 
@@ -1213,39 +1222,39 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/awards/suppliers"
+    rml:iterator "/root/releases/awards/suppliers/address"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{tbfy_id}/address" ;
+    rr:template "http://data.tbfy.eu/award/{../../../ocid}_{../../id}/supplier/{../tbfy_id}/address" ;
     rr:class ocds:Address
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:addressLocality ;
     rr:objectMap [
-      rml:reference "address/locality" 
+      rml:reference "locality" 
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:postalCode ;
     rr:objectMap [
-      rml:reference "address/postalCode" 
+      rml:reference "postalCode" 
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:addressCountry ;
     rr:objectMap [
-      rml:reference "address/countryName" 
+      rml:reference "countryName" 
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:streetAddress ;
     rr:objectMap [
-      rml:reference "address/streetAddress" 
+      rml:reference "streetAddress" 
     ]
   ].
 
@@ -1255,11 +1264,11 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/awards/suppliers"
+    rml:iterator "/root/releases/awards/suppliers/contactPoint"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/supplier/{tbfy_id}/contactPoint" ;
+    rr:template "http://data.tbfy.eu/award/{../../../ocid}_{../../id}/supplier/{../tbfy_id}/contactPoint" ;
     rr:class ocds:ContactPoint ;
     rr:class ocds:Person
   ];
@@ -1267,28 +1276,84 @@
   rr:predicateObjectMap [
     rr:predicate schema:name ;
     rr:objectMap [
-      rml:reference "contactPoint/name"
+      rml:reference "name"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:email ;
     rr:objectMap [
-      rml:reference "contactPoint/email"
+      rml:reference "email"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:faxNumber ;
     rr:objectMap [
-      rml:reference "contactPoint/faxNumber"
+      rml:reference "faxNumber"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:telephone ;
     rr:objectMap [
-      rml:reference "contactPoint/telephone"
+      rml:reference "telephone"
+    ]
+  ].
+
+<AwardItemMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/releases/awards/items"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/award/{../../ocid}_{../id}/item/{id}" ;
+    rr:class ocds:Item
+  ];
+     
+  rr:predicateObjectMap [
+    rr:predicate ocds:itemId ;
+    rr:objectMap [
+      rml:reference "id"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate dc:description ;
+    rr:objectMap [ 
+      rml:reference "description" 
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasClassificaton ;
+    rr:objectMap [
+      rml:reference "classification/id"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:classificatonScheme ;
+    rr:objectMap [
+      rml:reference "classification/scheme"
+    ]
+  ];
+        
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasAdditionalItemClassificaton ;
+    rr:objectMap [
+      rml:reference "additionalClassifications/id"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:additionalItemClassificatonScheme ;
+    rr:objectMap [
+      rml:reference "additionalClassifications/scheme"
     ]
   ].
 
@@ -1302,7 +1367,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/award/{tbfy_award_id}/contractPeriod" ;
+    rr:template "http://data.tbfy.eu/award/{../../ocid}_{../id}/contractPeriod" ;
     rr:class ocds:Period
   ];
       
@@ -1327,10 +1392,47 @@
     ]
   ].
 
+<AwardDocumentMap>
+  a rr:TriplesMap ;
 
-# *************************************************************************
-# ALL MAPPING RULES BELOW NEED TO BE CHECKED AND UPDATED (WORK IN PROGRESS)
-# *************************************************************************
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/releases/awards/documents"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/award/{../../ocid}_{../id}/document/{id}" ;
+    rr:class ocds:Document
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:documentId ;
+    rr:objectMap [
+      rml:reference "id"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:documentType ;
+    rr:objectMap [
+      rml:reference "documentType"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate dc:language ;
+    rr:objectMap [
+      rml:reference "language"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate schema:URL ;
+    rr:objectMap [
+      rml:reference "url"
+    ]
+  ].
 
 <AwardAmendmentMap>
   a rr:TriplesMap ;
@@ -1338,90 +1440,67 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/awards"
+    rml:iterator "/root/releases/awards/amendment"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/award/{award/id}/amendment" ;
+    rr:template "http://data.tbfy.eu/award/{../../ocid}_{../id}/amendment" ;
     rr:class ocds:Amendment 
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:amendmentDate ;
+    rr:objectMap [
+      rml:reference "date"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasChange ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/award/{../../ocid}_{../id}/amendment/change/{changes/property}"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:amendmentRationale ;
+    rr:objectMap [
+      rml:reference "rationale"
+    ]
   ].
 
-<AwardDocumentMap>
+<AwardAmendmentChangePropertyMap>
   a rr:TriplesMap ;
 
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/award/documents"
+    rml:iterator "/root/releases/awards/amendment/changes"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/award/{award/id}/document/{document/id}" ;
-    rr:class ocds:Document
+    rr:template "http://data.tbfy.eu/award/{../../../ocid}_{../../id}/amendment/change/{property}" ;
+    rr:class ocds:Change 
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:changeProperty ;
+    rr:objectMap [
+      rml:reference "property"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:changeFormerValue ;
+    rr:objectMap [
+      rml:reference "former_value"
+    ]
   ].
 
-<AwardItemMap>
-  a rr:TriplesMap ;
 
-  rml:logicalSource [
-    rml:source "input.xml" ; 
-    rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/award/items"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/award/{award/id}/item/{item/id}" ;
-    rr:class ocds:Item
-  ];
-     
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasClassificaton ;
-    rr:objectMap [
-      rml:reference "tender/items/classification/id"
-    ]
-  ];
-      
-  rr:predicateObjectMap [
-    rr:predicate ocds:classificatonScheme ;
-    rr:objectMap [
-      rml:reference "tender/items/classification/scheme"
-    ]
-  ];
-   
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasRelatedEnquiry ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/ocds/{ocid}/item/{tender/items/classification/id}/enquiry"
-    ]
-  ];
-     
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasAdditionalItemClassificaton ;
-    rr:objectMap [
-      rml:reference "tender/items/additionalClassifications/id"
-    ]
-  ];
-      
-  rr:predicateObjectMap [
-    rr:predicate ocds:additionalItemClassificatonScheme ;
-    rr:objectMap [
-      rml:reference "tender/items/additionalClassifications/scheme"
-    ]
-  ];
-     
-  rr:predicateObjectMap [
-    rr:predicate ocds:itemId ;
-    rr:objectMap [
-      rml:reference "tender/items/classification/id"
-    ]
-  ];
-          
-  rr:predicateObjectMap [
-    rr:predicate ocds:isRelatedToLot ;
-    rr:objectMap [
-      rml:reference "tender/items/relatedLot"
-    ]
-  ].
+# *************************************************************************
+# ALL MAPPING RULES BELOW NEED TO BE CHECKED AND UPDATED (WORK IN PROGRESS)
+# *************************************************************************
 
 <ContractAmendmentMap>
   a rr:TriplesMap ;
