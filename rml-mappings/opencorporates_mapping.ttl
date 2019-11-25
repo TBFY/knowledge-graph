@@ -278,7 +278,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{officer/id}" ;
+    rr:template "http://data.tbfy.eu/company/{../jurisdiction_code}/{../company_number}/officer/{officer/id}" ;
     rr:class org:Membership ;
   ];
 
@@ -292,14 +292,14 @@
   rr:predicateObjectMap [
     rr:predicate org:memberDuring ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{officer/id}/interval" 
+      rr:template "http://data.tbfy.eu/company/{../jurisdiction_code}/{../company_number}/officer/{officer/id}/interval" 
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate org:organization ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}" 
+      rr:template "http://data.tbfy.eu/company/{../jurisdiction_code}/{../company_number}" 
     ]
   ];
 
@@ -320,7 +320,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{officer/id}/interval" ;
+    rr:template "http://data.tbfy.eu/company/{../jurisdiction_code}/{../company_number}/officer/{officer/id}/interval" ;
     rr:class time:Interval
   ];
 
