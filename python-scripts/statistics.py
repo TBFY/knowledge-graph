@@ -1,7 +1,7 @@
 #####################################################################################################
 # Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
 # 
-# This file contains a script that aggregates statistics from the specified input folders
+# This file contains a script that aggregates statistics from the specified input folders.
 # 
 # Copyright: SINTEF 2017-2019
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
