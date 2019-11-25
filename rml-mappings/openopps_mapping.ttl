@@ -1498,23 +1498,9 @@
   ].
 
 
-# *************************************************************************
-# ALL MAPPING RULES BELOW NEED TO BE CHECKED AND UPDATED (WORK IN PROGRESS)
-# *************************************************************************
-
-<ContractAmendmentMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.xml" ; 
-    rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/contracts"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contract/{contract/id}/amendment" ;
-    rr:class ocds:Amendment 
-  ].
+# **********************
+# Contract mapping rules
+# **********************
 
 <ContractMap>
   a rr:TriplesMap ;
@@ -1526,63 +1512,203 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contract/{contract/id}" ;
+    rr:template "http://data.tbfy.eu/contract/{../ocid}_{id}" ;
     rr:class ocds:Contract
   ];
   
   rr:predicateObjectMap [
-    rr:predicate dc:title ;
-    rr:objectMap [ 
-      rml:reference "contract/title" 
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate dc:description ;
-    rr:objectMap [ 
-      rml:reference "contract/description" 
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasContractedItem ;
+    rr:predicate ocds:contractId ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/contract/{contract/id}/item/{items/id}"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasContractImplementation ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/contract/{contract/id}/contractImplementation"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasContractPeriod ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/contract/{contract/id}/contractPeriod"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasContractValue ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/contract/{contract/id}/contractValue"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate ocds:hasMilestone ;
-    rr:objectMap [
-      rr:template "http://data.tbfy.eu/contract/{contract/id}/contractMilestone"
+      rml:reference "id"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:isIssuedForAward ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/award/{award/id}"
+      rr:template "http://data.tbfy.eu/award/{../ocid}_{awardID}"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate dc:title ;
+    rr:objectMap [ 
+      rml:reference "title" 
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate dc:description ;
+    rr:objectMap [ 
+      rml:reference "description" 
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:contractStatus ;
+    rr:objectMap [ 
+      rml:reference "status" 
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasContractPeriod ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/contract/{../ocid}_{period/../id}/contractPeriod"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasContractValue ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/contract/{../ocid}_{value/../id}/contractValue"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasContractedItem ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/contract/{../ocid}_{id}/item/{items/id}"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:dateContractSigned ;
+    rr:objectMap [ 
+      rml:reference "dateSigned" 
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasDocument ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/contract/{../ocid}_{id}/document/{documents/id}"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasAmendment ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/contract/{../ocid}_{amendment/../id}/amendment/"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasContractImplementation ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/contract/{../ocid}_{implementation/../id}/implementation"
+    ]
+  ].
+
+<ContractPeriodMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/releases/contracts/period"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/contract/{../../ocid}_{../id}/contractPeriod" ;
+    rr:class ocds:Period
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:startDate;
+    rr:objectMap [
+      rml:reference "startDate"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:endDate;
+    rr:objectMap [
+      rml:reference "endDate"
+    ]
+  ].      
+
+<ContractValueMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/releases/contracts/value"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/contract/{../../ocid}_{../id}/value" ;
+    rr:class ocds:Value
+  ];
+
+    rr:predicateObjectMap [
+    rr:predicate ocds:valueAmount ;
+    rr:objectMap [
+      rml:reference "amount"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:valueCurrency ;
+    rr:objectMap [
+      rml:reference "currency"
+    ]
+  ].
+
+<ContractItemMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/releases/contracts/items"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/contract/{../../ocid}_{../id}/item/{id}" ;
+    rr:class ocds:Item
+  ];
+     
+  rr:predicateObjectMap [
+    rr:predicate ocds:itemId ;
+    rr:objectMap [
+      rml:reference "id"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate dc:description ;
+    rr:objectMap [ 
+      rml:reference "description" 
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasClassificaton ;
+    rr:objectMap [
+      rml:reference "classification/id"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:classificatonScheme ;
+    rr:objectMap [
+      rml:reference "classification/scheme"
+    ]
+  ];
+        
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasAdditionalItemClassificaton ;
+    rr:objectMap [
+      rml:reference "additionalClassifications/id"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:additionalItemClassificatonScheme ;
+    rr:objectMap [
+      rml:reference "additionalClassifications/scheme"
     ]
   ].
 
@@ -1592,61 +1718,103 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/contract/documents"
+    rml:iterator "/root/releases/contracts/documents"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contract/{contract/id}/document/{document/id}";
+    rr:template "http://data.tbfy.eu/contract/{../../ocid}_{../id}/document/{id}" ;
     rr:class ocds:Document
-  ].
-
-<ContractValueMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.xml" ; 
-    rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/contract"
   ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contract/{contract/id}/value" ;
-    rr:class ocds:Value
-  ].
-
-<ContractMilestoneMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.xml" ; 
-    rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/contracts/milestones"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contract/{contract/id}/milestone/{milestone/id}" ;
-    rr:class ocds:Milestone
-  ];
-      
+    
   rr:predicateObjectMap [
-    rr:predicate ocds:hasDocument ;
+    rr:predicate ocds:documentId ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/contract/{contract/id}/milestone/{milestone/id}/document/{document/id}"
+      rml:reference "id"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:documentType ;
+    rr:objectMap [
+      rml:reference "documentType"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate dc:language ;
+    rr:objectMap [
+      rml:reference "language"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate schema:URL ;
+    rr:objectMap [
+      rml:reference "url"
     ]
   ].
 
-<ContractMilestoneDocumentMap>
+<ContractAmendmentMap>
   a rr:TriplesMap ;
 
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/contracts/milestones/documents"
+    rml:iterator "/root/releases/contracts/amendment"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contract/{contract/id}/milestone/{milestone/id}/document/{document/id}" ;
-    rr:class ocds:Document
+    rr:template "http://data.tbfy.eu/contract/{../../ocid}_{../id}/amendment" ;
+    rr:class ocds:Amendment 
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:amendmentDate ;
+    rr:objectMap [
+      rml:reference "date"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasChange ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/contract/{../../ocid}_{../id}/amendment/change/{changes/property}"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:amendmentRationale ;
+    rr:objectMap [
+      rml:reference "rationale"
+    ]
+  ].
+
+<ContractAmendmentChangePropertyMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/releases/contracts/amendment/changes"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/contract/{../../../ocid}_{../../id}/amendment/change/{property}" ;
+    rr:class ocds:Change 
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:changeProperty ;
+    rr:objectMap [
+      rml:reference "property"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:changeFormerValue ;
+    rr:objectMap [
+      rml:reference "former_value"
+    ]
   ].
 
 <ContractImplementationMap>
@@ -1659,21 +1827,189 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contract/{contract/id}/implementation/{implementation/id}" ;
+    rr:template "http://data.tbfy.eu/contract/{../../ocid}_{../id}/implementation" ;
     rr:class ocds:Implementation
   ];
    
   rr:predicateObjectMap [
+    rr:predicate ocds:hasTransaction ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/contract/{../../ocid}_{../id}/implementation/transaction/{transaction/id}"
+    ]
+  ];
+
+  rr:predicateObjectMap [
     rr:predicate ocds:hasMilestone ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/contract/{contract/id}/implementation/{implementation/id}/milestone/{milestone/id}"
+      rr:template "http://data.tbfy.eu/contract/{../../ocid}_{../id}/implementation/milestone/{milestone/id}"
     ]
   ];
      
   rr:predicateObjectMap [
-    rr:predicate ocds:hasTransaction ;
+    rr:predicate ocds:hasDocument ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/contract/{contract/id}/implementation/{implementation/id}/transaction/{transaction/id}"
+      rr:template "http://data.tbfy.eu/contract/{../../ocid}_{../id}/implementation/document/{document/id}"
+    ]
+  ].
+
+<ContractImplementationTransactionMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/releases/contracts/implementation/transactions"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/contract/{../../../ocid}_{../../id}/implementation/transaction/{id}" ;
+    rr:class ocds:Value
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:transactionId ;
+    rr:objectMap [
+      rml:reference "id"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:transactionDataSource ;
+    rr:objectMap [
+      rml:reference "source"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:transactionDate ;
+    rr:objectMap [
+      rml:reference "date"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:hasTransactionValue ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/contract/{../../../ocid}_{../../id}/implementation/transaction/{amount/../id}/value"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:transactionId ;
+    rr:objectMap [
+      rml:reference "id"
+    ]
+  ].
+
+<ContractImplementationTransactionValueMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/releases/contracts/implementation/transactions/amount"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/contract/{../../../../ocid}_{../../../id}/implementation/transaction/{../id}/value" ;
+    rr:class ocds:Value
+  ];
+
+    rr:predicateObjectMap [
+    rr:predicate ocds:valueAmount ;
+    rr:objectMap [
+      rml:reference "amount"
+    ]
+  ];
+      
+  rr:predicateObjectMap [
+    rr:predicate ocds:valueCurrency ;
+    rr:objectMap [
+      rml:reference "currency"
+    ]
+  ].
+
+<ContractImplementationMilestoneMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/releases/contracts/implementation/milestones"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/contract/{../../../ocid}_{../../id}/milestone/{id}" ;
+    rr:class ocds:Milestone
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:documentId ;
+    rr:objectMap [
+      rml:reference "id"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate dc:title ;
+    rr:objectMap [
+      rml:reference "title"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:milestoneDueDate ;
+    rr:objectMap [
+      rml:reference "dueDate"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate dc:description ;
+    rr:objectMap [
+      rml:reference "description"
+    ]
+  ].
+
+<ContractImplementationMilestoneDocumentMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/releases/contracts/implementation/milestones/documents"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/contract/{../../../../ocid}_{../../../id}/milestone/{../id}/document/{id}" ;
+    rr:class ocds:Document
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:documentId ;
+    rr:objectMap [
+      rml:reference "id"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate ocds:documentType ;
+    rr:objectMap [
+      rml:reference "documentType"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate dc:language ;
+    rr:objectMap [
+      rml:reference "language"
+    ]
+  ];
+    
+  rr:predicateObjectMap [
+    rr:predicate schema:URL ;
+    rr:objectMap [
+      rml:reference "url"
     ]
   ].
 
@@ -1687,62 +2023,34 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contract/{contract/id}/implementation/{implementation/id}/document/{document/id}" ;
+    rr:template "http://data.tbfy.eu/contract/{../../../ocid}_{../../id}/document/{id}" ;
     rr:class ocds:Document
-  ].
-
-<ContractImplementationMilestoneMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.xml" ; 
-    rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/contracts/implementation/milestones"
   ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contract/{contract/id}/implementation/{implementation/id}/milestone/{milestone/id}" ;
-    rr:class ocds:Milestone
-  ];
-      
+    
   rr:predicateObjectMap [
-    rr:predicate ocds:hasDocument ;
+    rr:predicate ocds:documentId ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/tender/{tender/id}/implementation/milestone/{tender/milestones/title}/document"
+      rml:reference "id"
     ]
   ];
-      
+    
   rr:predicateObjectMap [
-    rr:predicate ocds:milestoneDueDate ;
+    rr:predicate ocds:documentType ;
     rr:objectMap [
-      rml:reference "tender/milestones/dueDate"
+      rml:reference "documentType"
     ]
-  ].
- 
-<ContractImplementationMilestoneDocumentMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.xml" ; 
-    rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/contracts/implementation/milestones/documents"
   ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contract/{contract/id}/implementation/{implementation/id}/milestone/{milestone/id}/document/{document/id}" ;
-    rr:class ocds:Document
-  ].    
-
-<ContractImplementationTransactionValueMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.xml" ; 
-    rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/releases/contract/transaction/value"
+    
+  rr:predicateObjectMap [
+    rr:predicate dc:language ;
+    rr:objectMap [
+      rml:reference "language"
+    ]
   ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/contract/{contract/id}/transaction/{transaction/id}/value" ;
-    rr:class ocds:Value
+    
+  rr:predicateObjectMap [
+    rr:predicate schema:URL ;
+    rr:objectMap [
+      rml:reference "url"
+    ]
   ].
