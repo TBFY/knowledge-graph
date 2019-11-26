@@ -1,7 +1,7 @@
 #####################################################################################################
 # Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
 # 
-# This file contains a script that enriches the JSON documents with TBFY-specific properties
+# This file contains a script that enriches the JSON documents with TBFY-specific properties.
 # 
 # Copyright: SINTEF 2017-2019
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)

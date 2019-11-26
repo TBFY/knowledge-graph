@@ -1,7 +1,7 @@
 #####################################################################################################
 # Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
 # 
-# This file contains a script that converts JSON documents to XML documents
+# This file contains a script that converts JSON documents to XML documents.
 # 
 # Copyright: SINTEF 2017-2019
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
