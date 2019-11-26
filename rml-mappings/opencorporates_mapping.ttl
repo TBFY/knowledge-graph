@@ -60,39 +60,39 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/results"
+    rml:iterator "/root/results/company"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{company/jurisdiction_code}/{company/company_number}" ;
+    rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}" ;
     rr:class rov:RegisteredOrganization
   ];
 
   rr:predicateObjectMap [
     rr:predicate rov:legalName ;
     rr:objectMap [ 
-      rml:reference "company/name" 
+      rml:reference "name" 
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate skos:prefLabel ;
     rr:objectMap [ 
-      rml:reference "company/name" 
+      rml:reference "name" 
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dbo:jurisdiction ;
     rr:objectMap [ 
-      rml:reference "company/jurisdiction_code" 
+      rml:reference "jurisdiction_code" 
     ];
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:foundingDate ;
     rr:objectMap [ 
-      rml:reference "company/incorporation_date" ;
+      rml:reference "incorporation_date" ;
       rr:datatype xsd:date
     ];
   ];
@@ -100,7 +100,7 @@
   rr:predicateObjectMap [
     rr:predicate schema:dissolutionDate ;
     rr:objectMap [ 
-      rml:reference "company/dissolution_date" ;
+      rml:reference "dissolution_date" ;
       rr:datatype xsd:date
     ];
   ];
@@ -108,7 +108,7 @@
   rr:predicateObjectMap [
     rr:predicate ebg:numberOfEmployees ;
     rr:objectMap [ 
-      rml:reference "company/number_of_employees" ;
+      rml:reference "number_of_employees" ;
       rr:datatype xsd:integer
     ];
   ];
@@ -116,56 +116,56 @@
   rr:predicateObjectMap [
     rr:predicate ebg:orgTypeText ;
     rr:objectMap [ 
-      rml:reference "company/company_type"
+      rml:reference "company_type"
     ];
   ];
 
   rr:predicateObjectMap [
     rr:predicate ebg:orgStatusText ;
     rr:objectMap [ 
-      rml:reference "company/current_status"
+      rml:reference "current_status"
     ];
   ];
 
   rr:predicateObjectMap [
     rr:predicate rov:hasSite ;
     rr:objectMap [ 
-      rr:template "http://data.tbfy.eu/company/{company/jurisdiction_code}/{company/company_number}/registeredSite/address" 
+      rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/registeredSite/address" 
     ];
   ];
 
   rr:predicateObjectMap [
     rr:predicate rov:hasRegisteredSite ;
     rr:objectMap [ 
-      rr:template "http://data.tbfy.eu/company/{company/jurisdiction_code}/{company/company_number}/registeredSite/address" 
+      rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/registeredSite/address" 
     ];
   ];
 
   rr:predicateObjectMap [
     rr:predicate rov:registration ;
     rr:objectMap [ 
-      rr:template "http://data.tbfy.eu/company/{company/jurisdiction_code}/{company/company_number}/id" 
+      rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id" 
     ];
   ];
 
   rr:predicateObjectMap [
     rr:predicate adms:identifier ;
     rr:objectMap [ 
-      rr:template "http://data.tbfy.eu/company/{company/jurisdiction_code}/{company/company_number}/id/OCORP" 
+      rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id/OCORP" 
     ];
   ].
 
-<CompanyAddressMap>
+<CompanyRegisteredAddressMap>
   a rr:TriplesMap ;
 
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/results"
+    rml:iterator "/root/results/company/registered_address"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{company/jurisdiction_code}/{company/company_number}/registeredSite/address" ;
+    rr:template "http://data.tbfy.eu/company/{../jurisdiction_code}/{../company_number}/registeredSite/address" ;
     rr:class org:Site ;
     rr:class locn:Address
   ];
@@ -173,42 +173,42 @@
   rr:predicateObjectMap [
     rr:predicate org:siteAddress ;
     rr:objectMap [ 
-      rr:template "http://data.tbfy.eu/company/{company/jurisdiction_code}/{company/company_number}/registeredSite/address" 
+      rr:template "http://data.tbfy.eu/company/{../jurisdiction_code}/{../company_number}/registeredSite/address" 
     ];
   ];
 
   rr:predicateObjectMap [
     rr:predicate locn:fullAddress ;
     rr:objectMap [
-      rml:reference "company/registered_address_in_full"
+      rml:reference "../registered_address_in_full"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate locn:postCode ;
     rr:objectMap [
-      rml:reference "company/registered_address/postal_code"
+      rml:reference "postal_code"
     ]
   ];
  
   rr:predicateObjectMap [
     rr:predicate locn:postName ;
     rr:objectMap [
-      rml:reference "company/registered_address/locality"
+      rml:reference "locality"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate locn:thoroughfare ;
     rr:objectMap [
-      rml:reference "company/registered_address/street_address"
+      rml:reference "street_address"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:addressCountry ;
     rr:objectMap [
-      rml:reference "company/registered_address/country"
+      rml:reference "country"
     ]
   ].
 
@@ -218,25 +218,25 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/results"
+    rml:iterator "/root/results/company"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{company/jurisdiction_code}/{company/company_number}/id" ;
+    rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id" ;
     rr:class adms:Identifier
   ];
 
   rr:predicateObjectMap [
     rr:predicate skos:notation;
     rr:objectMap [
-      rml:reference "company/company_number"  
+      rml:reference "company_number"  
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dct:creator ;
     rr:objectMap [ 
-      rml:reference "company/registry_url" 
+      rml:reference "registry_url" 
     ]
   ].
 
@@ -246,88 +246,88 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/results"
+    rml:iterator "/root/results/company"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{company/jurisdiction_code}/{company/company_number}/id/OCORP" ;
+    rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id/OCORP" ;
     rr:class adms:Identifier
   ];
 
   rr:predicateObjectMap [
     rr:predicate skos:notation;
     rr:objectMap [
-      rml:reference "company/company_number"
+      rml:reference "company_number"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dct:creator ;
     rr:objectMap [ 
-      rml:reference "company/opencorporates_url" 
+      rml:reference "opencorporates_url" 
     ]
   ].
 
-<CompanyMembershipMap>
+<CompanyOfficerMap>
   a rr:TriplesMap ;
 
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/results/company/officers" ;
+    rml:iterator "/root/results/company/officers/officer" ;
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{../jurisdiction_code}/{../company_number}/officer/{officer/id}" ;
+    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}" ;
     rr:class org:Membership ;
   ];
 
   rr:predicateObjectMap [
     rr:predicate org:role ;
     rr:objectMap [
-      rml:reference "officer/position"
+      rml:reference "position"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate org:memberDuring ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/company/{../jurisdiction_code}/{../company_number}/officer/{officer/id}/interval" 
+      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/interval" 
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate org:organization ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/company/{../jurisdiction_code}/{../company_number}" 
+      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}" 
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate org:member ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/officer/{officer/id}" 
+      rr:template "http://data.tbfy.eu/officer/{id}" 
     ]
   ].
 
-<MembershipIntervalMap>
+<CompanyOfficerIntervalMap>
   a rr:TriplesMap ;
 
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/results/company/officers"
+    rml:iterator "/root/results/company/officers/officer"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{../jurisdiction_code}/{../company_number}/officer/{officer/id}/interval" ;
+    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/interval" ;
     rr:class time:Interval
   ];
 
   rr:predicateObjectMap [
     rr:predicate time:hasBeginning ;
     rr:objectMap [
-      rml:reference "officer/start_date" ;
+      rml:reference "start_date" ;
       rr:datatype xsd:date
     ]
   ];
@@ -335,7 +335,7 @@
   rr:predicateObjectMap [
     rr:predicate time:hasEnd ;
     rr:objectMap [
-      rml:reference "officer/end_date" ;
+      rml:reference "end_date" ;
       rr:datatype xsd:date
     ]
   ].
@@ -346,31 +346,31 @@
   rml:logicalSource [
     rml:source "input.xml" ; 
     rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/results/company/officers"
+    rml:iterator "/root/results/company/officers/officer"
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/officer/{officer/id}" ;
+    rr:template "http://data.tbfy.eu/officer/{id}" ;
     rr:class person:Person
   ];
 
   rr:predicateObjectMap [
     rr:predicate person:birthName ;
     rr:objectMap [
-      rml:reference "officer/name"
+      rml:reference "name"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ebg:occupation ;
     rr:objectMap [
-      rml:reference "officer/position"
+      rml:reference "position"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate person:citizenship ;
     rr:objectMap [
-      rml:reference "officer/nationality"
+      rml:reference "nationality"
     ]
   ].
