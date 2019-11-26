@@ -1915,7 +1915,7 @@
     rr:class ocds:Value
   ];
 
-    rr:predicateObjectMap [
+  rr:predicateObjectMap [
     rr:predicate ocds:valueAmount ;
     rr:objectMap [
       rml:reference "amount"
@@ -1926,6 +1926,76 @@
     rr:predicate ocds:valueCurrency ;
     rr:objectMap [
       rml:reference "currency"
+    ]
+  ].
+
+<ContractImplementationTransactionPayerMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/releases/contracts/implementation/transactions/providerOrganization"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/contract/{../../../../ocid}_{../../../id}/implementation/transaction/{../id}/payer" ;
+    rr:class ocds:Organisation
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:legalName ;
+    rr:objectMap [
+      rml:reference "legalName"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:URI ;
+    rr:objectMap [
+      rml:reference "uri"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:isPayerFor ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/contract/{../../../../ocid}_{../../../id}/implementation/transaction/{../id}"
+    ]
+  ].
+
+<ContractImplementationTransactionPayeeMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/releases/contracts/implementation/transactions/receiverOrganization"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/contract/{../../../../ocid}_{../../../id}/implementation/transaction/{../id}/payee" ;
+    rr:class ocds:Organisation
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:legalName ;
+    rr:objectMap [
+      rml:reference "legalName"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:URI ;
+    rr:objectMap [
+      rml:reference "uri"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ocds:isPayeeFor ;
+    rr:objectMap [
+      rr:template "http://data.tbfy.eu/contract/{../../../../ocid}_{../../../id}/implementation/transaction/{../id}"
     ]
   ].
 
