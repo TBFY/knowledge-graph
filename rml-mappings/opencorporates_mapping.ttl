@@ -54,6 +54,10 @@
 @prefix sem:      <http://semanticweb.cs.vu.nl/2009/11/sem/> .
 
 
+# *************************************
+# Registered organization mapping rules
+# *************************************
+
 <RegisteredOrganizationMap>
   a rr:TriplesMap ;
 
@@ -285,7 +289,7 @@
   rr:predicateObjectMap [
     rr:predicate org:role ;
     rr:objectMap [
-      rml:reference "position"
+      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/role"
     ]
   ];
 
@@ -306,7 +310,35 @@
   rr:predicateObjectMap [
     rr:predicate org:member ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/officer/{id}" 
+      rr:template "http://data.tbfy.eu/officer/OCORP/{id}" 
+    ]
+  ].
+
+<CompanyOfficerRole>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/results/company/officers/officer" ;
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/role" ;
+    rr:class org:Membership ;
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate org:rolePositionText ;
+    rr:objectMap [
+      rml:reference "position"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate org:roleTitleText ;
+    rr:objectMap [
+      rml:reference "occupation"
     ]
   ].
 
@@ -327,18 +359,65 @@
   rr:predicateObjectMap [
     rr:predicate time:hasBeginning ;
     rr:objectMap [
-      rml:reference "start_date" ;
-      rr:datatype xsd:date
+      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/interval/beginning" 
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate time:hasEnd ;
     rr:objectMap [
+      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/end" 
+    ]
+  ].
+
+<CompanyOfficerIntervalBeginningMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/results/company/officers/officer"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/interval/beginning" ;
+    rr:class time:Instant
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate time:inXSDDate ;
+    rr:objectMap [
+      rml:reference "start_date" ;
+      rr:datatype xsd:date
+    ]
+  ].
+
+<CompanyOfficerIntervalEndMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/results/company/officers/officer"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/interval/end" ;
+    rr:class time:Instant
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate time:inXSDDate ;
+    rr:objectMap [
       rml:reference "end_date" ;
       rr:datatype xsd:date
     ]
   ].
+
+
+# *********************
+# Officer mapping rules
+# *********************
 
 <OfficerMap>
   a rr:TriplesMap ;
@@ -350,8 +429,15 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/officer/{id}" ;
+    rr:template "http://data.tbfy.eu/officer/OCORP/{id}" ;
     rr:class person:Person
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate schema:identifier ;
+    rr:objectMap [
+      rml:reference "id"
+    ]
   ];
 
   rr:predicateObjectMap [
@@ -362,14 +448,7 @@
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ebg:occupation ;
-    rr:objectMap [
-      rml:reference "position"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate person:citizenship ;
+    rr:predicate schema:nationality ;
     rr:objectMap [
       rml:reference "nationality"
     ]
