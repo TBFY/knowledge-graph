@@ -1,7 +1,9 @@
 #####################################################################################################
 # Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
 # 
-# This file contains a script that aggregates statistics from the specified input folders.
+# This file contains a script that aggregates and prints out the statistics from the 'STATISTICS.TXT'
+# file that are written in each release-date subfolder in the OpenCorporates output folder when 
+# running the opencorporates.py script.
 # 
 # Copyright: SINTEF 2017-2019
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)

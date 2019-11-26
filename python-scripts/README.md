@@ -7,7 +7,7 @@ The data ingestion process consists of the following steps:
 1. `openopps.py`: Downloads procurement data (plans, tenders and awards) from the [OpenOpps OCDS API](https://openopps.com/api/tbfy/ocds/) as JSON data files. The output folder of this script is input to the 2nd step.
 2. `opencorporates.py`: Matches supplier records in awards using the [OpenCorporates Reconciliation API](https://api.opencorporates.com/documentation/Open-Refine-Reconciliation-API). For matching suppliers the company data is downloaded using the [OpenCorporates Company API](https://api.opencorporates.com/documentation/API-Reference) as JSON data files. The output folder of this script is input to the 3rd step.
 3. `enrich_json.py`: Enriches the JSON data files downloaded in steps 1 and 2, e.g. adding new properties to support the mapping to RDF. The output folder of this script is input to the 4th step.
-4. `json2xml.py`: Converts the JSON data files from step 3 into corresponding XML data files. Due to limitations in JSONPath, i.e., lack of operations for accessing parent or sibling nodes from a given node, we prefer to use [XPath](https://www.w3schools.com/xml/xpath_syntax.asp) as the query language in RML. The output folder of this script ins input to the 5th step. 
+4. `json2xml.py`: Converts the JSON data files from step 3 into corresponding XML data files. Due to limitations in JSONPath, i.e., lack of operations for accessing parent or sibling nodes from a given node, we prefer to use [XPath](https://www.w3schools.com/xml/xpath_syntax.asp) as the query language in RML. The output folder of this script is input to the 5th step. 
 5. `xml2rdf.py`: Runs RML Mapper on the enriched XML data files from step 4 and produces N-Triples files. The script requires an RML folder which contains the [RML Mapper v4.5.1 release file](https://github.com/RMLio/rmlmapper-java/releases/tag/v4.5.1) and the [RML mapping files](https://github.com/TBFY/knowledge-graph/tree/master/rml-mappings).
 
 Configuration parameters for the four scripts are set in the `config.py` file.
@@ -72,7 +72,7 @@ python xml2rdf.py -s '2019-01-01' -e '2019-01-31' -r 'C:\TBFY\RML_Mapper_Scripts
 ## Statistics
 Scripts for processing statistics:
 
-* `statistics.py`: Script that aggregates and prints out the statistics from the 'STATISTICS.TXT' file that are written in each release-date subfolder in the OpenCorporates output folder when running the `opencorporates.py` script.
+* `opencorporates_statistics.py`: Script that aggregates and prints out the statistics from the 'STATISTICS.TXT' file that are written in each release-date subfolder in the OpenCorporates output folder when running the `opencorporates.py` script.
 
 ### Runnings the scripts
 
