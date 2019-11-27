@@ -146,16 +146,9 @@
   ];
 
   rr:predicateObjectMap [
-    rr:predicate rov:registration ;
-    rr:objectMap [ 
-      rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id" 
-    ];
-  ];
-
-  rr:predicateObjectMap [
     rr:predicate adms:identifier ;
     rr:objectMap [ 
-      rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id/OCORP" 
+      rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id/OpenCorporates" 
     ];
   ].
 
@@ -216,34 +209,6 @@
     ]
   ].
 
-<CompanyRegistrationMap>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.xml" ; 
-    rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/results/company"
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id" ;
-    rr:class adms:Identifier
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate skos:notation;
-    rr:objectMap [
-      rml:reference "company_number"  
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate dct:creator ;
-    rr:objectMap [ 
-      rml:reference "registry_url" 
-    ]
-  ].
-
 <CompanyIdentifierMap>
   a rr:TriplesMap ;
 
@@ -254,22 +219,29 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id/OCORP" ;
+    rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id/OpenCorporates" ;
     rr:class adms:Identifier
   ];
 
   rr:predicateObjectMap [
     rr:predicate skos:notation;
     rr:objectMap [
-      rml:reference "company_number"
+      rml:reference "tbfy_company_identifier_notation"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dct:creator ;
     rr:objectMap [ 
-      rml:reference "opencorporates_url" 
+      rr:template "http://data.tbfy.eu/identifier/OpenCorporates/organization" 
     ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate dct:isPartOf ;
+    rr:objectMap [ 
+      rr:template "http://data.tbfy.eu/identifier/OpenCorporates/system" 
+    ];
   ].
 
 <CompanyOfficerMap>
@@ -310,7 +282,7 @@
   rr:predicateObjectMap [
     rr:predicate org:member ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/officer/OCORP/{id}" 
+      rr:template "http://data.tbfy.eu/officer/OpenCorporates/{id}" 
     ]
   ].
 
@@ -429,7 +401,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/officer/OCORP/{id}" ;
+    rr:template "http://data.tbfy.eu/officer/OpenCorporates/{id}" ;
     rr:class person:Person
   ];
 

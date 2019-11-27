@@ -33,6 +33,11 @@ def enrich_company(company_data):
     company_jurisdiction_code = tbfy.json_utils.get_value(company_data, "results.company.jurisdiction_code")
     company_company_number = tbfy.json_utils.get_value(company_data, "results.company.company_number")
 
+    company_identifier_notation = company_jurisdiction_code + '/' + company_company_number
+    company_data['results']['company']['tbfy_company_identifier_notation'] = company_identifier_notation
+
+#    tbfy.json_utils.add_property_to_array_node(company_data, "results.company", "tbfy_company_identifier_notation", company_identifier_notation)
+
     tbfy.json_utils.add_property_to_array_node(company_data, "results.company.officers", "officer.tbfy_company_jurisdiction_code", company_jurisdiction_code)
     tbfy.json_utils.add_property_to_array_node(company_data, "results.company.officers", "officer.tbfy_company_company_number", company_company_number)
 

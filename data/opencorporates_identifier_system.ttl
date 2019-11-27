@@ -1,0 +1,63 @@
+# Own prefixes
+@base           <http://data.tbfy.eu/> .
+@prefix tbfy:   <http://data.tbfy.eu/ontology/tbfy#> .
+@prefix ocds:   <http://data.tbfy.eu/ontology/ocds#> .
+@prefix ebg:    <http://data.businessgraph.io/ontology#> .
+
+# External prefixes
+@prefix dc:     <http://purl.org/dc/elements/1.1/> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix schema: <http://schema.org/> .
+
+# OpenCorporates identifier system
+<identifier/OpenCorporates/system> a ebg:IdentifierSystem;
+  dct:creator <identifier/OpenCorporates/organization>;
+  schema:author <identifier/OpenCorporates/organization>;
+  schema:publisher <identifier/OpenCorporates/organization>;
+  skos:notation "OCORP";
+  schema:name "OCORP company identifiers";
+  schema:description "Aggregation of official register identifiers by OpenCorporates. Identifiers are issued by official registers, not OpenCorporates";
+  schema:url "https://opencorporates.com/registers";
+  schema:license "https://opencorporates.com/info/licence";
+  # characteristics
+  ebg:isUnique true;
+  ebg:isSingleValued true;
+  ebg:isPersistent true;
+  ebg:isImmutable true;
+  ebg:isPublic true;
+  ebg:isDumb true;
+  ebg:isEnumerated true;
+  ebg:isOfficial false;
+  # validation
+  ebg:validationRegex "([a-z]{2}|[a-z]{2}_[a-z\\d]{2})\\/.{1,128}";
+  ebg:identifierWebResource <identifier/OpenCorporates/resource/semantic>, <identifier/OpenCorporates/resource/web>, <identifier/OpenCorporates/resource/xml>, <identifier/OpenCorporates/resource/rdf>, <identifier/OpenCorporates/resource/json>.
+
+<identifier/OpenCorporates/resource/semantic> a ebg:IdentifierWebResource;
+  schema:name "OpenCorporates company semantic URL";
+  dc:format "application/rdf+xml","application/json", "application/xml", "text/html";
+  schema:description "Provides data in RDF, JSON, and HTML using content negotiation";
+  ebg:urlTemplate "https://opencorporates.com/companies/{}".
+
+<identifier/OpenCorporates/resource/web> a ebg:IdentifierWebResource;
+  schema:name "OpenCorporates company page";
+  dc:format "text/html";
+  ebg:urlTemplate "https://opencorporates.com/companies/{}".
+
+<identifier/OpenCorporates/resource/xml> a ebg:IdentifierWebResource;
+  schema:name "OpenCorporates company data XML";
+  dc:format "application/xml";
+  ebg:urlTemplate "https://api.opencorporates.com/companies/{}?format=xml".
+
+<identifier/OpenCorporates/resource/rdf> a ebg:IdentifierWebResource;
+  schema:name "OpenCorporates company data RDF";
+  dc:format "application/rdf+xml";
+  ebg:urlTemplate "https://opencorporates.com/companies/{}.rdf".
+
+<identifier/OpenCorporates/resource/json> a ebg:IdentifierWebResource;
+  schema:name "OpenCorporates company data JSON";
+  dc:format "application/json";
+  ebg:urlTemplate "https://api.opencorporates.com/companies/{}?format=json".
+
+<identifier/OpenCorporates/organization> a schema:Organization;
+  schema:name "Open database for corporate data"@en;
+  schema:description "OpenCorporates is the largest open database of companies and company data in the world, with in excess of 160 million companies in a similarly large number of jurisdictions. Identifiers are issued by official registers, not OpenCorporates".
