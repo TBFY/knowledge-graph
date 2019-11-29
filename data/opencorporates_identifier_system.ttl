@@ -30,10 +30,15 @@
   ebg:isOfficial false;
   # validation
   ebg:validationRegex "([a-z]{2}|[a-z]{2}_[a-z\\d]{2})\\/.{1,128}";
-  ebg:identifierWebResource <https://api.opencorporates.com>.
+  ebg:identifierWebResource <https://opencorporates.com/companies>, <https://api.opencorporates.com>.
 
+<https://opencorporates.com/companies> a ebg:IdentifierWebResource;
+  schema:name "OpenCorporates company page";
+  dc:format "text/html";
+  ebg:urlTemplate "https://opencorporates.com/companies/{}".
+  
 <https://api.opencorporates.com> a ebg:IdentifierWebResource;
-  schema:name "OpenCorporates company data JSON";
+  schema:name "OpenCorporates company data API (JSON)";
   dc:format "application/json";
   ebg:urlTemplate "https://api.opencorporates.com/companies/{}?format=json".
 
