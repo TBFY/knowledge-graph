@@ -15,8 +15,8 @@
   schema:author <https://opencorporates.com>;
   schema:publisher <https://opencorporates.com>;
   skos:notation "OCORP";
-  schema:name "OCORP company identifiers";
-  schema:description "Aggregation of official register identifiers by OpenCorporates. Identifiers are issued by official registers, not OpenCorporates";
+  schema:name "OpenCorporates company identifiers";
+  schema:description "Aggregation of official register identifiers by OpenCorporates. Identifiers are issued by official registers, not OpenCorporates.";
   schema:url "https://opencorporates.com/registers";
   schema:license "https://opencorporates.com/info/licence";
   # characteristics
@@ -33,7 +33,7 @@
   ebg:identifierWebResource <https://opencorporates.com/companies>, <https://api.opencorporates.com>.
 
 <https://opencorporates.com/companies> a ebg:IdentifierWebResource;
-  schema:name "OpenCorporates company page";
+  schema:name "OpenCorporates company data page";
   dc:format "text/html";
   ebg:urlTemplate "https://opencorporates.com/companies/{}".
   
@@ -44,4 +44,4 @@
 
 <https://opencorporates.com> a schema:Organization;
   schema:name "Open database for corporate data"@en;
-  schema:description "OpenCorporates is the largest open database of companies and company data in the world, with in excess of 160 million companies in a similarly large number of jurisdictions. Identifiers are issued by official registers, not OpenCorporates".
+  schema:description "OpenCorporates is the largest open database of companies and company data in the world, with in excess of 160 million companies in a similarly large number of jurisdictions. Identifiers are issued by official registers, not OpenCorporates.".
