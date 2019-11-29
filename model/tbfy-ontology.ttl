@@ -21,13 +21,20 @@
 tbfy:companyReconciliationScore a owl:DatatypeProperty ;
   schema:domainIncludes ocds:Organisation ;
   schema:rangeIncludes xsd:integer ;
-  rdfs:label "matching score" ;
+  rdfs:label "reconciliation score" ;
   skos:definition "Score value from the Reconciliation API." ;
-  skos:scopeNote "Only applicable to matching suppliers for which there exist a sameAs link." . 
+  skos:scopeNote "Only applicable to matching suppliers for which there exist a sameAs link to a company." . 
 
 tbfy:companyReconciliationSource a owl:DatatypeProperty ;
   schema:domainIncludes ocds:Organisation ;
   schema:rangeIncludes xsd:string ;
-  rdfs:label "matching source" ;
-  skos:definition "Source of the matching, i.e., the URL to the Reconciliation API or an URI to a person (crowdsourcing)." ;
+  rdfs:label "reconciliation source" ;
+  skos:definition "Source of the supplier-company matching, i.e., the URL to the Reconciliation API or an URI to a person (crowdsourcing)." ;
   skos:scopeNote "Only applicable to matching suppliers for which there exist a sameAs link." . 
+
+tbfy:companyReconciliationDate a owl:DatatypeProperty ;
+  schema:domainIncludes ocds:Organisation ;
+  schema:rangeIncludes xsd:date ;
+  rdfs:label "reconciliation date" ;
+  skos:definition "Date of the supplier-company matching." ;
+  skos:scopeNote "Only applicable to matching suppliers for which there exist a sameAs link to a company." . 
