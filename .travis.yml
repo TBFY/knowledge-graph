@@ -1,2 +1,8 @@
-language: minimal
-script: docker build .
+language: python
+python:
+  - "2.7"
+cache: pip
+install:
+  - pip install -r requirements.txt
+script:
+  - python tests.py
