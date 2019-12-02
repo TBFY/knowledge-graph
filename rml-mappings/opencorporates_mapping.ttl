@@ -118,6 +118,20 @@
   ];
 
   rr:predicateObjectMap [
+    rr:predicate ebg:orgActivity ;
+    rr:objectMap [ 
+      rr:template "http://data.tbfy.eu/nace/{industry_codes/industry_code/tbfy_nace/code}"
+    ];
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate ebg:orgActivityText ;
+    rr:objectMap [ 
+      rml:reference "industry_codes/industry_code/description"
+    ];
+  ];
+
+  rr:predicateObjectMap [
     rr:predicate ebg:orgTypeText ;
     rr:objectMap [ 
       rml:reference "company_type"
@@ -157,6 +171,20 @@
     rr:objectMap [ 
       rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id/OpenCorporates" 
     ];
+  ].
+
+<CompanyActivityMap>
+  a rr:TriplesMap ;
+
+  rml:logicalSource [
+    rml:source "input.xml" ; 
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/root/results/company/industry_codes/industry_code/tbfy_nace"
+  ];
+
+  rr:subjectMap [
+    rr:template "http://data.tbfy.eu/nace/{code}" ;
+    rr:class adms:Identifier
   ].
 
 <CompanyRegisteredAddressMap>
@@ -240,7 +268,7 @@
   rr:predicateObjectMap [
     rr:predicate skos:notation;
     rr:objectMap [
-      rml:reference "../registry_url"
+      rml:reference "../company_number"
     ]
   ];
 
