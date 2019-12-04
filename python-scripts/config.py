@@ -36,3 +36,20 @@ rml = {
 logging = {
     "level": "INFO"
 }
+
+openopps_stat_no_releases = {
+    "ignored": 0,
+    "plan": 0,
+    "tender": 0,
+    "tenderAmendment": 0,
+    "tenderUpdate": 0,
+    "tenderCancellation": 0,
+    "award": 0,
+    "awardUpdate": 0,
+    "awardCancellation": 0,
+    "contract": 0,
+    "contractAmendment": 0,
+    "implementation": 0,
+    "implementationUpdate": 0,
+    "contractTermination": 0
+}

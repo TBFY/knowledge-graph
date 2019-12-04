@@ -2,8 +2,8 @@
 # Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
 # 
 # This file contains a script that aggregates and prints out the statistics from the 'STATISTICS.TXT'
-# file that are written in each release-date subfolder in the OpenCorporates output folder when 
-# running the opencorporates.py script.
+# file that are written in each release-date subfolder in the OpenOpps output folder when 
+# running the openopps.py script.
 # 
 # Copyright: SINTEF 2017-2019
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
@@ -33,43 +33,21 @@ from datetime import timedelta
 # Statistics
 # **********
 
-stat_no_awards = 0
-stat_no_suppliers = 0
-stat_no_candidate_companies = 0
-stat_no_matching_companies = 0
-stat_highest_result_score = 0
+stat_no_releases = config.openopps_stat_no_releases.copy()
 
 def print_stats():
-    global stat_no_awards
-    global stat_no_suppliers
-    global stat_no_candidate_companies
-    global stat_no_matching_companies
-    global stat_highest_result_score
+    global stat_no_releases
 
     print("*********************************************************")
-    print("stat_no_awards = " + str(stat_no_awards))
-    print("stat_no_suppliers = " + str(stat_no_suppliers))
-    print("stat_no_candidate_companies = " + str(stat_no_candidate_companies))
-    print("stat_no_matching_companies = " + str(stat_no_matching_companies))
-    print("stat_highest_result_score = " + str(stat_highest_result_score))
+    for key in stat_no_releases.keys():
+        print(str(key) + " = " + str(stat_no_releases[key]))
     print("*********************************************************")
 
 def update_stats(file_stats):
-    global stat_no_awards
-    global stat_no_suppliers
-    global stat_no_candidate_companies
-    global stat_no_matching_companies
-    global stat_highest_result_score
+    global stat_no_releases
 
-    stat_no_awards += int(file_stats['stat_no_awards'])
-    stat_no_suppliers += int(file_stats['stat_no_suppliers'])
-    stat_no_candidate_companies += int(file_stats['stat_no_candidate_companies'])
-    stat_no_matching_companies += int(file_stats['stat_no_matching_companies'])
-    
-    file_stats_score = float(file_stats['stat_highest_result_score'])
-
-    if file_stats_score > stat_highest_result_score:
-        stat_highest_result_score = file_stats_score
+    for key in stat_no_releases.keys():
+        stat_no_releases[key] += int(file_stats[key])
 
 
 # *************
@@ -85,22 +63,22 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "hs:e:o:")
     except getopt.GetoptError:
-        print("opencorporates_statistics.py -s <start_date> -e <end_date> -o <opencorporates_folder>")
+        print("openopps_statistics.py -s <start_date> -e <end_date> -o <openopps_folder>")
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("opencorporates_statistics.py -s <start_date> -e <end_date> -o <opencorporates_folder>")
+            print("openopps_statistics.py -s <start_date> -e <end_date> -o <openopps_folder>")
             sys.exit()
         elif opt in ("-s"):
             start_date = arg
         elif opt in ("-e"):
             end_date = arg
         elif opt in ("-o"):
-            opencorporates_folder = arg
+            openopps_folder = arg
 
     logging.info("main(): start_date = " + start_date)
     logging.info("main(): end_date = " + end_date)
-    logging.info("main(): opencorporates_folder = " + opencorporates_folder)
+    logging.info("main(): openopps_folder = " + openopps_folder)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")
@@ -109,7 +87,7 @@ def main(argv):
         release_date = datetime.strftime(start, "%Y-%m-%d")
 
         dirname = release_date
-        stats_filepath = os.path.join(opencorporates_folder, dirname, 'STATISTICS.TXT')
+        stats_filepath = os.path.join(openopps_folder, dirname, 'STATISTICS.TXT')
         if os.path.isfile(stats_filepath):
             file_stats = {}
             with open(stats_filepath) as stats_file:
