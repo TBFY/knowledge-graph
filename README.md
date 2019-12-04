@@ -9,9 +9,8 @@
 [![License](https://img.shields.io/badge/license-Apache2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 <!-- [![DOI](https://zenodo.org/badge/167214336.svg)](https://zenodo.org/badge/latestdoi/167214336) -->
 
-## Basic Overview
+# About
 
-This repository contains the API documentation of the TheyBuyForYou project. So far, 25 GET resources have been identified for 
 This is the repository where all the work towards the creation of the TheyBuyForYou knowledge graph (KG) will be done. This repository is mostly related to activities that are being done in the context of Work Packages 1 and 2. In this repository we will keep:
 
 * Ontology model file that defines the schema for the TBFY knowledge graph  [ [.ttl file](https://github.com/TBFY/knowledge-graph/blob/master/model/tbfy-ontology.ttl) ]
