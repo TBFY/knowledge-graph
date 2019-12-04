@@ -1,7 +1,6 @@
 # Own prefixes
 @base           <http://data.tbfy.eu/> .
 @prefix tbfy:   <http://data.tbfy.eu/ontology/tbfy#> .
-@prefix ocds:   <http://data.tbfy.eu/ontology/ocds#> .
 @prefix ebg:    <http://data.businessgraph.io/ontology#> .
 
 # External prefixes
@@ -17,8 +16,8 @@
   skos:notation "OCORP";
   schema:name "OpenCorporates company identifiers";
   schema:description "Aggregation of official register identifiers by OpenCorporates. Identifiers are issued by official registers, not OpenCorporates.";
-  schema:url "https://opencorporates.com/registers";
-  schema:license "https://opencorporates.com/info/licence";
+  schema:url <https://opencorporates.com/registers>;
+  schema:license <https://opencorporates.com/info/licence>;
   # characteristics
   ebg:isUnique true;
   ebg:isSingleValued true;
