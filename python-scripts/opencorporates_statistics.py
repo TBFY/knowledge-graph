@@ -33,43 +33,25 @@ from datetime import timedelta
 # Statistics
 # **********
 
-stat_no_awards = 0
-stat_no_suppliers = 0
-stat_no_candidate_companies = 0
-stat_no_matching_companies = 0
-stat_highest_result_score = 0
+stats_reconciliation = config.opencorporates_statistics.copy()
 
 def print_stats():
-    global stat_no_awards
-    global stat_no_suppliers
-    global stat_no_candidate_companies
-    global stat_no_matching_companies
-    global stat_highest_result_score
+    global stats_reconciliation
 
     print("*********************************************************")
-    print("stat_no_awards = " + str(stat_no_awards))
-    print("stat_no_suppliers = " + str(stat_no_suppliers))
-    print("stat_no_candidate_companies = " + str(stat_no_candidate_companies))
-    print("stat_no_matching_companies = " + str(stat_no_matching_companies))
-    print("stat_highest_result_score = " + str(stat_highest_result_score))
+    for key in stats_reconciliation.keys():
+        print(str(key) + " = " + str(stats_reconciliation[key]))
     print("*********************************************************")
 
 def update_stats(file_stats):
-    global stat_no_awards
-    global stat_no_suppliers
-    global stat_no_candidate_companies
-    global stat_no_matching_companies
-    global stat_highest_result_score
+    global stats_reconciliation
 
-    stat_no_awards += int(file_stats['stat_no_awards'])
-    stat_no_suppliers += int(file_stats['stat_no_suppliers'])
-    stat_no_candidate_companies += int(file_stats['stat_no_candidate_companies'])
-    stat_no_matching_companies += int(file_stats['stat_no_matching_companies'])
-    
-    file_stats_score = float(file_stats['stat_highest_result_score'])
-
-    if file_stats_score > stat_highest_result_score:
-        stat_highest_result_score = file_stats_score
+    for key in stats_reconciliation.keys():
+        if (key == "highest_result_score"):
+            if (float(file_stats[key]) > float(stats_reconciliation[key])):
+                stats_reconciliation[key] = file_stats[key]
+        else:
+            stats_reconciliation[key] += int(file_stats[key])
 
 
 # *************

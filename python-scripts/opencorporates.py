@@ -33,6 +33,7 @@ import getopt
 
 import time
 import datetime
+from datetime import date
 from datetime import datetime
 from datetime import timedelta
 
@@ -50,43 +51,47 @@ opencorporates_companies_api_url = config.opencorporates["companies_api_url"]
 # Statistics
 # **********
 
-stat_no_awards = 0
-stat_no_suppliers = 0
-stat_no_candidate_companies = 0
-stat_no_matching_companies = 0
-stat_highest_result_score = 0
+stats_reconciliation = config.opencorporates_statistics.copy()
 
 def write_stats(output_folder):
-    global stat_no_awards
-    global stat_no_suppliers
-    global stat_no_candidate_companies
-    global stat_no_matching_companies
-    global stat_highest_result_score
+    global stats_reconciliation
 
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
     sfile = open(os.path.join(output_folder, 'STATISTICS.TXT'), 'w+')
-    sfile.write("stat_no_awards = " + str(stat_no_awards) +'\n')
-    sfile.write("stat_no_suppliers = " + str(stat_no_suppliers) +'\n')
-    sfile.write("stat_no_candidate_companies = " + str(stat_no_candidate_companies) +'\n')
-    sfile.write("stat_no_matching_companies = " + str(stat_no_matching_companies) +'\n')
-    sfile.write("stat_highest_result_score = " + str(stat_highest_result_score) + '\n')
+    for key in stats_reconciliation.keys():
+        sfile.write(str(key) + " = " + str(stats_reconciliation[key]) + "\n")
     sfile.close()
 
 def reset_stats():
-    global stat_no_awards
-    global stat_no_suppliers
-    global stat_no_candidate_companies
-    global stat_no_matching_companies
-    global stat_highest_result_score
+    global stats_reconciliation
 
-    stat_no_awards = 0
-    stat_no_suppliers = 0
-    stat_no_candidate_companies = 0
-    stat_no_matching_companies = 0
-    stat_highest_result_score = 0
+    for key in stats_reconciliation.keys():
+        stats_reconciliation[key] = 0
     
+
+# *****************************************
+# Cached lookup table for matched suppliers
+# *****************************************
+
+suppliers_lookup_dict = dict() # Used for processing a singe award release in case the same supplier occurs multiple time. Must be reset after each award processing.
+
+def add_supplier_to_lookup_dict(supplier_name, jurisdiction_code, company_number, identifier_notation, reconciliation_score, reconciliation_source, reconciliation_date):
+    global suppliers_lookup_dict
+    suppliers_lookup_dict[supplier_name] = (jurisdiction_code, company_number, identifier_notation, reconciliation_score, reconciliation_source, reconciliation_date)
+
+def get_supplier_from_lookup_dict(supplier_name):
+    global suppliers_lookup_dict
+    if supplier_name in suppliers_lookup_dict.keys():
+        return suppliers_lookup_dict[supplier_name]
+    else:
+        return None
+
+def reset_suppliers_lookup_dict():
+    global suppliers_lookup_dict
+    suppliers_lookup_dict.clear()
+
 
 # *****************************
 # Country name codes key errors
@@ -126,19 +131,25 @@ def country_name_2_code_jurisdiction(country_name):
 # *****************
 # Reconcile company
 # *****************
-def reconcile_company(company_name):
+def reconcile_company(company_name, jurisdiction_code):
     if config.opencorporates["country_name_codes_simulation"]:
         return None
 
     url = opencorporates_reconcile_api_url
     params = {
-        "query": company_name
+        "query": company_name,
+        "jurisdiction_code": jurisdiction_code
     }
     headers = {
         "Content-Type": "application/json"
     }
     response = requests.get(url, params=params, headers=headers)
-    return response
+
+    if response.status_code != 200:
+        logging.info("reconcile_company(): ERROR: " + json.dumps(response.json()))
+        return None
+    else:
+        return response
 
 
 # ***********
@@ -168,6 +179,8 @@ def get_company(company_id, api_token):
 # Is candidate company
 # ********************
 def is_candidate_company(buyer_data, supplier_data, result_data):
+    global stats_reconciliation
+
     supplier_name = get_supplier_name(supplier_data)
     result_id = result_data['id']
     result_score = result_data['score']
@@ -176,9 +189,8 @@ def is_candidate_company(buyer_data, supplier_data, result_data):
     if float(result_score) < float(opencorporates_reconcile_score):
         return False
 
-    global stat_highest_result_score
-    if float(result_score) > float(stat_highest_result_score):
-        stat_highest_result_score = result_score
+    if float(result_score) > float(stats_reconciliation['highest_result_score']):
+        stats_reconciliation['highest_result_score'] = result_score
 
     # If buyer jurisdiction is empty then return false
     buyer_jurisdiction = get_buyer_country_code(buyer_data)
@@ -196,8 +208,7 @@ def is_candidate_company(buyer_data, supplier_data, result_data):
         logging.info("is_candidate_company(): supplier_name = " + supplier_name)
         logging.info("is_candidate_company(): result_id = " + result_id)
         logging.info("is_candidate_company(): result_score = " + str(result_score))
-        global stat_no_candidate_companies
-        stat_no_candidate_companies += 1
+        stats_reconciliation['candidate_companies'] += 1
         return True
     else:
         return False
@@ -208,6 +219,8 @@ def is_candidate_company(buyer_data, supplier_data, result_data):
 # *******************
 
 def is_matching_company(supplier_data, company_data): 
+    global stats_reconciliation
+
     supplier_postal_code = get_supplier_postal_code(supplier_data)
     supplier_street_address = get_supplier_street_address(supplier_data)
     company_registered_address_in_full = get_company_registered_address_in_full(company_data)
@@ -220,8 +233,7 @@ def is_matching_company(supplier_data, company_data):
         logging.info("is_matching_company(): supplier_postal_code = " + supplier_postal_code)
         logging.info("is_matching_company(): supplier_street_address = " + supplier_street_address)
         logging.info("is_matching_company(): company_registered_address_in_full = " + company_registered_address_in_full)
-        global stat_no_matching_companies
-        stat_no_matching_companies += 1
+        stats_reconciliation['matching_companies'] += 1
         return True
     else:
         return False
@@ -248,6 +260,8 @@ def write_company(ocid, response_company, output_folder):
 # Loop through suppliers, reconcile and and write file for each candidate match
 # *****************************************************************************
 def process_suppliers(api_token, release_data, award_index, filename, output_folder):
+    global stats_reconciliation
+
     logging.info("process_suppliers(): tag_value = " + str(get_tag(release_data)))
     buyer_data = get_buyer(release_data)
     buyer_name = get_buyer_name(buyer_data)
@@ -260,46 +274,78 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
     if suppliers_data:
         supplier_index = 0
         for supplier_data in suppliers_data:
-            global stat_no_suppliers
-            stat_no_suppliers += 1
+            stats_reconciliation['suppliers'] += 1
             supplier_name = get_supplier_name(supplier_data)
-            release_ocid = release_data['ocid']
+
+            # If supplier jurisdiction is empty then use buyer jurisdiction for matching
+            supplier_jurisdiction_code = get_supplier_country_code(supplier_data)
+            if not supplier_jurisdiction_code:
+                supplier_jurisdiction_code = buyer_country_code
+
+            release_ocid = release_data['releases'][0]['ocid']
 
             # Get reconcile results
-            response_reconcile_results = reconcile_company(supplier_name)
+            response_reconcile_results = reconcile_company(supplier_name, supplier_jurisdiction_code)
             reconcile_results_data = json.loads(json.dumps(response_reconcile_results.json()))
             for reconcile_result in reconcile_results_data['result']:
                 result_score = reconcile_result['score']
 
-                if is_candidate_company(buyer_data, supplier_data, reconcile_result):
+                match_found = False
+                # Check lookup for previous matches
+                if supplier_name in suppliers_lookup_dict.keys():
+                    match_found = True
+                    stats_reconciliation['matching_companies'] += 1
+
+                new_match_found = False
+                if ((not match_found) and (is_candidate_company(buyer_data, supplier_data, reconcile_result))):
                     logging.info("process_suppliers(): result_score = " + str(result_score))
                     company_id = reconcile_result['id']
                     response_company = get_company(company_id, api_token)
                     company_data = json.loads(json.dumps(response_company.json()))
 
-                    if is_matching_company(supplier_data, company_data):
-                        write_company(release_ocid, response_company, output_folder)
-                        # Add specific TBFY property for OpenCorporates Id
-                        company_jurisdiction = company_data['results']['company']['jurisdiction_code']
-                        company_number = company_data['results']['company']['company_number']
-                        release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOpenCorporatesJurisdiction'] = company_jurisdiction
-                        release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOpenCorporatesCompanyNumber'] = company_number
-                        release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOpenCorporatesId'] = "/" + company_jurisdiction + "/" + company_number
-                        tbfy.json_utils.add_property_to_array_node(release_data, "json.releases.[0].awards.[" + str(supplier_index) + "]", "tbfy_company_jurisdiction_code", company_jurisdiction)
-                        tbfy.json_utils.add_property_to_array_node(release_data, "json.releases.[0].awards.[" + str(supplier_index) + "]", "tbfy_company_company_number", company_number)
-                        tbfy.json_utils.add_property_to_array_node(release_data, "json.releases.[0].awards.[" + str(supplier_index) + "]", "tbfy_opencorporates_identifier", company_jurisdiction + "/" + company_number)
+                    if not config.opencorporates['smart_address_check']:
+                        new_match_found = True
 
-            # Add specific TBFY properties for OpenOpps
-#            award_id = release_data['json']['releases'][0]['awards'][award_index]['id']
-#            release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyOcid'] = release_ocid
-#            release_data['json']['releases'][0]['awards'][award_index]['suppliers'][supplier_index]['tbfyAwardId'] = award_id
+                    if ((not new_match_found) and (is_matching_company(supplier_data, company_data))):
+                        new_match_found = True
+
+                    if new_match_found:
+                        # Add company to lookup table if new match
+                        company_jurisdiction_code = company_data['results']['company']['jurisdiction_code']
+                        company_number = company_data['results']['company']['company_number']
+                        identifier_notation = company_jurisdiction_code + "/" + company_number
+                        reconciliation_score = result_score
+                        reconciliation_source = opencorporates_reconcile_api_url
+                        reconciliation_date = str(date.today())
+
+                        add_supplier_to_lookup_dict(supplier_name, company_jurisdiction_code, company_number, identifier_notation, reconciliation_score, reconciliation_source, reconciliation_date)
+
+                        # Write company data
+                        write_company(release_ocid, response_company, output_folder)
+
+                if match_found:
+                    # Add specific TBFY property for OpenCorporates Id
+                    values = get_supplier_from_lookup_dict(supplier_name)
+                    company_jurisdiction_code = values[0]
+                    company_number = values[1]
+                    identifier_notation = values[2]
+                    reconciliation_score = values[3]
+                    reconciliation_source = values[4]
+                    reconciliation_date = values[5]
+
+                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_jurisdiction_code", company_jurisdiction_code)
+                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_company_number", company_number)
+                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_identifier_notation", identifier_notation)
+                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_score", reconciliation_score)
+                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_source", reconciliation_source)
+                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_date", reconciliation_date)
             
             supplier_index += 1
 
-        release_data['json']['releases'][0]['awards'][0]['tbfyOcid'] = release_ocid
+        release_data['releases'][0]['awards'][0]['tbfyOcid'] = release_ocid
 
     # Write award release to output folder
-    jfile = open(os.path.join(output_folder, release_data['ocid'] + '-release.json'), 'w+')
+    jfile = open(os.path.join(output_folder, release_data['releases'][0]['ocid'] + '-award-release.json'), 'w+')
     jfile.write(json.dumps(release_data, indent=4).replace(': null', ': ""'))
     jfile.close()
 
@@ -308,28 +354,29 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
 # Collection of helper functions for JSON release data
 # ****************************************************
 def get_tag(release_data):
-    return release_data['json']['releases'][0]['tag']
+    return release_data['releases'][0]['tag']
 
 def get_buyer(release_data):
-    return release_data['json']['releases'][0]['buyer']
+    return release_data['releases'][0]['buyer']
 
 def get_awards(release_data):
     try:
-        return release_data['json']['releases'][0]['awards']
+        return release_data['releases'][0]['awards']
     except KeyError:
         return None
 
 def get_suppliers(release_data, award_index):
     try:
-        return release_data['json']['releases'][0]['awards'][award_index]['suppliers']
+        return release_data['releases'][0]['awards'][award_index]['suppliers']
     except KeyError:
         return None
 
 def is_award(release_data):
+    global stats_reconciliation
+
     tag_value = get_tag(release_data)
     if ("award" in tag_value) or ("awardUpdate" in tag_value):
-        global stat_no_awards
-        stat_no_awards += 1
+        stats_reconciliation['awards'] += 1
         return True
     else:
         return False
@@ -357,7 +404,7 @@ def get_supplier_name(supplier_data):
     try:
         supplier_name = supplier_data['name']
         supplier_legal_name = supplier_data['identifier']['legalName']
-        if supplier_legal_name != "":
+        if ((supplier_legal_name != "") and (supplier_legal_name != None)):
             return supplier_legal_name
         else:
             return supplier_name
@@ -459,7 +506,6 @@ def main(argv):
         release_date = datetime.strftime(start, "%Y-%m-%d")
 
         dirname = release_date
-#    for dirname in os.listdir(input_folder):
         dirPath = os.path.join(input_folder, dirname)
         outputDirPath = os.path.join(output_folder, dirname)
         if os.path.isdir(dirPath):
@@ -492,7 +538,7 @@ def main(argv):
                 except:
                     pass
 
-            write_stats(outputDirPath)
+            write_stats(outputDirPath) # Write statistics
 
         start = start + timedelta(days=1)  # increase day one by one
 

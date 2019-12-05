@@ -1214,6 +1214,34 @@
     rr:objectMap [
       rr:template  "http://data.tbfy.eu/company/{tbfyOpenCorporatesJurisdiction}/{tbfyOpenCorporatesCompanyNumber}"
     ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate owl:sameAs ;
+    rr:objectMap [
+      rr:template  "http://data.tbfy.eu/company/{tbfy_reconciliation_company_jurisdiction}/{tbfy_reconciliation_company_number}"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate tbfy:companyReconciliationScore;
+    rr:objectMap [
+      rml:reference "tbfy_company_reconciliation_score"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate tbfy:companyReconciliationSource;
+    rr:objectMap [
+      rml:reference "tbfy_company_reconciliation_source"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate tbfy:companyReconciliationDate;
+    rr:objectMap [
+      rml:reference "tbfy_company_reconciliation_date"
+    ]
   ].
 
 <AwardSupplierAddressMap>
