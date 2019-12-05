@@ -37,7 +37,7 @@ logging = {
     "level": "INFO"
 }
 
-openopps_stat_no_releases = {
+openopps_statistics = {
     "ignored": 0,
     "plan": 0,
     "tender": 0,
@@ -52,4 +52,12 @@ openopps_stat_no_releases = {
     "implementation": 0,
     "implementationUpdate": 0,
     "contractTermination": 0
+}
+
+opencorporates_statistics = {
+    "awards": 0,
+    "suppliers": 0,
+    "candidate_companies": 0,
+    "matching_companies": 0,
+    "highest_result_score": 0
 }

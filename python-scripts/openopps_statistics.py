@@ -33,21 +33,21 @@ from datetime import timedelta
 # Statistics
 # **********
 
-stat_no_releases = config.openopps_stat_no_releases.copy()
+stats_releases = config.openopps_statistics.copy()
 
 def print_stats():
-    global stat_no_releases
+    global stats_releases
 
     print("*********************************************************")
-    for key in stat_no_releases.keys():
-        print(str(key) + " = " + str(stat_no_releases[key]))
+    for key in stats_releases.keys():
+        print(str(key) + " = " + str(stats_releases[key]))
     print("*********************************************************")
 
 def update_stats(file_stats):
-    global stat_no_releases
+    global stats_releases
 
-    for key in stat_no_releases.keys():
-        stat_no_releases[key] += int(file_stats[key])
+    for key in stats_releases.keys():
+        stats_releases[key] += int(file_stats[key])
 
 
 # *************
@@ -58,7 +58,7 @@ def main(argv):
 
     start_date = ""
     end_date = ""
-    opencorporates_folder = ""
+    openopps_folder = ""
 
     try:
         opts, args = getopt.getopt(argv, "hs:e:o:")

@@ -39,6 +39,38 @@ openopps_page_size = config.openopps["page_size"]
 openopps_sleep = config.openopps["sleep"]
 
 
+# **********
+# Statistics
+# **********
+
+stats_releases = config.openopps_statistics.copy()
+
+def write_stats(output_folder):
+    global stats_releases
+
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    sfile = open(os.path.join(output_folder, 'STATISTICS.TXT'), 'w+')
+    for key in stats_releases.keys():
+        sfile.write(str(key) + " = " + str(stats_releases[key]) + "\n")
+    sfile.close()
+
+def update_stats(key):
+    global stats_releases
+
+    try:
+        stats_releases[key] += 1
+    except KeyError:
+        stats_releases['ignored'] += 1
+
+def reset_stats():
+    global stats_releases
+
+    for key in stats_releases.keys():
+        stats_releases[key] = 0
+
+
 # *******************************
 # Acquire token from OpenOpps API
 # *******************************
@@ -104,7 +136,7 @@ def get_releases(date, username, password, token):
     response = requests.get(url, params=params, headers=headers)
 
     if response.status_code != 200:
-        logging.info("acquire_token(): ERROR: " + json.dumps(response.json()))
+        logging.info("get_releases(): ERROR: " + json.dumps(response.json()))
         return None
     else:
         return response
@@ -143,6 +175,8 @@ def write_releases(response_releases, output_folder):
 
             try:
                 release_tag = element['json']['releases'][0]['tag'][0]
+
+                update_stats(release_tag) # Update statistics
 
                 if len(release_tag) > 1:
                     jfile = open(os.path.join(output_folder, release_ocid + '-' + release_tag + '-release.json'), 'w+')
@@ -225,7 +259,9 @@ def main(argv):
     while start <= stop:
         release_date = datetime.strftime(start, "%Y-%m-%d")
         logging.info("main(): release_date = " + release_date)
-        get_and_write_releases(release_date, username, password, token, os.path.join(output_folder, release_date))
+        outputDirPath = os.path.join(output_folder, release_date)
+        get_and_write_releases(release_date, username, password, token, outputDirPath)
+        write_stats(outputDirPath) # Write statistics
         start = start + timedelta(days=1)  # increase day one by one
 
 
