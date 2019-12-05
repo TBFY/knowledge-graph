@@ -91,11 +91,13 @@ def main(argv):
             for filename in os.listdir(dirPath):
                 logging.info("main(): filename = " + filename)
                 inputFilePath = os.path.join(dirPath, filename)
-                xml_filename = os.path.splitext(filename)[0] + '.xml'
-                outputFilePath = os.path.join(outputDirPath, xml_filename)
-                json_dict = tbfy.json_utils.read_jsonfile(inputFilePath)
-                json_dict_one_root = {'root': json_dict}
-                tbfy.json_utils.write_xmlfile(tbfy.json_utils.convert_to_xml(json_dict_one_root), outputFilePath)
+                ext = os.path.splitext(inputFilePath)[-1].lower()
+                if (ext == ".json"):
+                    xml_filename = os.path.splitext(filename)[0] + '.xml'
+                    outputFilePath = os.path.join(outputDirPath, xml_filename)
+                    json_dict = tbfy.json_utils.read_jsonfile(inputFilePath)
+                    json_dict_one_root = {'root': json_dict}
+                    tbfy.json_utils.write_xmlfile(tbfy.json_utils.convert_to_xml(json_dict_one_root), outputFilePath)
 
         start = start + timedelta(days=1)  # increase day one by one
 
