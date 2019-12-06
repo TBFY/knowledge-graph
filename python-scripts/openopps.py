@@ -167,6 +167,8 @@ def get_release_tag(release_data):
 
         release_tag = ""
 
+        if "planning" in tags:
+            release_tag = "planning"
         if "tender" in tags:
             release_tag = "tender"
         if "tenderAmendment" in tags:
