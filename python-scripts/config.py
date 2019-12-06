@@ -38,7 +38,7 @@ logging = {
 }
 
 openopps_statistics = {
-    "ignored": 0,
+    "unknown": 0,
     "plan": 0,
     "tender": 0,
     "tenderAmendment": 0,

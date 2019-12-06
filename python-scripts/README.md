@@ -72,17 +72,29 @@ python xml2rdf.py -s '2019-01-01' -e '2019-01-31' -r 'C:\TBFY\RML_Mapper_Scripts
 ## Statistics
 Scripts for processing statistics:
 
+* `openopps_statistics.py`: Script that aggregates and prints out the statistics from the 'STATISTICS.TXT' file that are written in each release-date subfolder in the OpenOpps output folder when running the `openopps.py` script.
 * `opencorporates_statistics.py`: Script that aggregates and prints out the statistics from the 'STATISTICS.TXT' file that are written in each release-date subfolder in the OpenCorporates output folder when running the `opencorporates.py` script.
 
 ### Runnings the scripts
 
-#### statistics.py
+#### openopps_statistics.py
 Command line:
 ```
-python statistics.py -s <start_date> -e <end_date> -o <opencorporates_folder>
+python openopps_statistics.py -s <start_date> -e <end_date> -o <openopps_folder>
 ```
 
 Example:
 ```
-python statistics.py -s '2019-01-01' -e '2019-01-31' -o 'C:\TBFY\2_JSON_OpenCorporates'
+python openopps_statistics.py -s '2019-01-01' -e '2019-01-31' -o 'C:\TBFY\2_JSON_OpenOpps'
+```
+
+#### opencorporates_statistics.py
+Command line:
+```
+python opencorporates_statistics.py -s <start_date> -e <end_date> -o <opencorporates_folder>
+```
+
+Example:
+```
+python opencorporates_statistics.py -s '2019-01-01' -e '2019-01-31' -o 'C:\TBFY\2_JSON_OpenCorporates'
 ```
