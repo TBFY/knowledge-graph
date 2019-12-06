@@ -313,15 +313,16 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
                         new_match_found = True
 
                     if new_match_found:
+                        match_found = True
                         # Add company to lookup table if new match
                         company_jurisdiction_code = company_data['results']['company']['jurisdiction_code']
                         company_number = company_data['results']['company']['company_number']
-                        identifier_notation = company_jurisdiction_code + "/" + company_number
-                        reconciliation_score = result_score
-                        reconciliation_source = opencorporates_reconcile_api_url
-                        reconciliation_date = str(date.today())
+                        company_identifier_notation = company_jurisdiction_code + "/" + company_number
+                        company_reconciliation_score = result_score
+                        company_reconciliation_source = opencorporates_reconcile_api_url
+                        company_reconciliation_date = str(date.today())
 
-                        add_supplier_to_lookup_dict(supplier_name, company_jurisdiction_code, company_number, identifier_notation, reconciliation_score, reconciliation_source, reconciliation_date)
+                        add_supplier_to_lookup_dict(supplier_name, company_jurisdiction_code, company_number, company_identifier_notation, company_reconciliation_score, company_reconciliation_source, company_reconciliation_date)
 
                         # Write company data
                         write_company(release_ocid, response_company, output_folder)
