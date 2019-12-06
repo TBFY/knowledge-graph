@@ -1212,13 +1212,6 @@
   rr:predicateObjectMap [
     rr:predicate owl:sameAs ;
     rr:objectMap [
-      rr:template  "http://data.tbfy.eu/company/{tbfyOpenCorporatesJurisdiction}/{tbfyOpenCorporatesCompanyNumber}"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate owl:sameAs ;
-    rr:objectMap [
       rr:template  "http://data.tbfy.eu/company/{tbfy_reconciliation_company_jurisdiction}/{tbfy_reconciliation_company_number}"
     ]
   ];

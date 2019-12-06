@@ -269,6 +269,9 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
     logging.info("process_suppliers(): buyer_name = " + buyer_name)
     logging.info("process_suppliers(): buyer_country_code = " + buyer_country_code)
 
+    # Reset suppliers lookup table for processing new award
+    reset_suppliers_lookup_dict()
+
     # Try to reconcile each supplier
     suppliers_data = get_suppliers(release_data, award_index)
     if suppliers_data:
@@ -341,8 +344,6 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
                     tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_date", reconciliation_date)
             
             supplier_index += 1
-
-        release_data['releases'][0]['awards'][0]['tbfyOcid'] = release_ocid
 
     # Write award release to output folder
     jfile = open(os.path.join(output_folder, release_data['releases'][0]['ocid'] + '-award-release.json'), 'w+')

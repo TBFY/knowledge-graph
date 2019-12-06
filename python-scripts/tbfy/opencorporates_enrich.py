@@ -58,7 +58,7 @@ def enrich_company(company_data):
             code = company_data['results']['company']['industry_codes'][i]['industry_code']['code']
             code_scheme_id = company_data['results']['company']['industry_codes'][i]['industry_code']['code_scheme_id']
             if (code_scheme_id == "eu_nace_2"):
-                tbfy.json_utils.add_property_to_single_node(company_data, "results.company.industry_codes.[" + str(i) + "].industry_code", "tbfy_nace.code", code)
+                tbfy.json_utils.add_property_to_single_node2(company_data, "results.company.industry_codes.[" + str(i) + "].industry_code", "tbfy_nace.code", code)
             i += 1
     except KeyError:
         pass
