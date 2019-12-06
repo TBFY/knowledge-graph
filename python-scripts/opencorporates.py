@@ -331,17 +331,17 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
                     values = get_supplier_from_lookup_dict(supplier_name)
                     company_jurisdiction_code = values[0]
                     company_number = values[1]
-                    identifier_notation = values[2]
-                    reconciliation_score = values[3]
-                    reconciliation_source = values[4]
-                    reconciliation_date = values[5]
+                    company_identifier_notation = values[2]
+                    company_reconciliation_score = values[3]
+                    company_reconciliation_source = values[4]
+                    company_reconciliation_date = values[5]
 
                     tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_jurisdiction_code", company_jurisdiction_code)
-                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_company_number", company_number)
-                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_identifier_notation", identifier_notation)
-                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_score", reconciliation_score)
-                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_source", reconciliation_source)
-                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_date", reconciliation_date)
+                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_number", company_number)
+                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_identifier_notation", company_identifier_notation)
+                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_score", company_reconciliation_score)
+                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_source", company_reconciliation_source)
+                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_date", company_reconciliation_date)
             
             supplier_index += 1
 
