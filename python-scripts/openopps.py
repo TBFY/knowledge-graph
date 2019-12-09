@@ -293,6 +293,7 @@ def main(argv):
         outputDirPath = os.path.join(output_folder, release_date)
         get_and_write_releases(release_date, username, password, token, outputDirPath)
         write_stats(outputDirPath) # Write statistics
+        reset_stats() # Reset statistics for next folder date
         start = start + timedelta(days=1)  # increase day one by one
 
 
