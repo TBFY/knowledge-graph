@@ -16,16 +16,60 @@ import dpath.util
 import xmltodict
 
 
-# ****************
-# Helper functions
-# ****************
+# *************************
+# OpenOpps helper functions
+# *************************
 
 def is_openopps_json(filename):
-    if ("-release" in str(filename)) and (("ignore-release") not in str(filename)):
+    if "-release" in str(filename):
         return True
     else:
         return False
 
+
+def get_release_tag(release_data):
+    try:
+        tags = str(release_data['releases'][0]['tag'])
+
+        release_tag = ""
+
+        if "planning" in tags:
+            release_tag = "planning"
+        if "tender" in tags:
+            release_tag = "tender"
+        if "tenderAmendment" in tags:
+            release_tag = "tenderAmendment"
+        if "tenderUpdate" in tags:
+            release_tag = "tenderUpdate"
+        if "tenderCancellation" in tags:
+            release_tag = "tenderCancellation"
+        if "award" in tags:
+            release_tag = "award"
+        if "awardUpdate" in tags:
+            release_tag = "awardUpdate"
+        if "awardCancellation" in tags:
+            release_tag = "awardCancellation"
+        if "contract" in tags:
+            release_tag = "contract"
+        if "contractAmendment" in tags:
+            release_tag = "contractAmendment"
+        if "implementation" in tags:
+            release_tag = "implementation"
+        if "implementationUpdate" in tags:
+            release_tag = "implementationUpdate"
+        if "contractTermination" in tags:
+            release_tag = "contractTermination"
+        if release_tag == "":
+            release_tag = "unknown"
+
+        return release_tag
+    except KeyError:
+        return "unknown"
+
+
+# *******************************
+# OpenCorporates helper functions
+# *******************************
 
 def is_opencorporates_json(filename):
     if "-supplier" in str(filename):
@@ -33,6 +77,10 @@ def is_opencorporates_json(filename):
     else:
         return False
 
+
+# ************************
+# General helper functions
+# ************************
 
 def read_jsonfile(input_filePath):
     try:
@@ -56,23 +104,13 @@ def write_jsonfile(dictionary_data, output_filePath):
 def get_value(json_dict, path):
     try:
         new_path = path.replace('[', '').replace(']', '')
-        value = dpath.util.get(json_dict, path, separator='.')
+        value = dpath.util.get(json_dict, new_path, separator='.')
         return value
     except KeyError:
         return None
 
 
 def add_property_to_single_node(json_dict, node_path, new_prop, val):
-    try:
-        value = get_value(json_dict, node_path)
-        new_path = node_path + '.' + new_prop
-        new_path = new_path.replace('[', '').replace(']', '')
-        dpath.util.new(json_dict, new_path, val, separator='.')
-    except KeyError:
-        return None
-
-
-def add_property_to_single_node2(json_dict, node_path, new_prop, val):
     try:
         new_path = node_path + '.' + new_prop
         new_path = new_path.replace('[', '').replace(']', '')

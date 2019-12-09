@@ -46,20 +46,18 @@ def main(argv):
     output_folder = ""
 
     try:
-        opts, args = getopt.getopt(argv, "hs:e:r:i:o:")
+        opts, args = getopt.getopt(argv, "hs:e:i:o:")
     except getopt.GetoptError:
-        print("process_json.py -s <start_date> -e <end_date> -r <rml_folder> -i <input_folder> -o <output_folder>")
+        print("enrich_json.py -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>")
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("process_json.py -s <start_date> -e <end_date> -r <rml_folder> -i <input_folder> -o <output_folder>")
+            print("enrich_json.py -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>")
             sys.exit()
         elif opt in ("-s"):
             start_date = arg
         elif opt in ("-e"):
             end_date = arg
-        elif opt in ("-r"):
-            rml_folder = arg
         elif opt in ("-i"):
             input_folder = arg
         elif opt in ("-o"):
@@ -67,7 +65,6 @@ def main(argv):
 
     logging.info("main(): start_date = " + start_date)
     logging.info("main(): end_date = " + end_date)
-    logging.info("main(): rml_folder = " + rml_folder)
     logging.info("main(): input_folder = " + input_folder)
     logging.info("main(): output_folder = " + output_folder)
 

@@ -31,11 +31,12 @@ import getopt
 
 def enrich_release(release_data):
     try:
-        if release_data['releases'][0]['tag'][0] == "planning":
+        release_tag = tbfy.json_utils.get_release_tag(release_data)
+        if (release_tag == "planning"):
             return enrich_plan(release_data)
-        elif (release_data['releases'][0]['tag'][0] == "tender") or (release_data['releases'][0]['tag'][0] == "tenderUpdate") or (release_data['releases'][0]['tag'][0] == "tenderAmendment"):
+        elif (release_tag == "tender") or (release_tag == "tenderUpdate") or (release_tag == "tenderAmendment"):
             return enrich_tender(release_data)
-        elif release_data['releases'][0]['tag'][0] == "award":
+        elif (release_tag == "award") or (release_tag == "awardUpdate") or (release_tag == "awardCancellation"):
             return enrich_award(release_data)
         else:
             return release_data
@@ -94,10 +95,11 @@ def enrich_award(release_data):
         j = 0
         for supplier in suppliers_data:
             supplier_path = award_path + '.suppliers.[' + str(j) + ']'
-            tbfy.json_utils.add_property_to_single_node2(release_data, supplier_path, "tbfy_ocid", ocid)
-            tbfy.json_utils.add_property_to_single_node2(release_data, supplier_path, "tbfy_id", j)
-            tbfy.json_utils.add_property_to_single_node2(release_data, supplier_path, "tbfy_award_id", award_id)
+            tbfy.json_utils.add_property_to_single_node(release_data, supplier_path, "tbfy_ocid", ocid)
+            tbfy.json_utils.add_property_to_single_node(release_data, supplier_path, "tbfy_id", j)
+            tbfy.json_utils.add_property_to_single_node(release_data, supplier_path, "tbfy_award_id", award_id)
             j += 1
+            logging.info("enrich_award(): DEBUG (award i, supplier j) = " + "(" + str(i) + ", " + str(j) + ")")
 
         i += 1
 

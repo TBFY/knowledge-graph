@@ -16,6 +16,8 @@
 
 import config
 
+import tbfy.json_utils
+
 import logging
 
 import requests
@@ -158,49 +160,6 @@ def get_next_releases(url, token):
         return response
 
 
-# ***************
-# Get release tag
-# ***************
-def get_release_tag(release_data):
-    try:
-        tags = str(release_data['releases'][0]['tag'])
-
-        release_tag = ""
-
-        if "planning" in tags:
-            release_tag = "planning"
-        if "tender" in tags:
-            release_tag = "tender"
-        if "tenderAmendment" in tags:
-            release_tag = "tenderAmendment"
-        if "tenderUpdate" in tags:
-            release_tag = "tenderUpdate"
-        if "tenderCancellation" in tags:
-            release_tag = "tenderCancellation"
-        if "award" in tags:
-            release_tag = "award"
-        if "awardUpdate" in tags:
-            release_tag = "awardUpdate"
-        if "awardCancellation" in tags:
-            release_tag = "awardCancellation"
-        if "contract" in tags:
-            release_tag = "contract"
-        if "contractAmendment" in tags:
-            release_tag = "contractAmendment"
-        if "implementation" in tags:
-            release_tag = "implementation"
-        if "implementationUpdate" in tags:
-            release_tag = "implementationUpdate"
-        if "contractTermination" in tags:
-            release_tag = "contractTermination"
-        if release_tag == "":
-            release_tag = "unknown"
-
-        return release_tag
-    except KeyError:
-        return "unknown"
-
-
 # *******************************************
 # Process response and write releases to file
 # *******************************************
@@ -215,7 +174,7 @@ def write_releases(response_releases, output_folder):
             release_data = element['json']
             release_ocid = release_data['releases'][0]['ocid']
 
-            release_tag = get_release_tag(release_data) # Get tag, if missing then "unknown" is returned
+            release_tag = tbfy.json_utils.get_release_tag(release_data) # Get tag, if missing then "unknown" is returned
             update_stats(release_tag) # Update statistics
 
             jfile = open(os.path.join(output_folder, release_ocid + '-' + release_tag + '-release.json'), 'w+')

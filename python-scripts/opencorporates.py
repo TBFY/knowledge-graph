@@ -297,7 +297,6 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
                 # Check lookup for previous matches
                 if supplier_name in suppliers_lookup_dict.keys():
                     match_found = True
-                    stats_reconciliation['matching_companies'] += 1
 
                 new_match_found = False
                 if ((not match_found) and (is_candidate_company(buyer_data, supplier_data, reconcile_result))):
@@ -314,6 +313,8 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
 
                     if new_match_found:
                         match_found = True
+                        stats_reconciliation['matching_companies'] += 1
+
                         # Add company to lookup table if new match
                         company_jurisdiction_code = company_data['results']['company']['jurisdiction_code']
                         company_number = company_data['results']['company']['company_number']
@@ -337,12 +338,12 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
                     company_reconciliation_source = values[4]
                     company_reconciliation_date = values[5]
 
-                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_jurisdiction_code", company_jurisdiction_code)
-                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_number", company_number)
-                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_identifier_notation", company_identifier_notation)
-                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_score", company_reconciliation_score)
-                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_source", company_reconciliation_source)
-                    tbfy.json_utils.add_property_to_single_node2(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_date", company_reconciliation_date)
+                    tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_jurisdiction_code", company_jurisdiction_code)
+                    tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_number", company_number)
+                    tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_identifier_notation", company_identifier_notation)
+                    tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_score", company_reconciliation_score)
+                    tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_source", company_reconciliation_source)
+                    tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_date", company_reconciliation_date)
             
             supplier_index += 1
 
