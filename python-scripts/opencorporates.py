@@ -307,13 +307,13 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
 
                     if not config.opencorporates['smart_address_check']:
                         new_match_found = True
+                        stats_reconciliation['matching_companies'] += 1
 
                     if ((not new_match_found) and (is_matching_company(supplier_data, company_data))):
                         new_match_found = True
 
                     if new_match_found:
                         match_found = True
-                        stats_reconciliation['matching_companies'] += 1
 
                         # Add company to lookup table if new match
                         company_jurisdiction_code = company_data['results']['company']['jurisdiction_code']
