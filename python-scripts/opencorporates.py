@@ -347,7 +347,7 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
             supplier_index += 1
 
     # Write award release to output folder
-    jfile = open(os.path.join(output_folder, release_data['releases'][0]['ocid'] + '-award-release.json'), 'w+')
+    jfile = open(os.path.join(output_folder, filename), 'w+')
     jfile.write(json.dumps(release_data, indent=4).replace(': null', ': ""'))
     jfile.close()
 
