@@ -99,7 +99,6 @@ def enrich_award(release_data):
             tbfy.json_utils.add_property_to_single_node(release_data, supplier_path, "tbfy_id", j)
             tbfy.json_utils.add_property_to_single_node(release_data, supplier_path, "tbfy_award_id", award_id)
             j += 1
-            logging.info("enrich_award(): DEBUG (award i, supplier j) = " + "(" + str(i) + ", " + str(j) + ")")
 
         i += 1
 
