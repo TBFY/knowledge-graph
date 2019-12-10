@@ -170,7 +170,7 @@ def get_company(company_id, api_token):
 
     if response.status_code != 200:
         logging.info("get_company(): ERROR: " + json.dumps(response.json()))
-        return None
+        sys.exit(1)
     else:
         return response
 
@@ -538,6 +538,8 @@ def main(argv):
                     else:
                         if not config.opencorporates["country_name_codes_simulation"]:
                             os.system(copy_command + ' ' + filePath + ' ' + outputFilePath)
+                except SystemExit:
+                    sys.exit(1)
                 except:
                     pass
 

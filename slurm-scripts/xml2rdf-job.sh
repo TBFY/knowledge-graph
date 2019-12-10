@@ -4,7 +4,7 @@
 #SBATCH --partition sintef
 #SBATCH --ntasks 1
 #SBATCH --cpus-per-task=6
-#SBATCH --mem=2GB
+#SBATCH --mem=4GB
 #SBATCH --time 7-00:00:00
 
 homedir=/home/bre/knowledge-graph/python-scripts
