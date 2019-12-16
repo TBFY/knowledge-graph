@@ -17,8 +17,8 @@
 
 # Own prefixes
 @base             <http://data.tbfy.eu/> .
-@prefix tbfy:     <http://data.tbfy.eu/ontology/tbfy/> . 
-@prefix ocds:     <http://data.tbfy.eu/ontology/ocds/> .
+@prefix tbfy:     <http://data.tbfy.eu/ontology/tbfy#> . 
+@prefix ocds:     <http://data.tbfy.eu/ontology/ocds#> .
 
 # External prefixes
 @prefix dc:       <http://purl.org/dc/terms/> .

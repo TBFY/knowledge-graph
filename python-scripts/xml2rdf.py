@@ -119,7 +119,6 @@ def main(argv):
         release_date = datetime.strftime(start, "%Y-%m-%d")
 
         dirname = release_date
-#    for dirname in os.listdir(input_folder):
         dirPath = os.path.join(input_folder, dirname)
         outputDirPath = os.path.join(output_folder, dirname)
         if os.path.isdir(dirPath):
