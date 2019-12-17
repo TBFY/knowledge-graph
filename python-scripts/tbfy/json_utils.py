@@ -14,6 +14,7 @@
 import json
 import dpath.util
 import xmltodict
+import re
 
 
 # *************************
@@ -141,8 +142,15 @@ def convert_to_xml(json_dict):
         return None
 
 
+def strip_illegal_xml_chars(illegal_xml_string):  
+    illegal_xml_re = re.compile(u'[\x00-\x08\x0b-\x1f\x7f-\x84\x86-\x9f\ud800-\udfff\ufdd0-\ufddf\ufffe-\uffff]')
+    clean_xml_string = illegal_xml_re.sub('', illegal_xml_string)
+    return clean_xml_string
+
+
 def write_xmlfile(xml_string, output_filePath):
     if xml_string:
+        clean_xml_string = strip_illegal_xml_chars(xml_string)
         xfile = open(output_filePath, 'w+', encoding='utf8', errors='ignore')
-        xfile.write(xml_string)
+        xfile.write(clean_xml_string)
         xfile.close()

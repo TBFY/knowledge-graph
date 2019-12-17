@@ -41,7 +41,6 @@ def main(argv):
     
     start_date = ""
     end_date = ""
-    rml_folder = ""
     input_folder = ""
     output_folder = ""
 
