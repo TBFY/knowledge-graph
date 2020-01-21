@@ -19,6 +19,7 @@ import tbfy.json_utils
 import logging
 
 import json
+from urllib import parse
 
 import os
 import sys
@@ -37,10 +38,9 @@ def enrich_company(company_data):
     company_data['results']['company']['tbfy_company_identifier_notation'] = company_identifier_notation
 
     url = tbfy.json_utils.get_value(company_data, "results.company.source.url")
-    url = url.replace("http://", "")
-    url = url.replace("https://", "")
-    url = url.rstrip("/")
-    tbfy.json_utils.add_property_to_single_node(company_data, "results.company.source", "tbfy_url", url)
+    url_parsed = parse.urlparse(url).hostname
+    url_parsed = url_parsed.replace("www.", "")
+    tbfy.json_utils.add_property_to_single_node(company_data, "results.company.source", "tbfy_url", url_parsed)
 
     ramon_code = str(company_jurisdiction_code).upper()
     if (ramon_code == "GB"):
