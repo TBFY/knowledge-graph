@@ -18,23 +18,30 @@
 
 
 # Ontology
+tbfy:correspondsToRegOrg a owl:ObjectProperty ;
+  schema:domainIncludes ocds:Organisation ;
+  schema:rangeIncludes rov:RegisteredOrganization ;
+  rdfs:label "corresponds to registered organization" ;
+  skos:definition "Corresponding company (registered organization) matching the supplier (organisation)." ;
+  skos:scopeNote "Only applicable to suppliers (organisations) for which there exist a sameAs link to a matching company (registered organization)." . 
+
 tbfy:companyReconciliationScore a owl:DatatypeProperty ;
   schema:domainIncludes ocds:Organisation ;
   schema:rangeIncludes xsd:integer ;
   rdfs:label "reconciliation score" ;
   skos:definition "Score value from the Reconciliation API." ;
-  skos:scopeNote "Only applicable to matching suppliers for which there exist a sameAs link to a company." . 
+  skos:scopeNote "Only applicable to suppliers (organisations) for which there exist a sameAs link to a matching company (registered organization)." . 
 
 tbfy:companyReconciliationSource a owl:DatatypeProperty ;
   schema:domainIncludes ocds:Organisation ;
   schema:rangeIncludes xsd:string ;
   rdfs:label "reconciliation source" ;
   skos:definition "Source of the supplier-company matching, i.e., the URL to the Reconciliation API or an URI to a person (crowdsourcing)." ;
-  skos:scopeNote "Only applicable to matching suppliers for which there exist a sameAs link." . 
+  skos:scopeNote "Only applicable to suppliers (organisations) for which there exist a sameAs link to a matching company (registered organization)." . 
 
 tbfy:companyReconciliationDate a owl:DatatypeProperty ;
   schema:domainIncludes ocds:Organisation ;
   schema:rangeIncludes xsd:date ;
   rdfs:label "reconciliation date" ;
   skos:definition "Date of the supplier-company matching." ;
-  skos:scopeNote "Only applicable to matching suppliers for which there exist a sameAs link to a company." . 
+  skos:scopeNote "Only applicable to suppliers (organisations) for which there exist a sameAs link to a matching company (registered organization)." . 
