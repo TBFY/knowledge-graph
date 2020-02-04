@@ -66,7 +66,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}" ;
+    rr:template "http://data.tbfy.eu/organisation/{jurisdiction_code}-{company_number}" ;
     rr:class rov:RegisteredOrganization
   ];
 
@@ -146,28 +146,28 @@
   rr:predicateObjectMap [
     rr:predicate rov:hasSite ;
     rr:objectMap [ 
-      rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/registeredSite/address" 
+      rr:template "http://data.tbfy.eu/organisation/{jurisdiction_code}-{company_number}/registeredSite/address" 
     ];
   ];
 
   rr:predicateObjectMap [
     rr:predicate rov:hasRegisteredSite ;
     rr:objectMap [ 
-      rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/registeredSite/address" 
+      rr:template "http://data.tbfy.eu/organisation/{jurisdiction_code}-{company_number}/registeredSite/address" 
     ];
   ];
 
   rr:predicateObjectMap [
     rr:predicate rov:registration ;
     rr:objectMap [ 
-      rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id"
+      rr:template "http://data.tbfy.eu/organisation/{jurisdiction_code}-{company_number}/id"
     ];
   ];
 
   rr:predicateObjectMap [
     rr:predicate adms:identifier ;
     rr:objectMap [ 
-      rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id/OpenCorporates" 
+      rr:template "http://data.tbfy.eu/organisation/{jurisdiction_code}-{company_number}/id/OpenCorporates" 
     ];
   ].
 
@@ -195,7 +195,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{../jurisdiction_code}/{../company_number}/registeredSite/address" ;
+    rr:template "http://data.tbfy.eu/organisation/{../jurisdiction_code}-{../company_number}/registeredSite/address" ;
     rr:class org:Site ;
     rr:class locn:Address
   ];
@@ -203,7 +203,7 @@
   rr:predicateObjectMap [
     rr:predicate org:siteAddress ;
     rr:objectMap [ 
-      rr:template "http://data.tbfy.eu/company/{../jurisdiction_code}/{../company_number}/registeredSite/address" 
+      rr:template "http://data.tbfy.eu/organisation/{../jurisdiction_code}-{../company_number}/registeredSite/address" 
     ];
   ];
 
@@ -252,7 +252,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{../jurisdiction_code}/{../company_number}/id" ;
+    rr:template "http://data.tbfy.eu/organisation/{../jurisdiction_code}-{../company_number}/id" ;
     rr:class adms:Identifier
   ];
 
@@ -329,7 +329,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{jurisdiction_code}/{company_number}/id/OpenCorporates" ;
+    rr:template "http://data.tbfy.eu/organisation/{jurisdiction_code}-{company_number}/id/OpenCorporates" ;
     rr:class adms:Identifier
   ];
 
@@ -364,28 +364,28 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}" ;
+    rr:template "http://data.tbfy.eu/organisation/{../../jurisdiction_code}-{../../company_number}/officer/{id}" ;
     rr:class org:Membership ;
   ];
 
   rr:predicateObjectMap [
     rr:predicate org:role ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/role"
+      rr:template "http://data.tbfy.eu/organisation/{../../jurisdiction_code}-{../../company_number}/officer/{id}/role"
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate org:memberDuring ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/interval" 
+      rr:template "http://data.tbfy.eu/organisation/{../../jurisdiction_code}-{../../company_number}/officer/{id}/interval" 
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate org:organization ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}" 
+      rr:template "http://data.tbfy.eu/organisation/{../../jurisdiction_code}-{../../company_number}" 
     ]
   ];
 
@@ -406,7 +406,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/role" ;
+    rr:template "http://data.tbfy.eu/organisation/{../../jurisdiction_code}-{../../company_number}/officer/{id}/role" ;
     rr:class org:Membership ;
   ];
 
@@ -434,21 +434,21 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/interval" ;
+    rr:template "http://data.tbfy.eu/organisation/{../../jurisdiction_code}-{../../company_number}/officer/{id}/interval" ;
     rr:class time:Interval
   ];
 
   rr:predicateObjectMap [
     rr:predicate time:hasBeginning ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/interval/beginning" 
+      rr:template "http://data.tbfy.eu/organisation/{../../jurisdiction_code}-{../../company_number}/officer/{id}/interval/beginning" 
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate time:hasEnd ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/end" 
+      rr:template "http://data.tbfy.eu/organisation/{../../jurisdiction_code}-{../../company_number}/officer/{id}/end" 
     ]
   ].
 
@@ -462,7 +462,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/interval/beginning" ;
+    rr:template "http://data.tbfy.eu/organisation/{../../jurisdiction_code}-{../../company_number}/officer/{id}/interval/beginning" ;
     rr:class time:Instant
   ];
 
@@ -484,7 +484,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "http://data.tbfy.eu/company/{../../jurisdiction_code}/{../../company_number}/officer/{id}/interval/end" ;
+    rr:template "http://data.tbfy.eu/organisation/{../../jurisdiction_code}-{../../company_number}/officer/{id}/interval/end" ;
     rr:class time:Instant
   ];
 

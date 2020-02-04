@@ -1212,7 +1212,14 @@
   rr:predicateObjectMap [
     rr:predicate owl:sameAs ;
     rr:objectMap [
-      rr:template  "http://data.tbfy.eu/company/{tbfy_company_jurisdiction_code}/{tbfy_company_number}"
+      rr:template  "http://data.tbfy.eu/organisation/{tbfy_company_jurisdiction_code}-{tbfy_company_number}"
+    ]
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate tbfy:correspondsToRegOrg ;
+    rr:objectMap [
+      rr:template  "http://data.tbfy.eu/organisation/{tbfy_company_jurisdiction_code}-{tbfy_company_number}"
     ]
   ];
 
