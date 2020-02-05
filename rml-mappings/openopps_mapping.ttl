@@ -904,7 +904,7 @@
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:documentId ;
+    rr:predicate ocds:milestoneId ;
     rr:objectMap [
       rml:reference "id"
     ]
@@ -2042,7 +2042,7 @@
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:documentId ;
+    rr:predicate ocds:milestoneId ;
     rr:objectMap [
       rml:reference "id"
     ]
