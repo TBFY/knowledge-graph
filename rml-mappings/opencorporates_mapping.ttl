@@ -369,9 +369,9 @@
   ];
 
   rr:predicateObjectMap [
-    rr:predicate org:role ;
+    rr:predicate ebg:rolePositionText ;
     rr:objectMap [
-      rr:template "http://data.tbfy.eu/organisation/{../../jurisdiction_code}-{../../company_number}/officer/{id}/role"
+      rml:reference "position"
     ]
   ];
 
@@ -393,34 +393,6 @@
     rr:predicate org:member ;
     rr:objectMap [
       rr:template "http://data.tbfy.eu/officer/OpenCorporates/{id}" 
-    ]
-  ].
-
-<CompanyOfficerRole>
-  a rr:TriplesMap ;
-
-  rml:logicalSource [
-    rml:source "input.xml" ; 
-    rml:referenceFormulation ql:XPath ;
-    rml:iterator "/root/results/company/officers/officer" ;
-  ];
-
-  rr:subjectMap [
-    rr:template "http://data.tbfy.eu/organisation/{../../jurisdiction_code}-{../../company_number}/officer/{id}/role" ;
-    rr:class org:Membership ;
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate org:rolePositionText ;
-    rr:objectMap [
-      rml:reference "position"
-    ]
-  ];
-
-  rr:predicateObjectMap [
-    rr:predicate org:roleTitleText ;
-    rr:objectMap [
-      rml:reference "occupation"
     ]
   ].
 
