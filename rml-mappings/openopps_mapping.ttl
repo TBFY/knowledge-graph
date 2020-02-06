@@ -26,7 +26,7 @@
 @prefix owl:      <http://www.w3.org/2002/07/owl#> .
 @prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix schema:   <http://schema.org/> .
-@prefix xsd:      <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
 
 
 # *********************
@@ -44,97 +44,110 @@
 
   rr:subjectMap [
     rr:template "http://data.tbfy.eu/contractingProcess/{releases/ocid}/release/{releases/id}" ;
-    rr:class ocds:Release
+    rr:class tbfy:Release
   ];
   
   rr:predicateObjectMap [
-    rr:predicate ocds:releaseURI ;
+    rr:predicate tbfy:releaseURI ;
     rr:objectMap [
-      rml:reference "uri"
+      rml:reference "uri" ;
+      rr:datatype xsd:anyURI
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:dateReleasePublished ;
+    rr:predicate tbfy:releasePublishedDate ;
     rr:objectMap [
-      rml:reference "publishedDate"
+      rml:reference "publishedDate" ;
+      rr:datatype xsd:dateTime
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:releasePublisherUID ;
+    rr:predicate tbfy:releasePublisherUID ;
     rr:objectMap [
-      rml:reference "publisher/uid"
+      rml:reference "publisher/uid" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:releasePublisherURI ;
+    rr:predicate tbfy:releasePublisherURI ;
     rr:objectMap [
-      rml:reference "publisher/uri"
+      rml:reference "publisher/uri" ;
+      rr:datatype xsd:anyURI
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:releasePublisherName ;
+    rr:predicate tbfy:releasePublisherName ;
     rr:objectMap [
-      rml:reference "publisher/name"
+      rml:reference "publisher/name" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:releasePublisherScheme ;
+    rr:predicate tbfy:releasePublisherScheme ;
     rr:objectMap [
-      rml:reference "publisher/scheme"
+      rml:reference "publisher/scheme" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:releaseLicense ;
+    rr:predicate tbfy:releaseLicense ;
     rr:objectMap [
-      rml:reference "license"
+      rml:reference "license" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:releasePublicationPolicy ;
+    rr:predicate tbfy:releasePublicationPolicy ;
     rr:objectMap [
-      rml:reference "publicationPolicy"
+      rml:reference "publicationPolicy" ;
+      rr:datatype xsd:string 
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:releaseId ;
+    rr:predicate tbfy:releaseId ;
     rr:objectMap [
-      rml:reference "releases/id"
+      rml:reference "releases/id" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:releaseDate ;
+    rr:predicate tbfy:releaseDate ;
     rr:objectMap [
-      rml:reference "releases/date"
+      rml:reference "releases/date" ;
+      rr:datatype xsd:dateTime
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:releaseTag ;
+    rr:predicate tbfy:releaseTag ;
     rr:objectMap [
-      rml:reference "releases/tag"
+      rml:reference "releases/tag" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dc:language ;
     rr:objectMap [
-      rml:reference "releases/language"
+      rml:reference "releases/language" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:releaseInitiationType ;
+    rr:predicate tbfy:releaseInitiationType ;
     rr:objectMap [
-      rml:reference "releases/initiationType"
+      rml:reference "releases/initiationType" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -160,7 +173,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:ocid ;
     rr:objectMap [
-      rml:reference "ocid" 
+      rml:reference "ocid" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -223,7 +237,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:legalName ;
     rr:objectMap [
-      rml:reference "name"
+      rml:reference "name" ;
+      rr:datatype xsd:string
     ]
   ];
       
@@ -272,28 +287,32 @@
   rr:predicateObjectMap [
     rr:predicate schema:addressLocality ;
     rr:objectMap [
-      rml:reference "locality" 
+      rml:reference "locality" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:postalCode ;
     rr:objectMap [
-      rml:reference "postalCode" 
+      rml:reference "postalCode" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:addressCountry ;
     rr:objectMap [
-      rml:reference "countryName" 
+      rml:reference "countryName" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:streetAddress ;
     rr:objectMap [
-      rml:reference "streetAddress" 
+      rml:reference "streetAddress" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -315,35 +334,40 @@
   rr:predicateObjectMap [
     rr:predicate schema:email ;
     rr:objectMap [
-      rml:reference "email"
+      rml:reference "email" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:name ;
     rr:objectMap [
-      rml:reference "name"
+      rml:reference "name" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:faxNumber ;
     rr:objectMap [
-      rml:reference "faxNumber"
+      rml:reference "faxNumber" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:telephone ;
     rr:objectMap [
-      rml:reference "telephone"
+      rml:reference "telephone" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:URL ;
     rr:objectMap [
-      rml:reference "url"
+      rml:reference "url" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -376,7 +400,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:procurementRationale ;
     rr:objectMap [
-      rml:reference "rationale"
+      rml:reference "rationale" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -402,6 +427,14 @@
   ];
   
   rr:predicateObjectMap [
+    rr:predicate ocds:budgetId ;
+    rr:objectMap [
+      rml:reference "id" ;
+      rr:datatype xsd:string
+    ]
+  ];
+
+  rr:predicateObjectMap [
     rr:predicate ocds:hasReservedValue ;
     rr:objectMap [
       rr:template "http://data.tbfy.eu/plan/{../../ocid}_{../../id}/budget/{id}/reservedValue"
@@ -425,14 +458,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:valueAmount ;
     rr:objectMap [
-      rml:reference "amount"
+      rml:reference "amount" ;
+      rr:datatype xsd:decimal
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:valueCurrency;
     rr:objectMap [
-      rml:reference "currency"
+      rml:reference "currency" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -451,9 +486,18 @@
   ];
       
   rr:predicateObjectMap [
+    rr:predicate ocds:projectId ;
+    rr:objectMap [
+      rml:reference "projectID" ;
+      rr:datatype xsd:string
+    ]
+  ];
+
+  rr:predicateObjectMap [
     rr:predicate dc:title ;
     rr:objectMap [
-      rml:reference "project"
+      rml:reference "project" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -474,21 +518,24 @@
   rr:predicateObjectMap [
     rr:predicate ocds:documentId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
     
   rr:predicateObjectMap [
     rr:predicate schema:URL ;
     rr:objectMap [
-      rml:reference "url"
+      rml:reference "url" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dc:language ;
     rr:objectMap [
-      rml:reference "language"
+      rml:reference "language" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -521,21 +568,24 @@
   rr:predicateObjectMap [
     rr:predicate ocds:tenderId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dc:title ;
     rr:objectMap [ 
-      rml:reference "title" 
+      rml:reference "title" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dc:description ;
     rr:objectMap [ 
-      rml:reference "description" 
+      rml:reference "description" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -577,14 +627,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:procurementMethodDetails ;
     rr:objectMap [
-      rml:reference "procurementMethodDetails"
+      rml:reference "procurementMethodDetails" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:procurementMethodRationale ;
     rr:objectMap [
-      rml:reference "procurementMethodRationale"
+      rml:reference "procurementMethodRationale" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -598,7 +650,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:awardCriteriaDetails ;
     rr:objectMap [
-      rml:reference "awardCriteriaDetails"
+      rml:reference "awardCriteriaDetails" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -612,7 +665,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:submissionMethodDetails ;
     rr:objectMap [
-      rml:reference "submissionMethodDetails"
+      rml:reference "submissionMethodDetails" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -633,14 +687,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:enquiry ;
     rr:objectMap [
-      rml:reference "hasEnquiries" 
+      rml:reference "hasEnquiries" ;
+      rr:datatype xsd:boolean
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:eligibilityCriteria ;
     rr:objectMap [
-      rml:reference "eligibilityCriteria"
+      rml:reference "eligibilityCriteria" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -654,7 +710,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:numberOfTenderers ;
     rr:objectMap [
-      rml:reference "numberOfTenderers"
+      rml:reference "numberOfTenderers" ;
+      rr:datatype xsd:integer
     ]
   ];
 
@@ -696,14 +753,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:itemId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dc:description ;
     rr:objectMap [ 
-      rml:reference "description" 
+      rml:reference "description" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -715,7 +774,7 @@
   ];
       
   rr:predicateObjectMap [
-    rr:predicate ocds:classificatonScheme ;
+    rr:predicate ocds:classificationScheme ;
     rr:objectMap [
       rml:reference "classification/scheme"
     ]
@@ -729,7 +788,7 @@
   ];
       
   rr:predicateObjectMap [
-    rr:predicate ocds:additionalItemClassificatonScheme ;
+    rr:predicate ocds:additionalItemClassificationScheme ;
     rr:objectMap [
       rml:reference "additionalClassifications/scheme"
     ]
@@ -752,14 +811,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:valueAmount ;
     rr:objectMap [
-      rml:reference "amount"
+      rml:reference "amount" ;
+      rr:datatype xsd:decimal
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:valueCurrency ;
     rr:objectMap [
-      rml:reference "currency"
+      rml:reference "currency" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -780,14 +841,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:valueAmount ;
     rr:objectMap [
-      rml:reference "amount"
+      rml:reference "amount" ;
+      rr:datatype xsd:decimal
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:valueCurrency ;
     rr:objectMap [
-      rml:reference "currency"
+      rml:reference "currency" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -806,16 +869,18 @@
   ];
      
   rr:predicateObjectMap [
-    rr:predicate ocds:startDate;
+    rr:predicate ocds:periodStartDate ;
     rr:objectMap [
-      rml:reference "startDate"
+      rml:reference "startDate" ;
+      rr:datatype xsd:dateTime
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:endDate;
+    rr:predicate ocds:periodEndDate ;
     rr:objectMap [
-      rml:reference "endDate"
+      rml:reference "endDate" ;
+      rr:datatype xsd:dateTime
     ]
   ].
 
@@ -834,16 +899,18 @@
   ];
     
   rr:predicateObjectMap [
-    rr:predicate ocds:startDate;
+    rr:predicate ocds:periodStartDate ;
     rr:objectMap [
-      rml:reference "startDate"
+      rml:reference "startDate" ;
+      rr:datatype xsd:dateTime
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:endDate;
+    rr:predicate ocds:periodEndDate;
     rr:objectMap [
-      rml:reference "endDate"
+      rml:reference "endDate" ;
+      rr:datatype xsd:dateTime
     ]
   ].      
 
@@ -864,7 +931,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:documentId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
     
@@ -878,14 +946,16 @@
   rr:predicateObjectMap [
     rr:predicate dc:language ;
     rr:objectMap [
-      rml:reference "language"
+      rml:reference "language" ;
+      rr:datatype xsd:string
     ]
   ];
     
   rr:predicateObjectMap [
     rr:predicate schema:URL ;
     rr:objectMap [
-      rml:reference "url"
+      rml:reference "url" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -906,28 +976,32 @@
   rr:predicateObjectMap [
     rr:predicate ocds:milestoneId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dc:title ;
     rr:objectMap [
-      rml:reference "title"
+      rml:reference "title" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:milestoneDueDate ;
     rr:objectMap [
-      rml:reference "dueDate"
+      rml:reference "dueDate" ;
+      rr:datatype xsd:dateTime
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dc:description ;
     rr:objectMap [
-      rml:reference "description"
+      rml:reference "description" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -948,7 +1022,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:documentId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
     
@@ -962,14 +1037,16 @@
   rr:predicateObjectMap [
     rr:predicate dc:language ;
     rr:objectMap [
-      rml:reference "language"
+      rml:reference "language" ;
+      rr:datatype xsd:string
     ]
   ];
     
   rr:predicateObjectMap [
     rr:predicate schema:URL ;
     rr:objectMap [
-      rml:reference "url"
+      rml:reference "url" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -990,7 +1067,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:amendmentDate ;
     rr:objectMap [
-      rml:reference "date"
+      rml:reference "date" ;
+      rr:datatype xsd:dateTime
     ]
   ];
 
@@ -1004,7 +1082,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:amendmentRationale ;
     rr:objectMap [
-      rml:reference "rationale"
+      rml:reference "rationale" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1025,14 +1104,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:changeProperty ;
     rr:objectMap [
-      rml:reference "property"
+      rml:reference "property" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:changeFormerValue ;
     rr:objectMap [
-      rml:reference "former_value"
+      rml:reference "former_value" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1058,21 +1139,24 @@
   rr:predicateObjectMap [
     rr:predicate ocds:awardId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:awardDate ;
     rr:objectMap [
-      rml:reference "date"
+      rml:reference "date" ;
+      rr:datatype xsd:dateTime
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dc:title ;
     rr:objectMap [ 
-      rml:reference "title" 
+      rml:reference "title" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -1093,7 +1177,8 @@
   rr:predicateObjectMap [
     rr:predicate dc:description ;
     rr:objectMap [ 
-      rml:reference "description" 
+      rml:reference "description" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -1146,17 +1231,19 @@
     rr:class ocds:Value
   ];
 
-    rr:predicateObjectMap [
+  rr:predicateObjectMap [
     rr:predicate ocds:valueAmount ;
     rr:objectMap [
-      rml:reference "amount"
+      rml:reference "amount" ;
+      rr:datatype xsd:decimal
     ]
   ];
-      
+
   rr:predicateObjectMap [
     rr:predicate ocds:valueCurrency ;
     rr:objectMap [
-      rml:reference "currency"
+      rml:reference "currency" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1175,9 +1262,10 @@
   ];
     
   rr:predicateObjectMap [
-    rr:predicate ocds:legalName;
+    rr:predicate ocds:legalName ;
     rr:objectMap [
-      rml:reference "name"
+      rml:reference "name" ;
+      rr:datatype xsd:string
     ]
   ];
       
@@ -1224,23 +1312,26 @@
   ];
 
   rr:predicateObjectMap [
-    rr:predicate tbfy:companyReconciliationScore;
+    rr:predicate tbfy:companyReconciliationScore ;
     rr:objectMap [
-      rml:reference "tbfy_company_reconciliation_score"
+      rml:reference "tbfy_company_reconciliation_score" ;
+      rr:datatype xsd:decimal
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate tbfy:companyReconciliationSource;
+    rr:predicate tbfy:companyReconciliationSource ;
     rr:objectMap [
-      rml:reference "tbfy_company_reconciliation_source"
+      rml:reference "tbfy_company_reconciliation_source" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate tbfy:companyReconciliationDate;
+    rr:predicate tbfy:companyReconciliationDate ;
     rr:objectMap [
-      rml:reference "tbfy_company_reconciliation_date"
+      rml:reference "tbfy_company_reconciliation_date" ;
+      rr:datatype xsd:date
     ]
   ].
 
@@ -1261,28 +1352,32 @@
   rr:predicateObjectMap [
     rr:predicate schema:addressLocality ;
     rr:objectMap [
-      rml:reference "locality" 
+      rml:reference "locality" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:postalCode ;
     rr:objectMap [
-      rml:reference "postalCode" 
+      rml:reference "postalCode" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:addressCountry ;
     rr:objectMap [
-      rml:reference "countryName" 
+      rml:reference "countryName" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:streetAddress ;
     rr:objectMap [
-      rml:reference "streetAddress" 
+      rml:reference "streetAddress" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1304,28 +1399,32 @@
   rr:predicateObjectMap [
     rr:predicate schema:name ;
     rr:objectMap [
-      rml:reference "name"
+      rml:reference "name" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:email ;
     rr:objectMap [
-      rml:reference "email"
+      rml:reference "email" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:faxNumber ;
     rr:objectMap [
-      rml:reference "faxNumber"
+      rml:reference "faxNumber" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate schema:telephone ;
     rr:objectMap [
-      rml:reference "telephone"
+      rml:reference "telephone" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1346,14 +1445,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:itemId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dc:description ;
     rr:objectMap [ 
-      rml:reference "description" 
+      rml:reference "description" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -1407,16 +1508,18 @@
   ];
       
   rr:predicateObjectMap [
-    rr:predicate ocds:endDate ;
+    rr:predicate ocds:periodEndDate ;
     rr:objectMap [
-      rml:reference "endDate"
+      rml:reference "endDate" ;
+      rr:datatype xsd:dateTime
     ]
   ];
       
   rr:predicateObjectMap [
-    rr:predicate ocds:startDate ;
+    rr:predicate ocds:periodStartDate ;
     rr:objectMap [
-      rml:reference "startDate"
+      rml:reference "startDate" ;
+      rr:datatype xsd:dateTime
     ]
   ].
 
@@ -1437,7 +1540,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:documentId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
     
@@ -1451,14 +1555,16 @@
   rr:predicateObjectMap [
     rr:predicate dc:language ;
     rr:objectMap [
-      rml:reference "language"
+      rml:reference "language" ;
+      rr:datatype xsd:string
     ]
   ];
     
   rr:predicateObjectMap [
     rr:predicate schema:URL ;
     rr:objectMap [
-      rml:reference "url"
+      rml:reference "url" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1479,7 +1585,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:amendmentDate ;
     rr:objectMap [
-      rml:reference "date"
+      rml:reference "date" ;
+      rr:datatype xsd:dateTime
     ]
   ];
 
@@ -1493,7 +1600,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:amendmentRationale ;
     rr:objectMap [
-      rml:reference "rationale"
+      rml:reference "rationale" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1514,14 +1622,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:changeProperty ;
     rr:objectMap [
-      rml:reference "property"
+      rml:reference "property" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:changeFormerValue ;
     rr:objectMap [
-      rml:reference "former_value"
+      rml:reference "former_value" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1547,7 +1657,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:contractId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -1561,14 +1672,16 @@
   rr:predicateObjectMap [
     rr:predicate dc:title ;
     rr:objectMap [ 
-      rml:reference "title" 
+      rml:reference "title" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dc:description ;
     rr:objectMap [ 
-      rml:reference "description" 
+      rml:reference "description" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -1603,7 +1716,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:dateContractSigned ;
     rr:objectMap [ 
-      rml:reference "dateSigned" 
+      rml:reference "dateSigned" ;
+      rr:datatype xsd:dateTime
     ]
   ];
 
@@ -1643,16 +1757,18 @@
   ];
     
   rr:predicateObjectMap [
-    rr:predicate ocds:startDate;
+    rr:predicate ocds:periodStartDate ;
     rr:objectMap [
-      rml:reference "startDate"
+      rml:reference "startDate" ;
+      rr:datatype xsd:dateTime
     ]
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:endDate;
+    rr:predicate ocds:periodEndDate ;
     rr:objectMap [
-      rml:reference "endDate"
+      rml:reference "endDate" ;
+      rr:datatype xsd:dateTime
     ]
   ].      
 
@@ -1670,17 +1786,19 @@
     rr:class ocds:Value
   ];
 
-    rr:predicateObjectMap [
+  rr:predicateObjectMap [
     rr:predicate ocds:valueAmount ;
     rr:objectMap [
-      rml:reference "amount"
+      rml:reference "amount" ;
+      rr:datatype xsd:decimal
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:valueCurrency ;
     rr:objectMap [
-      rml:reference "currency"
+      rml:reference "currency" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1701,14 +1819,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:itemId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dc:description ;
     rr:objectMap [ 
-      rml:reference "description" 
+      rml:reference "description" ;
+      rr:datatype xsd:string
     ]
   ];
 
@@ -1757,7 +1877,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:documentId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
     
@@ -1771,14 +1892,16 @@
   rr:predicateObjectMap [
     rr:predicate dc:language ;
     rr:objectMap [
-      rml:reference "language"
+      rml:reference "language" ;
+      rr:datatype xsd:string
     ]
   ];
     
   rr:predicateObjectMap [
     rr:predicate schema:URL ;
     rr:objectMap [
-      rml:reference "url"
+      rml:reference "url" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1799,7 +1922,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:amendmentDate ;
     rr:objectMap [
-      rml:reference "date"
+      rml:reference "date" ;
+      rr:datatype xsd:dateTime
     ]
   ];
 
@@ -1813,7 +1937,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:amendmentRationale ;
     rr:objectMap [
-      rml:reference "rationale"
+      rml:reference "rationale" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1834,14 +1959,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:changeProperty ;
     rr:objectMap [
-      rml:reference "property"
+      rml:reference "property" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:changeFormerValue ;
     rr:objectMap [
-      rml:reference "former_value"
+      rml:reference "former_value" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1897,21 +2024,24 @@
   rr:predicateObjectMap [
     rr:predicate ocds:transactionId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:transactionDataSource ;
     rr:objectMap [
-      rml:reference "source"
+      rml:reference "source" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:transactionDate ;
     rr:objectMap [
-      rml:reference "date"
+      rml:reference "date" ;
+      rr:datatype xsd:dateTime
     ]
   ];
 
@@ -1925,7 +2055,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:transactionId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1946,14 +2077,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:valueAmount ;
     rr:objectMap [
-      rml:reference "amount"
+      rml:reference "amount" ;
+      rr:datatype xsd:decimal
     ]
   ];
       
   rr:predicateObjectMap [
     rr:predicate ocds:valueCurrency ;
     rr:objectMap [
-      rml:reference "currency"
+      rml:reference "currency" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -1974,14 +2107,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:legalName ;
     rr:objectMap [
-      rml:reference "legalName"
+      rml:reference "legalName" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:URI ;
     rr:objectMap [
-      rml:reference "uri"
+      rml:reference "uri" ;
+      rr:datatype xsd:anyURI
     ]
   ];
 
@@ -2009,14 +2144,16 @@
   rr:predicateObjectMap [
     rr:predicate ocds:legalName ;
     rr:objectMap [
-      rml:reference "legalName"
+      rml:reference "legalName" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:URI ;
     rr:objectMap [
-      rml:reference "uri"
+      rml:reference "uri" ;
+      rr:datatype xsd:anyURI
     ]
   ];
 
@@ -2044,28 +2181,32 @@
   rr:predicateObjectMap [
     rr:predicate ocds:milestoneId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dc:title ;
     rr:objectMap [
-      rml:reference "title"
+      rml:reference "title" ;
+      rr:datatype xsd:string
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate ocds:milestoneDueDate ;
     rr:objectMap [
-      rml:reference "dueDate"
+      rml:reference "dueDate" ;
+      rr:datatype xsd:dateTime
     ]
   ];
 
   rr:predicateObjectMap [
     rr:predicate dc:description ;
     rr:objectMap [
-      rml:reference "description"
+      rml:reference "description" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -2086,7 +2227,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:documentId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
     
@@ -2100,14 +2242,16 @@
   rr:predicateObjectMap [
     rr:predicate dc:language ;
     rr:objectMap [
-      rml:reference "language"
+      rml:reference "language" ;
+      rr:datatype xsd:string
     ]
   ];
     
   rr:predicateObjectMap [
     rr:predicate schema:URL ;
     rr:objectMap [
-      rml:reference "url"
+      rml:reference "url" ;
+      rr:datatype xsd:string
     ]
   ].
 
@@ -2128,7 +2272,8 @@
   rr:predicateObjectMap [
     rr:predicate ocds:documentId ;
     rr:objectMap [
-      rml:reference "id"
+      rml:reference "id" ;
+      rr:datatype xsd:string
     ]
   ];
     
@@ -2142,13 +2287,15 @@
   rr:predicateObjectMap [
     rr:predicate dc:language ;
     rr:objectMap [
-      rml:reference "language"
+      rml:reference "language" ;
+      rr:datatype xsd:string
     ]
   ];
     
   rr:predicateObjectMap [
     rr:predicate schema:URL ;
     rr:objectMap [
-      rml:reference "url"
+      rml:reference "url" ;
+      rr:datatype xsd:string
     ]
   ].
