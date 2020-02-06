@@ -1,7 +1,7 @@
 # Own prefixes
 @base             <http://data.tbfy.eu/> .
-@prefix tbfy:     <http://data.tbfy.eu/ontology/tbfy/> . 
-@prefix ocds:     <http://data.tbfy.eu/ontology/ocds/> .
+@prefix tbfy:     <http://data.tbfy.eu/ontology/tbfy#> . 
+@prefix ocds:     <http://data.tbfy.eu/ontology/ocds#> .
 @prefix ebg:      <http://data.businessgraph.io/ontology#/> .
 
 # External prefixes
@@ -9,15 +9,20 @@
 @prefix foaf:     <http://xmlns.com/foaf/0.1/> .
 @prefix owl:      <http://www.w3.org/2002/07/owl#> .
 @prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rov:      <http://www.w3.org/ns/regorg#> .
 @prefix schema:   <http://schema.org/> .
-@prefix xsd:      <http://www.w3.org/2004/02/skos/core#> .
+@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
 
 # Imports
 <http://data.tbfy.eu/ontology/tbfy> rdf:type owl:Ontology ;
   owl:imports <http://data.tbfy.eu/ontology/ocds/> , <http://data.businessgraph.io/ontology#/> .
 
 
-# Ontology
+############################################################################################################
+# Ontology concepts for reconciliation of suppliers (organisations) and companies (registered organizations)
+############################################################################################################
+
 tbfy:correspondsToRegOrg a owl:ObjectProperty ;
   schema:domainIncludes ocds:Organisation ;
   schema:rangeIncludes rov:RegisteredOrganization ;
@@ -27,7 +32,7 @@ tbfy:correspondsToRegOrg a owl:ObjectProperty ;
 
 tbfy:companyReconciliationScore a owl:DatatypeProperty ;
   schema:domainIncludes ocds:Organisation ;
-  schema:rangeIncludes xsd:integer ;
+  schema:rangeIncludes xsd:decimal ;
   rdfs:label "reconciliation score" ;
   skos:definition "Score value from the Reconciliation API." ;
   skos:scopeNote "Only applicable to suppliers (organisations) for which there exist a sameAs link to a matching company (registered organization)." . 
@@ -45,3 +50,90 @@ tbfy:companyReconciliationDate a owl:DatatypeProperty ;
   rdfs:label "reconciliation date" ;
   skos:definition "Date of the supplier-company matching." ;
   skos:scopeNote "Only applicable to suppliers (organisations) for which there exist a sameAs link to a matching company (registered organization)." . 
+
+
+##########################################################################################################
+# Ontology concepts for reconciliation of OCDS contracting processes (by adding metadata to OCDS releases)
+##########################################################################################################
+
+tbfy:Release a rdfs:Class ;
+  rdfs:label "Release" ;
+  skos:definition "Metadata for OCDS release." .
+
+tbfy:releaseURI a owl:DatatypeProperty ;
+  schema:domainIncludes tbfy:Release ;
+  schema:rangeIncludes xsd:anyURI ;
+  rdfs:label "release URI" ;
+  skos:definition "Release URI." .
+
+tbfy:releasePublishedDate a owl:DatatypeProperty ;
+  schema:domainIncludes tbfy:Release ;
+  schema:rangeIncludes xsd:dateTime ;
+  rdfs:label "release published date" ;
+  skos:definition "Release published date." .
+
+tbfy:releasePublisherUID a owl:DatatypeProperty ;
+  schema:domainIncludes tbfy:Release ;
+  schema:rangeIncludes xsd:string ;
+  rdfs:label "release publisher UID" ;
+  skos:definition "Release publisher UID." .
+
+tbfy:releasePublisherURI a owl:DatatypeProperty ;
+  schema:domainIncludes tbfy:Release ;
+  schema:rangeIncludes xsd:anyURI ;
+  rdfs:label "release publisher URI" ;
+  skos:definition "Release publisher URI." .
+
+tbfy:releasePublisherName a owl:DatatypeProperty ;
+  schema:domainIncludes tbfy:Release ;
+  schema:rangeIncludes xsd:string ;
+  rdfs:label "release publisher name" ;
+  skos:definition "Release publisher name." .
+
+tbfy:releasePublisherScheme a owl:DatatypeProperty ;
+  schema:domainIncludes tbfy:Release ;
+  schema:rangeIncludes xsd:string ;
+  rdfs:label "release publisher scheme" ;
+  skos:definition "Release publisher scheme." .
+
+tbfy:releaseLicense a owl:DatatypeProperty ;
+  schema:domainIncludes tbfy:Release ;
+  schema:rangeIncludes xsd:string ;
+  rdfs:label "release license" ;
+  skos:definition "Release license." .
+
+tbfy:releasePublicationPolicy a owl:DatatypeProperty ;
+  schema:domainIncludes tbfy:Release ;
+  schema:rangeIncludes xsd:string ;
+  rdfs:label "release publication policy" ;
+  skos:definition "Release publication policy." .
+
+tbfy:releaseId a owl:DatatypeProperty ;
+  schema:domainIncludes tbfy:Release ;
+  schema:rangeIncludes xsd:string ;
+  rdfs:label "release id" ;
+  skos:definition "Release id." .
+
+tbfy:releaseDate a owl:DatatypeProperty ;
+  schema:domainIncludes tbfy:Release ;
+  schema:rangeIncludes xsd:dateTime ;
+  rdfs:label "release date" ;
+  skos:definition "Release date." .
+
+tbfy:releaseTag a owl:DatatypeProperty ;
+  schema:domainIncludes tbfy:Release ;
+  schema:rangeIncludes xsd:string ;
+  rdfs:label "release tag" ;
+  skos:definition "Release tag." .
+
+dc:language a owl:DatatypeProperty ;
+  schema:domainIncludes tbfy:Release ;
+  schema:rangeIncludes xsd:string ;
+  rdfs:label "release language" ;
+  skos:definition "Release language." .
+
+tbfy:releaseInitiationType a owl:DatatypeProperty ;
+  schema:domainIncludes tbfy:Release ;
+  schema:rangeIncludes xsd:string ;
+  rdfs:label "release initiation type" ;
+  skos:definition "Release initiation type." .
