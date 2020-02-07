@@ -39,7 +39,7 @@ def enrich_company(company_data):
 
     url = tbfy.json_utils.get_value(company_data, "results.company.source.url")
     url_parsed = parse.urlparse(url).hostname
-    url_parsed = url_parsed.replace("www.", "")
+#    url_parsed = url_parsed.replace("www.", "")
     tbfy.json_utils.add_property_to_single_node(company_data, "results.company.source", "tbfy_url", url_parsed)
 
     ramon_code = str(company_jurisdiction_code).upper()
