@@ -49,7 +49,7 @@ def update_stats(file_stats):
     for key in stats_reconciliation.keys():
         if (key == "highest_result_score"):
             if (float(file_stats[key]) > float(stats_reconciliation[key])):
-                stats_reconciliation[key] = file_stats[key]
+                stats_reconciliation[key] = str(file_stats[key]).strip()
         else:
             stats_reconciliation[key] += int(file_stats[key])
 
@@ -65,19 +65,19 @@ def main(argv):
     opencorporates_folder = ""
 
     try:
-        opts, args = getopt.getopt(argv, "hs:e:o:")
+        opts, args = getopt.getopt(argv, "hs:e:i:")
     except getopt.GetoptError:
-        print("opencorporates_statistics.py -s <start_date> -e <end_date> -o <opencorporates_folder>")
+        print("opencorporates_statistics.py -s <start_date> -e <end_date> -i <opencorporates_folder>")
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("opencorporates_statistics.py -s <start_date> -e <end_date> -o <opencorporates_folder>")
+            print("opencorporates_statistics.py -s <start_date> -e <end_date> -i <opencorporates_folder>")
             sys.exit()
         elif opt in ("-s"):
             start_date = arg
         elif opt in ("-e"):
             end_date = arg
-        elif opt in ("-o"):
+        elif opt in ("-i"):
             opencorporates_folder = arg
 
     logging.info("main(): start_date = " + start_date)

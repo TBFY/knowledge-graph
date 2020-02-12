@@ -61,19 +61,19 @@ def main(argv):
     openopps_folder = ""
 
     try:
-        opts, args = getopt.getopt(argv, "hs:e:o:")
+        opts, args = getopt.getopt(argv, "hs:e:i:")
     except getopt.GetoptError:
-        print("openopps_statistics.py -s <start_date> -e <end_date> -o <openopps_folder>")
+        print("openopps_statistics.py -s <start_date> -e <end_date> -i <openopps_folder>")
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("openopps_statistics.py -s <start_date> -e <end_date> -o <openopps_folder>")
+            print("openopps_statistics.py -s <start_date> -e <end_date> -i <openopps_folder>")
             sys.exit()
         elif opt in ("-s"):
             start_date = arg
         elif opt in ("-e"):
             end_date = arg
-        elif opt in ("-o"):
+        elif opt in ("-i"):
             openopps_folder = arg
 
     logging.info("main(): start_date = " + start_date)

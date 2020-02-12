@@ -80,21 +80,21 @@ Scripts for processing statistics:
 #### openopps_statistics.py
 Command line:
 ```
-python openopps_statistics.py -s <start_date> -e <end_date> -o <openopps_folder>
+python openopps_statistics.py -s <start_date> -e <end_date> -i <openopps_folder>
 ```
 
 Example:
 ```
-python openopps_statistics.py -s '2019-01-01' -e '2019-01-31' -o 'C:\TBFY\2_JSON_OpenOpps'
+python openopps_statistics.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\2_JSON_OpenOpps'
 ```
 
 #### opencorporates_statistics.py
 Command line:
 ```
-python opencorporates_statistics.py -s <start_date> -e <end_date> -o <opencorporates_folder>
+python opencorporates_statistics.py -s <start_date> -e <end_date> -i <opencorporates_folder>
 ```
 
 Example:
 ```
-python opencorporates_statistics.py -s '2019-01-01' -e '2019-01-31' -o 'C:\TBFY\2_JSON_OpenCorporates'
+python opencorporates_statistics.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\2_JSON_OpenCorporates'
 ```
