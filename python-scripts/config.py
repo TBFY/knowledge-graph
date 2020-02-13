@@ -11,6 +11,10 @@
 #            research and innovation programme under grant agreement No 780247
 #####################################################################################################
 
+logging = {
+    "level": "INFO"
+}
+
 openopps = {
     "api_url": "https://api.openopps.com/api/",
     "page_size": 1000,
@@ -33,8 +37,13 @@ rml = {
     "rml_output_filename": "output.nt"
 }
 
-logging = {
-    "level": "INFO"
+jena_tools = {
+    "riot_command": "riot",
+}
+
+jena_fuseki = {
+    "fuseki_url": "http://52.19.213.234:3030", 
+    "dataset": "tbfy"
 }
 
 openopps_statistics = {
