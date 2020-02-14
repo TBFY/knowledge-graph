@@ -37,6 +37,7 @@ from datetime import timedelta
 # Global variables
 # ****************
 
+openopps_api_url = config.openopps["api_url"]
 openopps_page_size = config.openopps["page_size"]
 openopps_sleep = config.openopps["sleep"]
 
@@ -77,7 +78,7 @@ def reset_stats():
 # Acquire token from OpenOpps API
 # *******************************
 def acquire_token(username, password):
-    url = "https://api.openopps.com/api/api-token-auth/"
+    url = openopps_api_url + "api-token-auth/"
     headers = {
         "Content-Type": "application/json"
     }
@@ -100,7 +101,7 @@ def acquire_token(username, password):
 # Authenticate token from OpenOpps API
 # ************************************
 def authenticate_token(token):
-    url = "https://api.openopps.com/api/"
+    url = openopps_api_url
     params = {
         "format": "json"
     }
@@ -124,7 +125,7 @@ def get_releases(date, username, password, token):
         token = acquire_token(username, password)
 
     # Get releases
-    url = "https://api.openopps.com/api/tbfy/ocds/"
+    url = openopps_api_url + "tbfy/ocds/"
     params = {
         "page_size": openopps_page_size,
         "min_releasedate": date,
@@ -147,7 +148,12 @@ def get_releases(date, username, password, token):
 # *******************************************************************************
 # Get next releases by date from OpenOpps API (limitation of count 1000 per page)
 # *******************************************************************************
-def get_next_releases(url, token):
+def get_next_releases(url, username, password, token):
+    # Authenticate token
+    if not authenticate_token(token):
+        token = acquire_token(username, password)
+
+    # Get next releases
     headers = {
         "Authorization": token
     }
@@ -195,7 +201,7 @@ def get_and_write_releases(date, username, password, token, output_folder):
     next_page_url = response_releases_first_page_data['next']
     while next_page_url != None:
         time.sleep(openopps_sleep) # Sleep to not stress max retries
-        response_releases_next_page = get_next_releases(next_page_url, token)
+        response_releases_next_page = get_next_releases(next_page_url, username, password, token)
         write_releases(response_releases_next_page, output_folder)
 
         response_releases_next_page_data = json.loads(json.dumps(response_releases_next_page.json()))
