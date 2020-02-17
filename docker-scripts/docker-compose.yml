@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  fuseki:
+    image: stain/jena-fuseki
+    container_name: fuseki
+    ports:
+      - "3030:3030"
+    volumes:
+      - /data/fuseki:/fuseki
+    env_file:
+      - ./fuseki.env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "fuseki-log"
+  yasgui:
+    image: erikap/yasgui
+    container_name: yasgui
+    ports:
+      - "3040:80"
+    env_file:
+      - ./yasgui.env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "yasgui-log"
+    depends_on:
+      - fuseki

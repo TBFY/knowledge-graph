@@ -13,12 +13,17 @@
 
 This is the repository where all the work towards the creation of the TheyBuyForYou knowledge graph (KG) will be done. This repository is mostly related to activities that are being done in the context of Work Packages 1 and 2. In this repository we will keep:
 
-* Ontology model file that defines the schema for the TBFY knowledge graph  [ [.ttl file](https://github.com/TBFY/knowledge-graph/blob/master/model/tbfy-ontology.ttl) ]
-* Python scripts and RML mappings for the data ingestion pipeline developed for onboarding data to the knowledge graph:
+* Ontology model file that defines the schema for the TBFY knowledge graph:
+  * TBFY ontology [ [.ttl file](https://github.com/TBFY/knowledge-graph/blob/master/model/tbfy-ontology.ttl) ]
+* Data that must be loaded into the TBFY knowledge graph:
+  * NACE and OpenCorporates identifier system data files [ [repository folder](https://github.com/TBFY/knowledge-graph/tree/master/data) ]
+* Python scripts and RML mappings for the data ingestion pipeline (onboarding data to the knowledge graph):
   * Python scripts [ [repository folder](https://github.com/TBFY/knowledge-graph/tree/master/python-scripts) ]
   * RML mappings [ [repository folder](https://github.com/TBFY/knowledge-graph/tree/master/rml-mappings) ]
-* Modules with references to related ontologies in the public procurement domain.
-* Documentation of the knowledge graph schema (ontology) and related services that is being developed.
+* Docker scripts for deploying the TBFY knowledge graph:
+  * Docker scripts [ [repository folder](https://github.com/TBFY/knowledge-graph/tree/master/docker-scripts) ]
+* SLURM scripts for running jobs (e.g., Python scripts to ingest and publish data):
+  * SLURM scripts [ [repository folder](https://github.com/TBFY/knowledge-graph/tree/master/slurm-scripts) ]
 
 # References
 
