@@ -3,7 +3,7 @@
 # 
 # This file contains a script that converts JSON documents to XML documents.
 # 
-# Copyright: SINTEF 2017-2019
+# Copyright: SINTEF 2017-2020
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)
@@ -99,7 +99,7 @@ def main(argv):
                     json_dict_one_root = {'root': json_dict}
                     tbfy.json_utils.write_xmlfile(tbfy.json_utils.convert_to_xml(json_dict_one_root), outputFilePath)
 
-        start = start + timedelta(days=1)  # increase day one by one
+        start = start + timedelta(days=1) # Increase date by one day
 
 
 # *****************

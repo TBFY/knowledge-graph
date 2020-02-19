@@ -4,7 +4,7 @@
 # This file contains JSON enrichment methods for OCDS 1.0 releases downloaded from the 
 # OpenOpps OCDS API (https://openopps.com/api/tbfy/ocds/)
 # 
-# Copyright: SINTEF 2017-2019
+# Copyright: SINTEF 2017-2020
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)

@@ -4,7 +4,7 @@
 # This file contains JSON enrichment functions for company data downloaded from the 
 # OpenCorporates Company API (https://api.opencorporates.com/documentation/API-Reference)
 # 
-# Copyright: SINTEF 2017-2019
+# Copyright: SINTEF 2017-2020
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)
@@ -39,7 +39,6 @@ def enrich_company(company_data):
 
     url = tbfy.json_utils.get_value(company_data, "results.company.source.url")
     url_parsed = parse.urlparse(url).hostname
-#    url_parsed = url_parsed.replace("www.", "")
     tbfy.json_utils.add_property_to_single_node(company_data, "results.company.source", "tbfy_url", url_parsed)
 
     ramon_code = str(company_jurisdiction_code).upper()

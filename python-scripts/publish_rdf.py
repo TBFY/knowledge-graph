@@ -3,7 +3,7 @@
 # 
 # This file contains a script that publishes the RDF (N-Triples) files to the triplestore database.
 # 
-# Copyright: SINTEF 2017-2019
+# Copyright: SINTEF 2017-2020
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)
@@ -117,7 +117,7 @@ def main(argv):
 
         publish_rdf(rdf_data)
 
-        start = start + timedelta(days=1)  # increase day one by one
+        start = start + timedelta(days=1) # Increase date by one day
 
 
 # *****************

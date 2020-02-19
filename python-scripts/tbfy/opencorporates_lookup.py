@@ -4,7 +4,7 @@
 # This file contains a lookup/conversion table to be used for country names according 
 # to https://en.wikipedia.org/wiki/ISO_3166-1
 #
-# Copyright: SINTEF 2017-2019
+# Copyright: SINTEF 2017-2020
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)

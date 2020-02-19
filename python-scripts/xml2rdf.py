@@ -3,7 +3,7 @@
 # 
 # This file contains a script that runs the RML Mapper on XML files and produces N-triples files.
 # 
-# Copyright: SINTEF 2017-2019
+# Copyright: SINTEF 2017-2020
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)
@@ -144,7 +144,7 @@ def main(argv):
                     os.replace(rmlOutputFilePath, outputFilePath)
                     os.remove(rmlOpenCorporatesInputFilePath)
 
-        start = start + timedelta(days=1)  # increase day one by one
+        start = start + timedelta(days=1) # Increase date by one day
 
 
 # *****************
