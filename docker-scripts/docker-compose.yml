@@ -30,3 +30,18 @@ services:
         labels: "yasgui-log"
     depends_on:
       - fuseki
+  kg-api:
+    image: tbfy/kg-api:0.1
+    container_name: kg-api
+    ports:
+      - "7777:7777"
+    env_file:
+      - ./kg-api.env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "kg-api-log"
+    depends_on:
+      - fuseki
