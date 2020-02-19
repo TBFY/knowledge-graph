@@ -5,6 +5,7 @@ This module contains Docker scripts for deploying the TBFY knowledge graph:
 * `docker-compose.yml`: Docker Compose file for running the services required to host the TBFY knowledge graph.
 * `fuseki.env`: Environment file for the [Apache Jena Fuseki](https://jena.apache.org/documentation/fuseki2/index.html) service defined in the Docker Compose file. Here you must set the admin password for the Fuseki administration GUI.
 * `yasgui.env`: Environment file for the [YASGUI](https://github.com/TriplyDB/Yasgui) service defined in the Docker Compose file. Here you must set the SPARQL endpoint for the TBFY knowledge graph.
+* `kg-api.env`: Environment file for the [Knowledge Graph API](https://github.com/TBFY/knowledge-graph-API) service defined in the Docker Compose file. Here you must set the SPARQL endpoint for the TBFY knowledge graph, the resource namespace and the server path.
 
 ## Prerequisites
 
@@ -27,3 +28,8 @@ docker-compose up &
 
 ### Query the data using YASGUI
 * Open YASGUI in your browser, e.g. [http://52.19.213.234:3040](http://52.19.213.234:3040), and enter your SPARQL queries.
+
+### Query the data using the Knowledge Graph API
+* See [https://github.com/TBFY/knowledge-graph-API/wiki](https://github.com/TBFY/knowledge-graph-API/wiki) for documentation and examples.
+* Example: Obtain the list of tenders that contain the word "cluster".
+  * [http://52.19.213.234:7777/kg-api/tender?title=cluster](http://52.19.213.234:7777/kg-api/tender?title=cluster)
