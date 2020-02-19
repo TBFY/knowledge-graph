@@ -3,7 +3,7 @@
 # 
 # This file contains configuration parameters for the data ingestion process.
 # 
-# Copyright: SINTEF 2017-2019
+# Copyright: SINTEF 2017-2020
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)
@@ -26,7 +26,10 @@ opencorporates = {
     "reconcile_score": 70,   
     "companies_api_url": "http://api.opencorporates.com",
     "smart_address_check": False,
-    "country_name_codes_simulation": False
+    "country_name_codes_simulation": False,
+    "use_cached_company_database": True,
+    "cached_company_database_retention_days": 100,
+    "cached_company_database_filename": "shelve/company_database_dict"
 }
 
 rml = {

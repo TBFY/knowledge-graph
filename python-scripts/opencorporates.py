@@ -7,7 +7,7 @@
 # Company data for matching companies are downloaded as JSON documents from the
 # OpenCorporates Company API (https://api.opencorporates.com/documentation/API-Reference)
 # 
-# Copyright: SINTEF 2017-2019
+# Copyright: SINTEF 2017-2020
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)
@@ -23,6 +23,9 @@ import tbfy.json_utils
 import tbfy.opencorporates_lookup
 
 import logging
+
+import shelve
+import copy
 
 import requests
 import json
@@ -45,6 +48,10 @@ from datetime import timedelta
 opencorporates_reconcile_score = config.opencorporates["reconcile_score"]
 opencorporates_reconcile_api_url = config.opencorporates["reconcile_api_url"]
 opencorporates_companies_api_url = config.opencorporates["companies_api_url"]
+
+opencorporates_use_cached_company_database = config.opencorporates["use_cached_company_database"]
+opencorporates_cached_company_database_retention_days = config.opencorporates["cached_company_database_retention_days"]
+opencorporates_cached_company_database_filename = config.opencorporates["cached_company_database_filename"]
 
 
 # **********
@@ -71,11 +78,37 @@ def reset_stats():
         stats_reconciliation[key] = 0
     
 
-# *****************************************
-# Cached lookup table for matched suppliers
-# *****************************************
+# *************************************************
+# Cached lookup database (dictionary) for companies
+# *************************************************
 
-suppliers_lookup_dict = dict() # Used for processing a singe award release in case the same supplier occurs multiple time. Must be reset after each award processing.
+# Used to lookup companies that are kept for retention days
+company_database_dict = shelve.open(opencorporates_cached_company_database_filename, writeback=True) 
+
+def add_company_to_database_dict(company_id, entry_date, json_data):
+    global company_database_dict
+    company_database_dict[company_id] = (company_id, entry_date, json_data)
+
+def get_company_from_database_dict(company_id):
+    global company_database_dict
+    if company_id in company_database_dict.keys():
+        company_result = company_database_dict[company_id]
+        entry_date = company_result[1]
+        days_old = (date.today() - entry_date).days
+        if (days_old > opencorporates_cached_company_database_retention_days):
+            company_database_dict.pop(company_id, None)
+        else:
+            return company_result[2]
+    else:
+        return None
+
+
+# ******************************************************
+# Cached lookup table (dictionary) for matched suppliers
+# ******************************************************
+
+# Used for processing a single award release in case the same supplier occurs multiple time. Must be reset after each award processing
+suppliers_lookup_dict = dict()
 
 def add_supplier_to_lookup_dict(supplier_name, jurisdiction_code, company_number, identifier_notation, reconciliation_score, reconciliation_source, reconciliation_date):
     global suppliers_lookup_dict
@@ -302,7 +335,16 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
                 if ((not match_found) and (is_candidate_company(buyer_data, supplier_data, reconcile_result))):
                     logging.info("process_suppliers(): result_score = " + str(result_score))
                     company_id = reconcile_result['id']
-                    response_company = get_company(company_id, api_token)
+
+                    response_company = None
+                    if opencorporates_use_cached_company_database:
+                        response_company = get_company_from_database_dict(company_id)
+                        if response_company == None:
+                            response_company = get_company(company_id, api_token)
+                            add_company_to_database_dict(company_id, date.today(), response_company)
+                    else:
+                        response_company = get_company(company_id, api_token)
+
                     company_data = json.loads(json.dumps(response_company.json()))
 
                     if not config.opencorporates['smart_address_check']:
@@ -545,7 +587,10 @@ def main(argv):
 
             write_stats(outputDirPath) # Write statistics
 
-        start = start + timedelta(days=1)  # increase day one by one
+        start = start + timedelta(days=1) # Increase date by one day
+
+    if opencorporates_use_cached_company_database:
+        company_database_dict.close() # Close shelve in order to persist data
 
     if config.opencorporates["country_name_codes_simulation"]:
         write_country_name_codes_errors(output_folder)

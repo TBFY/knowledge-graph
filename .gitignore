@@ -5,3 +5,6 @@ python-scripts/.editorconfig
 python-scripts/tbfy/__pycache__
 .editorconfig
 rml-mappings/rmlmapper-4.5.1.jar
+python-scripts/shelve/company_database_dict.bak
+python-scripts/shelve/company_database_dict.dat
+python-scripts/shelve/company_database_dict.dir
