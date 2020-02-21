@@ -1,5 +1,5 @@
 # Docker scripts
-This module contains Docker scripts for deploying the TBFY knowledge graph:
+This module contains Docker scripts for deploying the TBFY knowledge graph.
 
 ## Docker and environment files
 * `docker-compose.yml`: Docker Compose file for running the services required to host the TBFY knowledge graph.
@@ -24,6 +24,7 @@ docker-compose up &
 * Log into the Fuseki administration GUI, e.g. [http://52.19.213.234:3030](http://52.19.213.234:3030), using the admin password that you set in the `fuseki.env` file.
 * Create a new dataset `tbfy` with the dataset type `Persistent (TDB2)`.
 * Upload the NACE and OpenCorporates identifer system data files from the [data folder](https://github.com/TBFY/knowledge-graph/tree/master/data).
+* Download the TBFY procurement data from the [TBFY data sources repository](https://github.com/TBFY/data-sources).
 * Publish TBFY procurement data using the [Python scripts](https://github.com/TBFY/knowledge-graph/tree/master/python-scripts).
 
 ### Query the data using YASGUI
