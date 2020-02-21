@@ -110,3 +110,21 @@ Example:
 ```
 python opencorporates_statistics.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\2_JSON_OpenCorporates'
 ```
+
+## Utilities
+Utility scripts:
+
+* `replace_string_rdf.py`: Script that can be used to perform a simple string replace in the produced RDF (N-Triples) files.
+
+### Runnings the scripts
+
+#### replace_string_rdf.py
+Command line:
+```
+python replace_string_rdf.py -a <old_string> -b <new_string> -s <start_date> -e <end_date> -i <old_rdf_folder> -i <new_rdf_folder>
+```
+
+Example:
+```
+python replace_string_rdf.py -a 'data.tbfy.org' -b 'data.tbfy.eu' -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\5_RDF_TBFY' -o 'C:\TBFY\5_RDF_TFY_REPLACED'
+```
