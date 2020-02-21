@@ -1,5 +1,5 @@
 # Python scripts
-This module contains Python scripts for downloading procurement data from the OpenOpps API and matching supplier records using the OpenCorporates Reconciliation and Company APIs.
+This module contains Python scripts for downloading procurement data from the OpenOpps API, matching supplier records using the OpenCorporates Reconciliation and Company APIs, enrich and map the downloaded data to RDF, and publish the RDF data to the TBFY knowledge graph.
 
 ## Process
 The data ingestion process consists of the following steps:
@@ -11,19 +11,34 @@ The data ingestion process consists of the following steps:
 5. `xml2rdf.py`: Runs RML Mapper on the enriched XML data files from step 4 and produces N-Triples files. The script requires an RML folder which contains the [RML Mapper v4.5.1 release file](https://github.com/RMLio/rmlmapper-java/releases/tag/v4.5.1) and the [RML mapping files](https://github.com/TBFY/knowledge-graph/tree/master/rml-mappings).
 6. `publish_rdf.py`: Publishes the RDF (N-Triples) files from step 5 to [Apache Jena Fuseki](https://jena.apache.org/documentation/fuseki2/index.html) and [Apache Jena TBD](https://jena.apache.org/documentation/tdb/index.html). Jena TDB is used as the triplestore for the TBFY Knowledge Graph (KG) RDF dataset. Jena Fuseki provides a SPARQL endpoint to the TBFY KG.
 
-Configuration parameters for the four scripts are set in the `config.py` file.
+Configuration parameters for these scripts are set in the `config.py` file.
 
-### Running the scripts
+We have defined a main script `ingest_data.py` that runs the whole data ingestion process.
 
-#### openopps.py
+### Running the main data ingestion script
+
+#### ingest_data.py
 Command line:
 ```
-python openopps.py -u <username> -p <password>' -s <start_date> -e <end_date> -o <output_folder>
+python ingest_data.py -u <openopps_username> -p <openopps_password> -a <opencorporates_api_key> -r <rml_folder> -s <start_date> -e <end_date> -o <output_folder>
 ```
 
 Example:
 ```
-python openopps.py -u 'johndoe@tbfy.eu' -p 'secret' -s '2019-01-01' -e '2019-01-31' -o 'C:\TBFY\1_JSON_OpenOpps'
+python ingest_data.py -u 'johndoe@tbfy.eu' -p 'password' -a 'secret' -r 'C:\TBFY\RML_Mapper_Scripts' -s '2019-01-01' -e '2019-01-31' -o 'C:\TBFY\DATA_INGESTION'
+```
+
+### Running individual ingestion step scripts
+
+#### openopps.py
+Command line:
+```
+python openopps.py -u <username> -p <password> -s <start_date> -e <end_date> -o <output_folder>
+```
+
+Example:
+```
+python openopps.py -u 'johndoe@tbfy.eu' -p 'password' -s '2019-01-01' -e '2019-01-31' -o 'C:\TBFY\1_JSON_OpenOpps'
 ```
 
 #### opencorporates.py
@@ -115,6 +130,7 @@ python opencorporates_statistics.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\
 Utility scripts:
 
 * `replace_string_rdf.py`: Script that can be used to perform a simple string replace in the produced RDF (N-Triples) files.
+* `validate_rdf.py`: Script that can be used to validate the produced RDF (N-Triples) files. Requires that the [Apache Jena command line tools](https://jena.apache.org/download/index.cgi) are installed.
 
 ### Runnings the scripts
 
@@ -127,4 +143,15 @@ python replace_string_rdf.py -a <old_string> -b <new_string> -s <start_date> -e 
 Example:
 ```
 python replace_string_rdf.py -a 'data.tbfy.org' -b 'data.tbfy.eu' -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\5_RDF_TBFY' -o 'C:\TBFY\5_RDF_TFY_REPLACED'
+```
+
+#### validate_rdf.py
+Command line:
+```
+python validate_rdf.py -s <start_date> -e <end_date> -i <input_folder>
+```
+
+Example:
+```
+python validate_rdf.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\5_RDF_TBFY'
 ```
