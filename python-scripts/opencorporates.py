@@ -31,6 +31,7 @@ import requests
 import json
 
 import os
+import shutil
 import sys
 import getopt
 
@@ -179,7 +180,7 @@ def reconcile_company(company_name, jurisdiction_code):
     response = requests.get(url, params=params, headers=headers)
 
     if response.status_code != 200:
-        logging.info("reconcile_company(): ERROR: " + json.dumps(response.json()))
+        logging.error("reconcile_company(): ERROR: " + json.dumps(response.json()))
         return None
     else:
         return response
@@ -202,7 +203,7 @@ def get_company(company_id, api_token):
     response = requests.get(url, params=params, headers=headers)
 
     if response.status_code != 200:
-        logging.info("get_company(): ERROR: " + json.dumps(response.json()))
+        logging.error("get_company(): ERROR: " + json.dumps(response.json()))
         sys.exit(1)
     else:
         return response
@@ -238,9 +239,9 @@ def is_candidate_company(buyer_data, supplier_data, result_data):
     # If supplier jurisdiction matches result jurisdiction then return true
     result_jurisdiction = get_result_jurisdiction(result_data)
     if supplier_jurisdiction == result_jurisdiction:
-        logging.info("is_candidate_company(): supplier_name = " + supplier_name)
-        logging.info("is_candidate_company(): result_id = " + result_id)
-        logging.info("is_candidate_company(): result_score = " + str(result_score))
+        logging.debug("is_candidate_company(): supplier_name = " + supplier_name)
+        logging.debug("is_candidate_company(): result_id = " + result_id)
+        logging.debug("is_candidate_company(): result_score = " + str(result_score))
         stats_reconciliation['candidate_companies'] += 1
         return True
     else:
@@ -263,9 +264,9 @@ def is_matching_company(supplier_data, company_data):
     elif not company_registered_address_in_full:
         return False
     elif (supplier_postal_code in company_registered_address_in_full) and (supplier_street_address in company_registered_address_in_full):
-        logging.info("is_matching_company(): supplier_postal_code = " + supplier_postal_code)
-        logging.info("is_matching_company(): supplier_street_address = " + supplier_street_address)
-        logging.info("is_matching_company(): company_registered_address_in_full = " + company_registered_address_in_full)
+        logging.debug("is_matching_company(): supplier_postal_code = " + supplier_postal_code)
+        logging.debug("is_matching_company(): supplier_street_address = " + supplier_street_address)
+        logging.debug("is_matching_company(): company_registered_address_in_full = " + company_registered_address_in_full)
         stats_reconciliation['matching_companies'] += 1
         return True
     else:
@@ -295,12 +296,12 @@ def write_company(ocid, response_company, output_folder):
 def process_suppliers(api_token, release_data, award_index, filename, output_folder):
     global stats_reconciliation
 
-    logging.info("process_suppliers(): tag_value = " + str(get_tag(release_data)))
+    logging.debug("process_suppliers(): tag_value = " + str(get_tag(release_data)))
     buyer_data = get_buyer(release_data)
     buyer_name = get_buyer_name(buyer_data)
     buyer_country_code = get_buyer_country_code(buyer_data)
-    logging.info("process_suppliers(): buyer_name = " + buyer_name)
-    logging.info("process_suppliers(): buyer_country_code = " + buyer_country_code)
+    logging.debug("process_suppliers(): buyer_name = " + buyer_name)
+    logging.debug("process_suppliers(): buyer_country_code = " + buyer_country_code)
 
     # Reset suppliers lookup table for processing new award
     reset_suppliers_lookup_dict()
@@ -333,7 +334,7 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
 
                 new_match_found = False
                 if ((not match_found) and (is_candidate_company(buyer_data, supplier_data, reconcile_result))):
-                    logging.info("process_suppliers(): result_score = " + str(result_score))
+                    logging.debug("process_suppliers(): result_score = " + str(result_score))
                     company_id = reconcile_result['id']
 
                     response_company = None
@@ -525,24 +526,11 @@ def main(argv):
         elif opt in ("-o"):
             output_folder = arg
 
-    logging.info("main(): api_token = " + api_token)
-    logging.info("main(): start_date = " + start_date)
-    logging.info("main(): end_date = " + end_date)
-    logging.info("main(): input_folder = " + input_folder)
-    logging.info("main(): output_folder = " + output_folder)
-
-    copy_command = ""
-    if sys.platform.lower().startswith("win"):
-        copy_command = "copy"
-    elif sys.platform.lower().startswith("linux"):
-        copy_command = "cp"
-    elif sys.platform.lower().startswith("darwin"):
-        copy_command = "cp"
-    else:
-        copy_command = "copy"
-
-    logging.info("main(): platform = " + sys.platform.lower())
-    logging.info("main(): copy_command = " + copy_command)
+    logging.info("opencorporates.py: api_token = " + api_token)
+    logging.info("opencorporates.py: start_date = " + start_date)
+    logging.info("opencorporates.py: end_date = " + end_date)
+    logging.info("opencorporates.py: input_folder = " + input_folder)
+    logging.info("opencorporates.py: output_folder = " + output_folder)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")
@@ -569,7 +557,7 @@ def main(argv):
                     f.close()
 
                     if is_award(release_data):
-                        logging.info("main(): filename = " + f.name)
+                        logging.info("opencorporates.py: filename = " + f.name)
 
                         awards_data = get_awards(release_data)
                         if awards_data:
@@ -579,7 +567,7 @@ def main(argv):
                                 award_index += 1
                     else:
                         if not config.opencorporates["country_name_codes_simulation"]:
-                            os.system(copy_command + ' ' + filePath + ' ' + outputFilePath)
+                            shutil.copy(filePath, outputFilePath)
                 except SystemExit:
                     sys.exit(1)
                 except:

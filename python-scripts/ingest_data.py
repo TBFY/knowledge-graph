@@ -40,8 +40,8 @@ def main(argv):
     openopps_password = ""
     opencorporates_api_key = ""
     rml_folder = ""
+    start_date = ""
     end_date = ""
-    input_folder = ""
     output_folder = ""
 
     try:
@@ -68,14 +68,13 @@ def main(argv):
         elif opt in ("-o"):
             output_folder = arg
 
-    logging.info("main(): argv[1:] = " + str(argv[1:]))
-    logging.info("main(): openopps_username = " + openopps_username)
-    logging.info("main(): openopps_password = " + openopps_password)
-    logging.info("main(): opencorporates_api_key = " + opencorporates_api_key)
-    logging.info("main(): rml_folder = " + rml_folder)
-    logging.info("main(): start_date = " + start_date)
-    logging.info("main(): end_date = " + end_date)
-    logging.info("main(): output_folder = " + output_folder)
+    logging.info("ingest_data.py: openopps_username = " + openopps_username)
+    logging.info("ingest_data.py: openopps_password = " + openopps_password)
+    logging.info("ingest_data.py: opencorporates_api_key = " + opencorporates_api_key)
+    logging.info("ingest_data.py: rml_folder = " + rml_folder)
+    logging.info("ingest_data.py: start_date = " + start_date)
+    logging.info("ingest_data.py: end_date = " + end_date)
+    logging.info("ingest_data.py: output_folder = " + output_folder)
 
     openopps_folder = os.path.join(output_folder, "1_JSON_OpenOpps")
     openopps_argv = ["openopps.py", "-u", openopps_username, "-p", openopps_password, "-s", start_date, "-e", end_date, "-o", openopps_folder]

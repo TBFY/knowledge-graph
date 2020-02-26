@@ -45,3 +45,18 @@ services:
         labels: "kg-api-log"
     depends_on:
       - fuseki
+#  kg-ingestion-service:
+#    image: tbfy/kg-ingestion-service:0.1
+#    container_name: kg-ingestion-service
+#    volumes:
+#      - /data/ingestion:/ingestion
+#    env_file:
+#      - ./kg-ingestion-service.env
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "10m"
+#        max-file: "3"
+#        labels: "kg-ingestion-service-log"
+#    depends_on:
+#      - fuseki

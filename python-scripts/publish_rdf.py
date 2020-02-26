@@ -34,8 +34,8 @@ from datetime import timedelta
 # Global variables
 # ****************
 
-jena_fuseki_url = config.jena_fuseki["fuseki_url"]
-jena_fuseki_dataset = config.jena_fuseki["dataset"]
+jena_fuseki_url = os.getenv("TBFY_FUSEKI_URL") or config.jena_fuseki["fuseki_url"]
+jena_fuseki_dataset = os.getenv("TBFY_FUSEKI_DATASET") or config.jena_fuseki["dataset"]
 
 
 # ***************************
@@ -93,9 +93,9 @@ def main(argv):
         elif opt in ("-i"):
             input_folder = arg
 
-    logging.info("main(): start_date = " + start_date)
-    logging.info("main(): end_date = " + end_date)
-    logging.info("main(): input_folder = " + input_folder)
+    logging.info("publish_rdf.py: start_date = " + start_date)
+    logging.info("publish_rdf.py: end_date = " + end_date)
+    logging.info("publish_rdf.py: input_folder = " + input_folder)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")
@@ -113,7 +113,7 @@ def main(argv):
                 filePath = os.path.join(dirPath, filename)
                 rdf_data = rdf_data + read_rdf_data(filePath)
 
-        logging.info("main(): release_date = " + release_date)
+        logging.info("publish_rdf.py: release_date = " + release_date)
 
         publish_rdf(rdf_data)
 

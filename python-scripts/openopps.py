@@ -89,7 +89,7 @@ def acquire_token(username, password):
     response = requests.post(url, headers=headers, data=json.dumps(data))
 
     if response.status_code != 200:
-        logging.info("acquire_token(): ERROR: " + json.dumps(response.json()))
+        logging.error("acquire_token(): ERROR: " + json.dumps(response.json()))
         return None
     else:
         data = json.loads(json.dumps(response.json()))
@@ -242,19 +242,19 @@ def main(argv):
 
     token = acquire_token(username, password)
 
-    logging.info("main(): username = " + username)
-    logging.info("main(): password = " + password)
-    logging.info("main(): token = " + token)
-    logging.info("main(): start_date = " + start_date)
-    logging.info("main(): end_date = " + end_date)
-    logging.info("main(): output_folder = " + output_folder)
+    logging.info("openopps.py: username = " + username)
+    logging.info("openopps.py: password = " + password)
+    logging.info("openopps.py: token = " + token)
+    logging.info("openopps.py: start_date = " + start_date)
+    logging.info("openopps.py: end_date = " + end_date)
+    logging.info("openopps.py: output_folder = " + output_folder)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")
 
     while start <= stop:
         release_date = datetime.strftime(start, "%Y-%m-%d")
-        logging.info("main(): release_date = " + release_date)
+        logging.info("openopps.py: release_date = " + release_date)
         outputDirPath = os.path.join(output_folder, release_date)
         get_and_write_releases(release_date, username, password, token, outputDirPath)
         write_stats(outputDirPath) # Write statistics
