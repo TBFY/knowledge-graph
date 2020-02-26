@@ -2,8 +2,7 @@
 <p align="center"><img width=40% src="https://github.com/TBFY/knowledge-graph/blob/master/logo.png"></p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-![Docker](https://img.shields.io/badge/python-v3.0-blue.svg)
-[![](https://jitpack.io/v/TBFY/knowledge-graph.svg)](https://jitpack.io/#TBFY/knowledge-graph)
+![Docker](https://img.shields.io/badge/python-v3.7-blue.svg)
 [![GitHub Issues](https://img.shields.io/github/issues/TBFY/knowledge-graph.svg)](https://github.com/TBFY/knowledge-graph/issues)
 [![License](https://img.shields.io/badge/license-Apache2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![DOI](https://zenodo.org/badge/123939667.svg)](https://zenodo.org/badge/latestdoi/123939667)
