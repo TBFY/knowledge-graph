@@ -62,10 +62,10 @@ def main(argv):
         elif opt in ("-o"):
             output_folder = arg
 
-    logging.info("enrich_json.py: start_date = " + start_date)
-    logging.info("enrich_json.py: end_date = " + end_date)
-    logging.info("enrich_json.py: input_folder = " + input_folder)
-    logging.info("enrich_json.py: output_folder = " + output_folder)
+    logging.debug("enrich_json.py: start_date = " + start_date)
+    logging.debug("enrich_json.py: end_date = " + end_date)
+    logging.debug("enrich_json.py: input_folder = " + input_folder)
+    logging.debug("enrich_json.py: output_folder = " + output_folder)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")
@@ -80,9 +80,9 @@ def main(argv):
             if not os.path.exists(outputDirPath):
                 os.makedirs(outputDirPath)
             for filename in os.listdir(dirPath):
-                logging.info("enrich_json.py: filename = " + filename)
                 filePath = os.path.join(dirPath, filename)
                 outputFilePath = os.path.join(outputDirPath, filename)
+                logging.info("enrich_json.py: file = " + outputFilePath)
                 if tbfy.json_utils.is_openopps_json(filename):
                     tbfy.openopps_enrich.process_release(filePath, outputFilePath)
                 if tbfy.json_utils.is_opencorporates_json(filename):

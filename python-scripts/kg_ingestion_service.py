@@ -63,17 +63,17 @@ def main(argv):
     tbfy_fuseki_url = os.environ["TBFY_FUSEKI_URL"]
     tbfy_fuseki_dataset = os.environ["TBFY_FUSEKI_DATASET"]
 
-    logging.info("kg_ingestion_service.py: openopps_username = " + openopps_username)
-    logging.info("kg_ingestion_service.py: openopps_password = " + openopps_password)
-    logging.info("kg_ingestion_service.py: opencorporates_api_key = " + opencorporates_api_key)
-    logging.info("kg_ingestion_service.py: rml_folder = " + rml_folder)
-    logging.info("kg_ingestion_service.py: start_date = " + start_date)
-    logging.info("kg_ingestion_service.py: end_date = " + end_date)
-    logging.info("kg_ingestion_service.py: days_delayed = " + days_delayed)
-    logging.info("kg_ingestion_service.py: daily_schedule = " + daily_schedule)
-    logging.info("kg_ingestion_service.py: output_folder = " + output_folder)
-    logging.info("kg_ingestion_service.py: tbfy_fuseki_url = " + tbfy_fuseki_url)
-    logging.info("kg_ingestion_service.py: tbfy_fuseki_dataset = " + tbfy_fuseki_dataset)
+    logging.debug("kg_ingestion_service.py: openopps_username = " + openopps_username)
+    logging.debug("kg_ingestion_service.py: openopps_password = " + openopps_password)
+    logging.debug("kg_ingestion_service.py: opencorporates_api_key = " + opencorporates_api_key)
+    logging.debug("kg_ingestion_service.py: rml_folder = " + rml_folder)
+    logging.debug("kg_ingestion_service.py: start_date = " + start_date)
+    logging.debug("kg_ingestion_service.py: end_date = " + end_date)
+    logging.debug("kg_ingestion_service.py: days_delayed = " + days_delayed)
+    logging.debug("kg_ingestion_service.py: daily_schedule = " + daily_schedule)
+    logging.debug("kg_ingestion_service.py: output_folder = " + output_folder)
+    logging.debug("kg_ingestion_service.py: tbfy_fuseki_url = " + tbfy_fuseki_url)
+    logging.debug("kg_ingestion_service.py: tbfy_fuseki_dataset = " + tbfy_fuseki_dataset)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")

@@ -242,12 +242,12 @@ def main(argv):
 
     token = acquire_token(username, password)
 
-    logging.info("openopps.py: username = " + username)
-    logging.info("openopps.py: password = " + password)
-    logging.info("openopps.py: token = " + token)
-    logging.info("openopps.py: start_date = " + start_date)
-    logging.info("openopps.py: end_date = " + end_date)
-    logging.info("openopps.py: output_folder = " + output_folder)
+    logging.debug("openopps.py: username = " + username)
+    logging.debug("openopps.py: password = " + password)
+    logging.debug("openopps.py: token = " + token)
+    logging.debug("openopps.py: start_date = " + start_date)
+    logging.debug("openopps.py: end_date = " + end_date)
+    logging.debug("openopps.py: output_folder = " + output_folder)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")

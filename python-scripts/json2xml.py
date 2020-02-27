@@ -59,10 +59,10 @@ def main(argv):
         elif opt in ("-o"):
             output_folder = arg
 
-    logging.info("json2xml.py: start_date = " + start_date)
-    logging.info("json2xml.py: end_date = " + end_date)
-    logging.info("json2xml.py: input_folder = " + input_folder)
-    logging.info("json2xml.py: output_folder = " + output_folder)
+    logging.debug("json2xml.py: start_date = " + start_date)
+    logging.debug("json2xml.py: end_date = " + end_date)
+    logging.debug("json2xml.py: input_folder = " + input_folder)
+    logging.debug("json2xml.py: output_folder = " + output_folder)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")
@@ -77,12 +77,12 @@ def main(argv):
             if not os.path.exists(outputDirPath):
                 os.makedirs(outputDirPath)
             for filename in os.listdir(dirPath):
-                logging.info("json2xml.py: filename = " + filename)
                 inputFilePath = os.path.join(dirPath, filename)
                 ext = os.path.splitext(inputFilePath)[-1].lower()
                 if (ext == ".json"):
                     xml_filename = os.path.splitext(filename)[0] + '.xml'
                     outputFilePath = os.path.join(outputDirPath, xml_filename)
+                    logging.info("json2xml.py: file = " + outputFilePath)
                     json_dict = tbfy.json_utils.read_jsonfile(inputFilePath)
                     json_dict_one_root = {'root': json_dict}
                     tbfy.json_utils.write_xmlfile(tbfy.json_utils.convert_to_xml(json_dict_one_root), outputFilePath)

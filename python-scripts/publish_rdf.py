@@ -93,9 +93,9 @@ def main(argv):
         elif opt in ("-i"):
             input_folder = arg
 
-    logging.info("publish_rdf.py: start_date = " + start_date)
-    logging.info("publish_rdf.py: end_date = " + end_date)
-    logging.info("publish_rdf.py: input_folder = " + input_folder)
+    logging.debug("publish_rdf.py: start_date = " + start_date)
+    logging.debug("publish_rdf.py: end_date = " + end_date)
+    logging.debug("publish_rdf.py: input_folder = " + input_folder)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")

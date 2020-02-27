@@ -80,11 +80,11 @@ def main(argv):
         elif opt in ("-o"):
             output_folder = arg
 
-    logging.info("xml2rdf.py: start_date = " + start_date)
-    logging.info("xml2rdf.py: end_date = " + end_date)
-    logging.info("xml2rdf.py: rml_folder = " + rml_folder)
-    logging.info("xml2rdf.py: input_folder = " + input_folder)
-    logging.info("xml2rdf.py: output_folder = " + output_folder)
+    logging.debug("xml2rdf.py: start_date = " + start_date)
+    logging.debug("xml2rdf.py: end_date = " + end_date)
+    logging.debug("xml2rdf.py: rml_folder = " + rml_folder)
+    logging.debug("xml2rdf.py: input_folder = " + input_folder)
+    logging.debug("xml2rdf.py: output_folder = " + output_folder)
 
     rml_filename = config.rml["rml_filename"]
     openopps_mapping_filename = config.rml["openopps_mapping_filename"]
@@ -92,11 +92,11 @@ def main(argv):
     rml_input_filename = config.rml["rml_input_filename"]
     rml_output_filename = config.rml["rml_output_filename"]
 
-    logging.info("xml2rdf.py: rml_filename = " + rml_filename)
-    logging.info("xml2rdf.py: openopps_mapping_filename = " + openopps_mapping_filename)
-    logging.info("xml2rdf.py: opencorporates_mapping_filename = " + opencorporates_mapping_filename)
-    logging.info("xml2rdf.py: rml_input_filename = " + rml_input_filename)
-    logging.info("xml2rdf.py: rml_output_filename = " + rml_output_filename)
+    logging.debug("xml2rdf.py: rml_filename = " + rml_filename)
+    logging.debug("xml2rdf.py: openopps_mapping_filename = " + openopps_mapping_filename)
+    logging.debug("xml2rdf.py: opencorporates_mapping_filename = " + opencorporates_mapping_filename)
+    logging.debug("xml2rdf.py: rml_input_filename = " + rml_input_filename)
+    logging.debug("xml2rdf.py: rml_output_filename = " + rml_output_filename)
 
     rmlOpenOppsInputFilePath = os.path.join(rml_folder, rml_input_filename)
     rmlOpenCorporatesInputFilePath = os.path.join(rml_folder, rml_input_filename)
@@ -115,9 +115,10 @@ def main(argv):
             if not os.path.exists(outputDirPath):
                 os.makedirs(outputDirPath)
             for filename in os.listdir(dirPath):
-                logging.info("xml2rdf.py: filename = " + filename)
                 filePath = os.path.join(dirPath, filename)
                 outputFilePath = os.path.join(outputDirPath, str(filename).replace(".xml", ".nt"))
+                logging.info("xml2rdf.py: file = " + outputFilePath)
+
                 rmlInputFilePath = os.path.join(rml_folder, filename)
                 if is_openopps_json(filename):
                     shutil.copy(filePath, rml_folder)

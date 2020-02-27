@@ -526,11 +526,11 @@ def main(argv):
         elif opt in ("-o"):
             output_folder = arg
 
-    logging.info("opencorporates.py: api_token = " + api_token)
-    logging.info("opencorporates.py: start_date = " + start_date)
-    logging.info("opencorporates.py: end_date = " + end_date)
-    logging.info("opencorporates.py: input_folder = " + input_folder)
-    logging.info("opencorporates.py: output_folder = " + output_folder)
+    logging.debug("opencorporates.py: api_token = " + api_token)
+    logging.debug("opencorporates.py: start_date = " + start_date)
+    logging.debug("opencorporates.py: end_date = " + end_date)
+    logging.debug("opencorporates.py: input_folder = " + input_folder)
+    logging.debug("opencorporates.py: output_folder = " + output_folder)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")
@@ -557,7 +557,7 @@ def main(argv):
                     f.close()
 
                     if is_award(release_data):
-                        logging.info("opencorporates.py: filename = " + f.name)
+                        logging.info("opencorporates.py: file = " + outputFilePath)
 
                         awards_data = get_awards(release_data)
                         if awards_data:
