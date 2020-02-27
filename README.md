@@ -20,6 +20,8 @@ This is the repository where all the work towards the creation of the TheyBuyFor
   * RML mappings [ [repository folder](https://github.com/TBFY/knowledge-graph/tree/master/rml-mappings) ]
 * Docker scripts for deploying the TBFY knowledge graph:
   * Docker scripts [ [repository folder](https://github.com/TBFY/knowledge-graph/tree/master/docker-scripts) ]
+* Dockerfile for creating the knowledge graph ingestion service Docker image:
+  * Dockerfile [ [repository folder](https://github.com/TBFY/knowledge-graph/tree/master/docker-image) ]
 * SLURM scripts for running jobs (e.g., Python scripts to ingest and publish data):
   * SLURM scripts [ [repository folder](https://github.com/TBFY/knowledge-graph/tree/master/slurm-scripts) ]
 

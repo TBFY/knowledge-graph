@@ -6,6 +6,7 @@ This module contains Docker scripts for deploying the TBFY knowledge graph.
 * `fuseki.env`: Environment file for the [Apache Jena Fuseki](https://jena.apache.org/documentation/fuseki2/index.html) service defined in the Docker Compose file. Here you must set the admin password for the Fuseki administration GUI.
 * `yasgui.env`: Environment file for the [YASGUI](https://github.com/TriplyDB/Yasgui) service defined in the Docker Compose file. Here you must set the SPARQL endpoint for the TBFY knowledge graph.
 * `kg-api.env`: Environment file for the [Knowledge Graph API](https://github.com/TBFY/knowledge-graph-API) service defined in the Docker Compose file. Here you must set the SPARQL endpoint for the TBFY knowledge graph, the resource namespace and the server path.
+* `kg-ingestion-service.env`: Environment file for the [Knowledge Graph Ingestion Service](https://github.com/TBFY/knowledge-graph-API) defined in the Docker Compose file. This service is commented out. See the [docker-image](https://github.com/TBFY/knowledge-graph/tree/master/docker-image) module for further details.
 
 ## Prerequisites
 
