@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --output /home/bre/jobs/publish_rdf-%j.out
-#SBATCH --job-name XML2RDF
+#SBATCH --job-name PUBLISH_RDF
 #SBATCH --partition sintef
 #SBATCH --ntasks 1
 #SBATCH --cpus-per-task=1
