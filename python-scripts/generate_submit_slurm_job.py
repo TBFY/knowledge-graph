@@ -100,7 +100,7 @@ def main(argv):
     logging.debug("generate_submit_slurm_job.py: output_folder = " + output_folder)
 
     release_date = datetime.strftime((datetime.now() - timedelta(days=int(days_delayed))), "%Y-%m-%d")
-    logging.debug("generate_submit_slurm_job.py: release_date = " + release_date)
+    logging.info("generate_submit_slurm_job.py: release_date = " + release_date)
 
     generate_slurm_script(openopps_username, openopps_password, opencorporates_api_key, rml_folder, release_date, output_folder, script_file)
     submit_slurm_script(script_file)
