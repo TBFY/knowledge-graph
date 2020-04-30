@@ -17,7 +17,12 @@
 
 import config
 
+import tbfy.statistics
+
 import logging
+
+from statistics import mean
+from decimal import Decimal
 
 import os
 import sys
@@ -33,30 +38,53 @@ from datetime import timedelta
 # Statistics
 # **********
 
-stats_reconciliation = config.opencorporates_statistics.copy()
+stats_reconciliation = tbfy.statistics.opencorporates_statistics_reconciliation.copy()
+stats_performance = tbfy.statistics.opencorporates_statistics_performance.copy()
 
 def print_stats():
     global stats_reconciliation
+    global stats_performance
 
+    print("*********************************************************")
+    print("OpenCorporates statistics - reconciliation               ")
     print("*********************************************************")
     for key in stats_reconciliation.keys():
         print(str(key) + " = " + str(stats_reconciliation[key]))
-    print("*********************************************************")
+    print("")
 
-def update_stats(file_stats):
+    print("*********************************************************")
+    print("OpenCorporates statistics - performance (aggregated)     ")
+    print("*********************************************************")
+    for key in stats_performance.keys():
+        if not "list_" in key:
+            print(str(key) + " = " + str(stats_performance[key]))
+    print("")
+
+
+def update_stats_reconciliation(file_stats):
     global stats_reconciliation
 
-    for key in stats_reconciliation.keys():
-        if (key == "highest_result_score"):
-            if (float(file_stats[key]) > float(stats_reconciliation[key])):
-                stats_reconciliation[key] = str(file_stats[key]).strip()
-        else:
-            stats_reconciliation[key] += int(file_stats[key])
+    try:
+        for key in stats_reconciliation.keys():
+            if "list_" in key:
+                tbfy.statistics.update_stats_list(stats_reconciliation, key, file_stats[key])
+            else:
+                tbfy.statistics.update_stats_add(stats_reconciliation, key, Decimal(file_stats[key]))
+    except KeyError:
+        None
+
+
+def compute_stats_performance():
+    global stats_reconciliation
+    global stats_performance
+
+    tbfy.statistics.compute_opencorporates_stats_performance(stats_performance, stats_reconciliation)
 
 
 # *************
 # Main function
 # *************
+
 def main(argv):
     logging.basicConfig(level=config.logging["level"])
 
@@ -98,14 +126,16 @@ def main(argv):
                 for line in stats_file:
                     s_key, s_value = line.partition("=")[::2]
                     file_stats[s_key.strip()] = s_value
-                update_stats(file_stats)
+                update_stats_reconciliation(file_stats)
 
         start = start + timedelta(days=1)  # increase day one by one
 
+    compute_stats_performance()
     print_stats()
 
 
 # *****************
 # Run main function
 # *****************
+
 if __name__ == "__main__": main(sys.argv[1:])

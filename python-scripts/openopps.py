@@ -17,6 +17,7 @@
 import config
 
 import tbfy.json_utils
+import tbfy.statistics
 
 import logging
 
@@ -46,10 +47,12 @@ openopps_sleep = config.openopps["sleep"]
 # Statistics
 # **********
 
-stats_releases = config.openopps_statistics.copy()
+stats_releases = tbfy.statistics.openopps_statistics_releases.copy()
+stats_performance = tbfy.statistics.openopps_statistics_performance.copy()
 
 def write_stats(output_folder):
     global stats_releases
+    global stats_performance
 
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -57,26 +60,46 @@ def write_stats(output_folder):
     sfile = open(os.path.join(output_folder, 'STATISTICS.TXT'), 'w+')
     for key in stats_releases.keys():
         sfile.write(str(key) + " = " + str(stats_releases[key]) + "\n")
+    for key in stats_performance.keys():
+        sfile.write(str(key) + " = " + str(stats_performance[key]) + "\n")
     sfile.close()
 
-def update_stats(key):
+
+def update_stats_releases(key):
     global stats_releases
 
     try:
         stats_releases[key] += 1
     except KeyError:
-        stats_releases['ignored'] += 1
+        stats_releases['unknown'] += 1
+
+
+def compute_stats_performance(download_start_time, download_end_time):
+    global stats_releases
+    global stats_performance
+
+    stats_performance['download_start_time'] = download_start_time
+    stats_performance['download_end_time'] = download_end_time
+    stats_performance['download_duration_in_seconds'] = (stats_performance['download_end_time'] - stats_performance['download_start_time']).total_seconds()
+
+    for key in stats_releases.keys():
+        stats_performance['number_of_releases'] += stats_releases[key]
+
+    stats_performance['releases_downloaded_per_second'] = tbfy.statistics.safe_div(stats_performance['number_of_releases'], stats_performance['download_duration_in_seconds'])
+
 
 def reset_stats():
     global stats_releases
+    global stats_performance
 
-    for key in stats_releases.keys():
-        stats_releases[key] = 0
+    stats_releases = tbfy.statistics.openopps_statistics_releases.copy()
+    stats_performance = tbfy.statistics.openopps_statistics_performance.copy()
 
 
 # *******************************
 # Acquire token from OpenOpps API
 # *******************************
+
 def acquire_token(username, password):
     url = openopps_api_url + "api-token-auth/"
     headers = {
@@ -100,6 +123,7 @@ def acquire_token(username, password):
 # ************************************
 # Authenticate token from OpenOpps API
 # ************************************
+
 def authenticate_token(token):
     url = openopps_api_url
     params = {
@@ -119,6 +143,7 @@ def authenticate_token(token):
 # **************************************
 # Get releases by date from OpenOpps API
 # **************************************
+
 def get_releases(date, username, password, token):
     # Authenticate token
     if not authenticate_token(token):
@@ -148,6 +173,7 @@ def get_releases(date, username, password, token):
 # *******************************************************************************
 # Get next releases by date from OpenOpps API (limitation of count 1000 per page)
 # *******************************************************************************
+
 def get_next_releases(url, username, password, token):
     # Authenticate token
     if not authenticate_token(token):
@@ -169,6 +195,7 @@ def get_next_releases(url, username, password, token):
 # *******************************************
 # Process response and write releases to file
 # *******************************************
+
 def write_releases(response_releases, output_folder):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -181,7 +208,7 @@ def write_releases(response_releases, output_folder):
             release_ocid = release_data['releases'][0]['ocid']
 
             release_tag = tbfy.json_utils.get_release_tag(release_data) # Get tag, if missing then "unknown" is returned
-            update_stats(release_tag) # Update statistics
+            update_stats_releases(release_tag) # Update statistics
 
             jfile = open(os.path.join(output_folder, release_ocid + '-' + release_tag + '-release.json'), 'w+')
             jfile.write(json.dumps(release_data, indent=4).replace(': null', ': ""'))
@@ -191,6 +218,7 @@ def write_releases(response_releases, output_folder):
 # **********************
 # Get and write releases 
 # **********************
+
 def get_and_write_releases(date, username, password, token, output_folder):
     time.sleep(openopps_sleep) # Sleep to not stress max retries
     response_releases_first_page = get_releases(date, username, password, token)
@@ -211,6 +239,7 @@ def get_and_write_releases(date, username, password, token, output_folder):
 # *************
 # Main function
 # *************
+
 def main(argv):
     logging.basicConfig(level=config.logging["level"])
 
@@ -256,7 +285,10 @@ def main(argv):
         release_date = datetime.strftime(start, "%Y-%m-%d")
         logging.info("openopps.py: release_date = " + release_date)
         outputDirPath = os.path.join(output_folder, release_date)
+        download_start_time = datetime.now()
         get_and_write_releases(release_date, username, password, token, outputDirPath)
+        download_end_time = datetime.now()
+        compute_stats_performance(download_start_time, download_end_time) # Compute performance statistics
         write_stats(outputDirPath) # Write statistics
         reset_stats() # Reset statistics for next folder date
         start = start + timedelta(days=1) # Increase date by one day
@@ -265,4 +297,5 @@ def main(argv):
 # *****************
 # Run main function
 # *****************
+
 if __name__ == "__main__": main(sys.argv[1:])

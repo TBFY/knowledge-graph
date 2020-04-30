@@ -17,7 +17,12 @@
 
 import config
 
+import tbfy.statistics
+
 import logging
+
+from statistics import mean
+from decimal import Decimal
 
 import os
 import sys
@@ -33,21 +38,99 @@ from datetime import timedelta
 # Statistics
 # **********
 
-stats_releases = config.openopps_statistics.copy()
+stats_releases = tbfy.statistics.openopps_statistics_releases.copy()
+stats_performance = tbfy.statistics.openopps_statistics_performance.copy()
+stats_aggregate = tbfy.statistics.openopps_statistics_aggregate.copy()
 
 def print_stats():
     global stats_releases
+    global stats_aggregate
 
+    print("*********************************************************")
+    print("OpenOpps statistics - releases (counts per type)         ")
     print("*********************************************************")
     for key in stats_releases.keys():
         print(str(key) + " = " + str(stats_releases[key]))
-    print("*********************************************************")
+    print("")
 
-def update_stats(file_stats):
+    print("*********************************************************")
+    print("OpenOpps statistics - performance (aggregated)           ")
+    print("*********************************************************")
+    for key in stats_aggregate.keys():
+        if not "list_" in key:
+            print(str(key) + " = " + str(stats_aggregate[key]))
+    print("")
+
+
+def update_stats_releases(file_stats):
     global stats_releases
 
     for key in stats_releases.keys():
         stats_releases[key] += int(file_stats[key])
+
+
+def update_stats_performance(file_stats):
+    global stats_performance
+
+    try:
+        stats_performance['download_duration_in_seconds'] += Decimal(file_stats['download_duration_in_seconds'])
+        stats_performance['number_of_releases'] += int(file_stats['number_of_releases'])
+    except KeyError:
+        None
+
+
+def update_stats_aggregate_count(file_stats):
+    global stats_releases
+    global stats_performance
+    global stats_aggregate
+
+    try:
+        stats_aggregate['number_of_days'] += 1
+
+        number_of_releases = 0
+        for key in stats_releases.keys():
+            number_of_releases += int(file_stats[key])
+        stats_aggregate['list_releases_per_day'].append(number_of_releases)
+
+        stats_aggregate['list_planning_releases_per_day'].append(int(file_stats['planning']))
+        stats_aggregate['list_tender_releases_per_day'].append((int(file_stats['tender']) + int(file_stats['tenderAmendment']) + int(file_stats['tenderUpdate']) + int(file_stats['tenderCancellation'])))
+        stats_aggregate['list_award_releases_per_day'].append((int(file_stats['award']) + int(file_stats['awardUpdate']) + int(file_stats['awardCancellation'])))
+        stats_aggregate['list_contract_releases_per_day'].append((int(file_stats['contract']) + int(file_stats['contractAmendment'])))
+    except KeyError:
+        None
+
+
+def compute_stats_aggregate():
+    global stats_releases
+    global stats_performance
+    global stats_aggregate
+
+    try:
+        stats_aggregate['number_of_releases'] = stats_performance['number_of_releases']
+        stats_aggregate['download_duration_in_seconds'] = stats_performance['download_duration_in_seconds']
+        stats_aggregate['releases_downloaded_per_second'] = tbfy.statistics.safe_div(stats_aggregate['number_of_releases'], stats_aggregate['download_duration_in_seconds'])
+
+        stats_aggregate['min_releases_per_day'] = min(stats_aggregate['list_releases_per_day'])
+        stats_aggregate['max_releases_per_day'] = max(stats_aggregate['list_releases_per_day'])
+        stats_aggregate['average_releases_per_day'] = mean(stats_aggregate['list_releases_per_day'])
+
+        stats_aggregate['min_planning_releases_per_day'] = min(stats_aggregate['list_planning_releases_per_day'])
+        stats_aggregate['max_planning_releases_per_day'] = max(stats_aggregate['list_planning_releases_per_day'])
+        stats_aggregate['average_planning_releases_per_day'] = mean(stats_aggregate['list_planning_releases_per_day'])
+
+        stats_aggregate['min_tender_releases_per_day'] = min(stats_aggregate['list_tender_releases_per_day'])
+        stats_aggregate['max_tender_releases_per_day'] = max(stats_aggregate['list_tender_releases_per_day'])
+        stats_aggregate['average_tender_releases_per_day'] = mean(stats_aggregate['list_tender_releases_per_day'])
+
+        stats_aggregate['min_award_releases_per_day'] = min(stats_aggregate['list_award_releases_per_day'])
+        stats_aggregate['max_award_releases_per_day'] = max(stats_aggregate['list_award_releases_per_day'])
+        stats_aggregate['average_award_releases_per_day'] = mean(stats_aggregate['list_award_releases_per_day'])
+
+        stats_aggregate['min_contract_releases_per_day'] = min(stats_aggregate['list_contract_releases_per_day'])
+        stats_aggregate['max_contract_releases_per_day'] = max(stats_aggregate['list_contract_releases_per_day'])
+        stats_aggregate['average_contract_releases_per_day'] = mean(stats_aggregate['list_contract_releases_per_day'])
+    except KeyError:
+        None
 
 
 # *************
@@ -94,10 +177,13 @@ def main(argv):
                 for line in stats_file:
                     s_key, s_value = line.partition("=")[::2]
                     file_stats[s_key.strip()] = s_value
-                update_stats(file_stats)
+                update_stats_releases(file_stats)
+                update_stats_performance(file_stats)
+                update_stats_aggregate_count(file_stats)
 
         start = start + timedelta(days=1)  # increase day one by one
 
+    compute_stats_aggregate()
     print_stats()
 
 

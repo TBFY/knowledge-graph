@@ -23,7 +23,7 @@ openopps = {
 
 opencorporates = {
     "reconcile_api_url": "https://opencorporates.com/reconcile",
-    "reconcile_score": 70,   
+    "reconcile_score": 70,
     "companies_api_url": "http://api.opencorporates.com",
     "smart_address_check": False,
     "country_name_codes_simulation": False,
@@ -47,29 +47,4 @@ jena_tools = {
 jena_fuseki = {
     "fuseki_url": "http://52.19.213.234:3030", 
     "dataset": "tbfy"
-}
-
-openopps_statistics = {
-    "unknown": 0,
-    "planning": 0,
-    "tender": 0,
-    "tenderAmendment": 0,
-    "tenderUpdate": 0,
-    "tenderCancellation": 0,
-    "award": 0,
-    "awardUpdate": 0,
-    "awardCancellation": 0,
-    "contract": 0,
-    "contractAmendment": 0,
-    "implementation": 0,
-    "implementationUpdate": 0,
-    "contractTermination": 0
-}
-
-opencorporates_statistics = {
-    "awards": 0,
-    "suppliers": 0,
-    "candidate_companies": 0,
-    "matching_companies": 0,
-    "highest_result_score": 0
 }
