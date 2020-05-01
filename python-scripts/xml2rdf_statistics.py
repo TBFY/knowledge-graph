@@ -2,8 +2,8 @@
 # Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
 # 
 # This file contains a script that aggregates and prints out the statistics from the 'STATISTICS.TXT'
-# file that are written in each release-date subfolder in the OpenCorporates output folder when 
-# running the opencorporates.py script.
+# file that are written in each release-date subfolder in the output folder when running the 
+# xml2rdf.py script.
 # 
 # Copyright: SINTEF 2017-2019
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
@@ -38,15 +38,15 @@ from datetime import timedelta
 # Statistics
 # **********
 
-stats_reconciliation = tbfy.statistics.opencorporates_statistics_reconciliation.copy()
-stats_performance = tbfy.statistics.opencorporates_statistics_performance.copy()
+stats_xml2rdf = tbfy.statistics.xml2rdf_statistics_count.copy()
+stats_performance = tbfy.statistics.xml2rdf_statistics_performance.copy()
 
 def print_stats():
-    global stats_reconciliation
+    global stats_xml2rdf
     global stats_performance
 
     print("*********************************************************")
-    print("OpenCorporates statistics - performance (aggregated)     ")
+    print("JSON 2 XML statistics - performance (aggregated)         ")
     print("*********************************************************")
     for key in stats_performance.keys():
         if not "list_" in key:
@@ -54,24 +54,24 @@ def print_stats():
     print("")
 
 
-def update_stats_reconciliation(file_stats):
-    global stats_reconciliation
+def update_stats_files(file_stats):
+    global stats_xml2rdf
 
     try:
-        for key in stats_reconciliation.keys():
+        for key in stats_xml2rdf.keys():
             if "list_" in key:
-                tbfy.statistics.update_stats_list(stats_reconciliation, key, file_stats[key])
+                tbfy.statistics.update_stats_list(stats_xml2rdf, key, file_stats[key])
             else:
-                tbfy.statistics.update_stats_add(stats_reconciliation, key, Decimal(file_stats[key]))
+                tbfy.statistics.update_stats_add(stats_xml2rdf, key, Decimal(file_stats[key]))
     except KeyError:
         None
 
 
 def compute_stats_performance():
-    global stats_reconciliation
+    global stats_xml2rdf
     global stats_performance
 
-    tbfy.statistics.compute_opencorporates_stats_performance(stats_performance, stats_reconciliation)
+    tbfy.statistics.compute_xml2rdf_stats_performance(stats_performance, stats_xml2rdf)
 
 
 # *************
@@ -83,27 +83,27 @@ def main(argv):
 
     start_date = ""
     end_date = ""
-    opencorporates_folder = ""
+    xml2rdf_folder = ""
 
     try:
         opts, args = getopt.getopt(argv, "hs:e:i:")
     except getopt.GetoptError:
-        print("opencorporates_statistics.py -s <start_date> -e <end_date> -i <opencorporates_folder>")
+        print("xml2rdf_statistics.py -s <start_date> -e <end_date> -i <xml2rdf_folder>")
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("opencorporates_statistics.py -s <start_date> -e <end_date> -i <opencorporates_folder>")
+            print("xml2rdf_statistics.py -s <start_date> -e <end_date> -i <xml2rdf_folder>")
             sys.exit()
         elif opt in ("-s"):
             start_date = arg
         elif opt in ("-e"):
             end_date = arg
         elif opt in ("-i"):
-            opencorporates_folder = arg
+            xml2rdf_folder = arg
 
     logging.info("main(): start_date = " + start_date)
     logging.info("main(): end_date = " + end_date)
-    logging.info("main(): opencorporates_folder = " + opencorporates_folder)
+    logging.info("main(): xml2rdf_folder = " + xml2rdf_folder)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")
@@ -112,14 +112,14 @@ def main(argv):
         release_date = datetime.strftime(start, "%Y-%m-%d")
 
         dirname = release_date
-        stats_filepath = os.path.join(opencorporates_folder, dirname, 'STATISTICS.TXT')
+        stats_filepath = os.path.join(xml2rdf_folder, dirname, 'STATISTICS.TXT')
         if os.path.isfile(stats_filepath):
             file_stats = {}
             with open(stats_filepath) as stats_file:
                 for line in stats_file:
                     s_key, s_value = line.partition("=")[::2]
                     file_stats[s_key.strip()] = s_value
-                update_stats_reconciliation(file_stats)
+                update_stats_files(file_stats)
 
         start = start + timedelta(days=1)  # increase day one by one
 

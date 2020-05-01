@@ -183,6 +183,7 @@ def main(argv):
 
         start = start + timedelta(days=1)  # increase day one by one
 
+    # Compute and print aggregated performance stats
     compute_stats_aggregate()
     print_stats()
 

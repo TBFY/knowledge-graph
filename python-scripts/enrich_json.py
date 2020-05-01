@@ -18,6 +18,7 @@ import config
 import tbfy.json_utils
 import tbfy.openopps_enrich
 import tbfy.opencorporates_enrich
+import tbfy.statistics
 
 import logging
 
@@ -33,10 +34,37 @@ from datetime import datetime
 from datetime import timedelta
 
 
+# **********
+# Statistics
+# **********
+
+stats_files = tbfy.statistics.files_statistics_count.copy()
+
+def write_stats(output_folder):
+    global stats_files
+
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    sfile = open(os.path.join(output_folder, 'STATISTICS.TXT'), 'w+')
+    for key in stats_files.keys():
+        sfile.write(str(key) + " = " + str(stats_files[key]) + "\n")
+    sfile.close()
+
+
+def reset_stats():
+    global stats_files
+
+    stats_files = tbfy.statistics.files_statistics_count.copy()
+
+
 # *************
 # Main function
 # *************
+
 def main(argv):
+    global stats_files
+
     logging.basicConfig(level=config.logging["level"])
     
     start_date = ""
@@ -71,8 +99,9 @@ def main(argv):
     stop = datetime.strptime(end_date, "%Y-%m-%d")
 
     while start <= stop:
-        release_date = datetime.strftime(start, "%Y-%m-%d")
+        process_start_time = datetime.now()
 
+        release_date = datetime.strftime(start, "%Y-%m-%d")
         dirname = release_date
         dirPath = os.path.join(input_folder, dirname)
         outputDirPath = os.path.join(output_folder, dirname)
@@ -85,8 +114,16 @@ def main(argv):
                 logging.info("enrich_json.py: file = " + outputFilePath)
                 if tbfy.json_utils.is_openopps_json(filename):
                     tbfy.openopps_enrich.process_release(filePath, outputFilePath)
+                    tbfy.statistics.update_stats_count(stats_files, "number_of_files")
                 if tbfy.json_utils.is_opencorporates_json(filename):
                     tbfy.opencorporates_enrich.process_company(filePath, outputFilePath)
+                    tbfy.statistics.update_stats_count(stats_files, "number_of_files")
+
+        process_end_time = datetime.now()
+        duration_in_seconds = (process_end_time - process_start_time).total_seconds()
+        tbfy.statistics.update_stats_value(stats_files, "files_processed_duration_in_seconds", duration_in_seconds)
+        write_stats(outputDirPath) # Write statistics
+        reset_stats() # Reset statistics for next folder date
 
         start = start + timedelta(days=1) # Increase date by one day
 
@@ -94,4 +131,5 @@ def main(argv):
 # *****************
 # Run main function
 # *****************
+
 if __name__ == "__main__": main(sys.argv[1:])

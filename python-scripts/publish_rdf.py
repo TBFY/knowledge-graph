@@ -15,6 +15,8 @@
 
 import config
 
+import tbfy.statistics
+
 import logging
 
 import requests
@@ -30,6 +32,30 @@ from datetime import datetime
 from datetime import timedelta
 
 
+# **********
+# Statistics
+# **********
+
+stats_publish = tbfy.statistics.publish_statistics_count.copy()
+
+def write_stats(output_folder):
+    global stats_publish
+
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    sfile = open(os.path.join(output_folder, 'STATISTICS_PUBLISH.TXT'), 'w+')
+    for key in stats_publish.keys():
+        sfile.write(str(key) + " = " + str(stats_publish[key]) + "\n")
+    sfile.close()
+
+
+def reset_stats():
+    global stats_publish
+
+    stats_publish = tbfy.statistics.publish_statistics_count.copy()
+
+
 # ****************
 # Global variables
 # ****************
@@ -41,14 +67,24 @@ jena_fuseki_dataset = os.getenv("TBFY_FUSEKI_DATASET") or config.jena_fuseki["da
 # ***************************
 # Read RDF data from RDF file
 # ***************************
+
 def read_rdf_data(rdf_file):
-    rdf_contents = open(rdf_file, encoding='utf-8').read()
+    global stats_publish
+
+    rdf_contents = ""
+    with open(rdf_file) as f:
+        for line in f:
+            rdf_contents += f.readline()
+            tbfy.statistics.update_stats_count(stats_publish, "number_of_triples")
+        tbfy.statistics.update_stats_count(stats_publish, "number_of_files")
+
     return rdf_contents.encode('utf-8')
 
 
 # ****************************************
 # Publish RDF data to triplestore database
 # ****************************************
+
 def publish_rdf(rdf_data):
     url = jena_fuseki_url + "/" + jena_fuseki_dataset + "/data?default"
 
@@ -70,7 +106,10 @@ def publish_rdf(rdf_data):
 # *************
 # Main function
 # *************
+
 def main(argv):
+    global stats_publish
+
     logging.basicConfig(level=config.logging["level"])
     
     start_date = ""
@@ -101,8 +140,9 @@ def main(argv):
     stop = datetime.strptime(end_date, "%Y-%m-%d")
 
     while start <= stop:
-        release_date = datetime.strftime(start, "%Y-%m-%d")
+        process_start_time = datetime.now()
 
+        release_date = datetime.strftime(start, "%Y-%m-%d")
         dirname = release_date
         dirPath = os.path.join(input_folder, dirname)
         
@@ -111,11 +151,19 @@ def main(argv):
         if os.path.isdir(dirPath):
             for filename in os.listdir(dirPath):
                 filePath = os.path.join(dirPath, filename)
-                rdf_data = rdf_data + read_rdf_data(filePath)
+                ext = os.path.splitext(filePath)[-1].lower()
+                if (ext == ".nt"):
+                    rdf_data = rdf_data + read_rdf_data(filePath)
 
         logging.info("publish_rdf.py: release_date = " + release_date)
 
         publish_rdf(rdf_data)
+
+        process_end_time = datetime.now()
+        duration_in_seconds = (process_end_time - process_start_time).total_seconds()
+        tbfy.statistics.update_stats_value(stats_publish, "publish_duration_in_seconds", duration_in_seconds)
+        write_stats(dirPath) # Write statistics
+        reset_stats() # Reset statistics for next folder date
 
         start = start + timedelta(days=1) # Increase date by one day
 
@@ -123,4 +171,5 @@ def main(argv):
 # *****************
 # Run main function
 # *****************
+
 if __name__ == "__main__": main(sys.argv[1:])

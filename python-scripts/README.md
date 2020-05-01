@@ -99,8 +99,12 @@ python publish_rdf.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\5_RFD_TBFY'
 ## Statistics
 Scripts for processing statistics:
 
-* `openopps_statistics.py`: Script that aggregates and prints out the statistics from the 'STATISTICS.TXT' file that are written in each release-date subfolder in the OpenOpps output folder when running the `openopps.py` script.
-* `opencorporates_statistics.py`: Script that aggregates and prints out the statistics from the 'STATISTICS.TXT' file that are written in each release-date subfolder in the OpenCorporates output folder when running the `opencorporates.py` script.
+* `openopps_statistics.py`: Script that aggregates and prints out performance statistics computed from the 'STATISTICS.TXT' files that are written in each release-date subfolder in the OpenOpps output folder when running the `openopps.py` script.
+* `opencorporates_statistics.py`: Script that aggregates and prints out performance statistics computed from the 'STATISTICS.TXT' files that are written in each release-date subfolder in the OpenCorporates output folder when running the `opencorporates.py` script.
+* `enrich_json_statistics.py`: Script that aggregates and prints out performance statistics computed from the 'STATISTICS.TXT' files that are written in each release-date subfolder in the output folder when running the `enrich_json.py` script.
+* `json2xml_statistics.py`: Script that aggregates and prints out performance statistics computed from the 'STATISTICS.TXT' files that are written in each release-date subfolder in the output folder when running the `json2xml.py` script. 
+* `xml2rdf_statistics.py`: Script that aggregates and prints out performance statistics computed from the 'STATISTICS.TXT' files that are written in each release-date subfolder in the output folder when running the `xml2rdf.py` script. 
+* `publish_rdf_statistics.py`: Script that aggregates and prints out performance statistics computed from the 'STATISTICS_PUBLISH.TXT' files that are written in each release-date subfolder in the input folder when running the `publish_rdf.py` script. 
 
 ### Runnings the scripts
 
@@ -124,6 +128,50 @@ python opencorporates_statistics.py -s <start_date> -e <end_date> -i <opencorpor
 Example:
 ```
 python opencorporates_statistics.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\2_JSON_OpenCorporates'
+```
+
+#### enrich_statistics.py
+Command line:
+```
+python enrich_statistics.py -s <start_date> -e <end_date> -i <enrich_folder>
+```
+
+Example:
+```
+python enrich_statistics.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\3_JSON_Enriched'
+```
+
+#### json2xml_statistics.py
+Command line:
+```
+python json2xml_statistics.py -s <start_date> -e <end_date> -i <json2xml_folder>
+```
+
+Example:
+```
+python json2xml_statistics.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\4_XML_Enriched'
+```
+
+#### xml2rdf_statistics.py
+Command line:
+```
+python xml2rdf_statistics.py -s <start_date> -e <end_date> -i <xml2rdf_folder>
+```
+
+Example:
+```
+python xml2rdf_statistics.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\5_RDF_TBFY'
+```
+
+#### publish_rdf_statistics.py
+Command line:
+```
+python publish_rdf_statistics.py -s <start_date> -e <end_date> -i <publish_rdf_folder>
+```
+
+Example:
+```
+python publish_rdf_statistics.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\5_RDF_TBFY'
 ```
 
 ## Utilities

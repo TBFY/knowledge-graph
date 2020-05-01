@@ -285,12 +285,15 @@ def main(argv):
         release_date = datetime.strftime(start, "%Y-%m-%d")
         logging.info("openopps.py: release_date = " + release_date)
         outputDirPath = os.path.join(output_folder, release_date)
+
         download_start_time = datetime.now()
         get_and_write_releases(release_date, username, password, token, outputDirPath)
         download_end_time = datetime.now()
+
         compute_stats_performance(download_start_time, download_end_time) # Compute performance statistics
         write_stats(outputDirPath) # Write statistics
         reset_stats() # Reset statistics for next folder date
+
         start = start + timedelta(days=1) # Increase date by one day
 
 

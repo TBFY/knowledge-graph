@@ -164,6 +164,120 @@ def compute_opencorporates_stats_performance(stats_performance, stats_reconcilia
         None
 
 
+# ****************************
+# Enrich & JSON2XML statistics
+# ****************************
+
+files_statistics_count = {
+    "number_of_files": 0,
+    "files_processed_duration_in_seconds": 0
+}
+
+
+files_statistics_performance = {
+    "number_of_files": 0,
+    "files_processed_duration_in_seconds": 0,
+    "files_processed_per_second": 0
+}
+
+
+def compute_files_stats_performance(stats_performance, stats_count):
+    for key in stats_performance.keys():
+        try:
+            update_stats_value(stats_performance, key, stats_count[key])
+        except KeyError:
+            None
+
+    try:
+        stats_performance["files_processed_per_second"] = safe_div(stats_performance["number_of_files"], stats_performance["files_processed_duration_in_seconds"])
+    except KeyError:
+        None
+
+
+# ****************************
+# XML2RDF statistics
+# ****************************
+
+xml2rdf_statistics_count = {
+    "number_of_files": 0,
+    "files_processed_duration_in_seconds": 0,
+    "number_of_release_files": 0,
+    "release_files_processed_duration_in_seconds": 0,
+    "number_of_company_files": 0,
+    "company_files_processed_duration_in_seconds": 0
+}
+
+
+xml2rdf_statistics_performance = {
+    "number_of_files": 0,
+    "files_processed_duration_in_seconds": 0,
+    "average_time_to_process_each_file_in_seconds": 0,
+    "files_processed_per_second": 0,
+    "number_of_release_files": 0,
+    "release_files_processed_duration_in_seconds": 0,
+    "average_time_to_process_each_release_file_in_seconds": 0,
+    "release_files_processed_per_second": 0,
+    "number_of_company_files": 0,
+    "company_files_processed_duration_in_seconds": 0,
+    "average_time_to_process_each_company_file_in_seconds": 0,
+    "company_files_processed_per_second": 0
+}
+
+
+def compute_xml2rdf_stats_performance(stats_performance, stats_count):
+    for key in stats_performance.keys():
+        try:
+            update_stats_value(stats_performance, key, stats_count[key])
+        except KeyError:
+            None
+
+    try:
+        stats_performance["files_processed_per_second"] = safe_div(stats_performance["number_of_files"], stats_performance["files_processed_duration_in_seconds"])
+        stats_performance["average_time_to_process_each_file_in_seconds"] = safe_div(stats_performance["files_processed_duration_in_seconds"], stats_performance["number_of_files"])
+
+        stats_performance["release_files_processed_per_second"] = safe_div(stats_performance["number_of_release_files"], stats_performance["release_files_processed_duration_in_seconds"])
+        stats_performance["average_time_to_process_each_release_file_in_seconds"] = safe_div(stats_performance["release_files_processed_duration_in_seconds"], stats_performance["number_of_release_files"])
+
+        stats_performance["company_files_processed_per_second"] = safe_div(stats_performance["number_of_company_files"], stats_performance["company_files_processed_duration_in_seconds"])
+        stats_performance["average_time_to_process_each_company_file_in_seconds"] = safe_div(stats_performance["company_files_processed_duration_in_seconds"], stats_performance["number_of_company_files"])
+    except KeyError:
+        None
+
+
+# **********************
+# Publish RDF statistics
+# **********************
+
+publish_statistics_count = {
+    "number_of_files": 0,
+    "number_of_triples": 0,
+    "publish_duration_in_seconds": 0
+}
+
+
+publish_statistics_performance = {
+    "number_of_files": 0,
+    "number_of_triples": 0,
+    "publish_duration_in_seconds": 0,
+    "files_published_per_second": 0,
+    "triples_published_per_second": 0
+}
+
+
+def compute_publish_stats_performance(stats_performance, stats_count):
+    for key in stats_performance.keys():
+        try:
+            update_stats_value(stats_performance, key, stats_count[key])
+        except KeyError:
+            None
+
+    try:
+        stats_performance["files_published_per_second"] = safe_div(stats_performance["number_of_files"], stats_performance["publish_duration_in_seconds"])
+        stats_performance["triples_published_per_second"] = safe_div(stats_performance["number_of_triples"], stats_performance["publish_duration_in_seconds"])
+    except KeyError:
+        None
+
+
 # ****************
 # Helper functions
 # ****************
@@ -187,7 +301,8 @@ def update_stats_append(dict, key, value):
 def update_stats_list(dict, key, value):
     value = value.replace("[", "").replace(" ", "").replace("\n", "").replace("]", "")
     for item in value.split(","):
-        dict[key].append(Decimal(item))
+        if item:
+            dict[key].append(Decimal(item))
 
 
 def update_stats_min(dict, key, value):

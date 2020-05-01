@@ -86,7 +86,7 @@ def reset_stats():
 # Cached lookup database (dictionary) for companies
 # *************************************************
 
-# Used to lookup companies that are kept for retention days
+# Used to lookup previously matched companies that are kept for the number of retention days specified in config
 company_database_dict = shelve.open(opencorporates_cached_company_database_filename, writeback=True) 
 
 def add_company_to_database_dict(company_id, entry_date, json_data):
@@ -109,23 +109,23 @@ def get_company_from_database_dict(company_id):
         return None
 
 
-# ******************************************************
-# Cached lookup table (dictionary) for matched suppliers
-# ******************************************************
+# ***********************************************************************
+# Cached lookup table (dictionary) for suppliers (reconciliation results)
+# ***********************************************************************
 
-# Used for processing a single award release in case the same supplier occurs multiple time. Must be reset after each award processing
+# Used for processing a single award release in case the same supplier occurs multiple time. Must be reset after each award release processing.
 suppliers_lookup_dict = dict()
 
-def add_supplier_to_lookup_dict(supplier_name, jurisdiction_code, company_number, identifier_notation, reconciliation_score, reconciliation_source, reconciliation_date):
+def add_supplier_to_lookup_dict(supplier_name, jurisdiction_code, json_data):
     global suppliers_lookup_dict
-    suppliers_lookup_dict[(supplier_name, jurisdiction_code)] = (jurisdiction_code, company_number, identifier_notation, reconciliation_score, reconciliation_source, reconciliation_date)
+    suppliers_lookup_dict[(supplier_name, jurisdiction_code)] = (supplier_name, jurisdiction_code, json_data)
 
 
 def get_supplier_from_lookup_dict(supplier_name, jurisdiction_code):
     global suppliers_lookup_dict
 
     if (supplier_name, jurisdiction_code) in suppliers_lookup_dict.keys():
-        return suppliers_lookup_dict[(supplier_name, jurisdiction_code)]
+        return suppliers_lookup_dict[(supplier_name, jurisdiction_code)][2]
     else:
         return None
 
@@ -312,14 +312,16 @@ def write_company(ocid, response_company, output_folder):
         company_number = data['results']['company']['company_number']
         company_jurisdiction = data['results']['company']['jurisdiction_code']
 
-        jfile = open(os.path.join(output_folder, str(ocid) + '-supplier-' + str(company_jurisdiction) + '-' + str(company_number) + '.json'), 'w+')
-        jfile.write(json.dumps(data, indent=4).replace(': null', ': ""'))
-        jfile.close()
+        outputFilePath = os.path.join(output_folder, str(ocid) + '-supplier-' + str(company_jurisdiction) + '-' + str(company_number) + '.json')
+        if not os.path.exists(outputFilePath):
+            jfile = open(outputFilePath, 'w+')
+            jfile.write(json.dumps(data, indent=4).replace(': null', ': ""'))
+            jfile.close()
 
-    end_time = datetime.now()
-    duration_in_seconds = (end_time - start_time).total_seconds()
-    tbfy.statistics.update_stats_add(stats_reconciliation, "company_files_written_duration_in_seconds", duration_in_seconds)
-    tbfy.statistics.update_stats_count(stats_reconciliation, "company_files_written")
+            end_time = datetime.now()
+            duration_in_seconds = (end_time - start_time).total_seconds()
+            tbfy.statistics.update_stats_add(stats_reconciliation, "company_files_written_duration_in_seconds", duration_in_seconds)
+            tbfy.statistics.update_stats_count(stats_reconciliation, "company_files_written")
 
 
 # *****************************************************************************
@@ -336,9 +338,6 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
     logging.debug("process_suppliers(): buyer_name = " + buyer_name)
     logging.debug("process_suppliers(): buyer_country_code = " + buyer_country_code)
 
-    # Reset suppliers lookup table for processing new award
-    reset_suppliers_lookup_dict()
-
     # Try to reconcile each supplier
     suppliers_data = get_suppliers(release_data, award_index)
     if suppliers_data:
@@ -354,18 +353,29 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
 
             release_ocid = release_data['releases'][0]['ocid']
 
-            # Check lookup table for previous matches
-            match_found = False
-            values = get_supplier_from_lookup_dict(supplier_name, supplier_jurisdiction_code)
-            if values != None:
-                match_found = True
-                tbfy.statistics.update_stats_count(stats_reconciliation, "reconciliation_lookups_from_cache")
-            else:
-                # Get reconcile results from the API if no match found in lookup table 
+            # Check lookup table for supplier reconciliation results entries for previously looked up suppliers (multiple occurences) in this award release
+            reconcile_results_data = get_supplier_from_lookup_dict(supplier_name, supplier_jurisdiction_code)
+            if not reconcile_results_data:
+                # Get result from reconcile API if no match is found in the lookup table 
                 response_reconcile_results = reconcile_company(supplier_name, supplier_jurisdiction_code)
                 reconcile_results_data = json.loads(json.dumps(response_reconcile_results.json()))
+                # Add new reconciliation results to lookup table
+                add_supplier_to_lookup_dict(supplier_name, supplier_jurisdiction_code, reconcile_results_data)
+            else:
+                tbfy.statistics.update_stats_count(stats_reconciliation, "reconciliation_lookups_from_cache")
+            
+            # Check if reconcile results data contains an actual result, i.e., score is available
+            reconcile_result = None
+            result_score = None
+            try:
                 reconcile_result = reconcile_results_data['result'][0]
                 result_score = reconcile_result['score']
+            except:
+                None
+
+            # Check for match
+            if result_score:
+                match_found = False
 
                 if is_candidate_company(buyer_data, supplier_data, reconcile_result):
                     match_found = True
@@ -392,7 +402,6 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
                         tbfy.statistics.update_stats_count(stats_reconciliation, "matching_companies")
 
                     if match_found:
-                        # Add company to lookup table if new match
                         company_jurisdiction_code = company_data['results']['company']['jurisdiction_code']
                         company_number = company_data['results']['company']['company_number']
                         company_identifier_notation = company_jurisdiction_code + "/" + company_number
@@ -400,29 +409,19 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
                         company_reconciliation_source = opencorporates_reconcile_api_url
                         company_reconciliation_date = str(date.today())
 
-                        add_supplier_to_lookup_dict(supplier_name, company_jurisdiction_code, company_number, company_identifier_notation, company_reconciliation_score, company_reconciliation_source, company_reconciliation_date)
-
                         # Write company data
                         write_company(release_ocid, response_company, output_folder)
 
-            if match_found:
-                # Add specific TBFY property for OpenCorporates Id
-                values = get_supplier_from_lookup_dict(supplier_name, supplier_jurisdiction_code)
-                company_jurisdiction_code = values[0]
-                company_number = values[1]
-                company_identifier_notation = values[2]
-                company_reconciliation_score = values[3]
-                company_reconciliation_source = values[4]
-                company_reconciliation_date = values[5]
-
-                tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_jurisdiction_code", company_jurisdiction_code)
-                tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_number", company_number)
-                tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_identifier_notation", company_identifier_notation)
-                tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_score", company_reconciliation_score)
-                tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_source", company_reconciliation_source)
-                tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_date", company_reconciliation_date)
+                        # Add TBFY specific properties to award
+                        tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_jurisdiction_code", company_jurisdiction_code)
+                        tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_number", company_number)
+                        tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_identifier_notation", company_identifier_notation)
+                        tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_score", company_reconciliation_score)
+                        tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_source", company_reconciliation_source)
+                        tbfy.json_utils.add_property_to_single_node(release_data, "releases.[0].awards.[" + str(award_index) + "].suppliers.[" + str(supplier_index) +"]", "tbfy_company_reconciliation_date", company_reconciliation_date)
             
             supplier_index += 1
+        
         tbfy.statistics.update_stats_append(stats_reconciliation, "list_suppliers_per_award", (supplier_index))
 
     # Write award release to output folder
@@ -574,16 +573,15 @@ def main(argv):
     stop = datetime.strptime(end_date, "%Y-%m-%d")
 
     while start <= stop:
-        release_date = datetime.strftime(start, "%Y-%m-%d")
         process_start_time = datetime.now()
 
+        release_date = datetime.strftime(start, "%Y-%m-%d")
         dirname = release_date
         dirPath = os.path.join(input_folder, dirname)
         outputDirPath = os.path.join(output_folder, dirname)
         if os.path.isdir(dirPath):
             if not os.path.exists(outputDirPath):
                 os.makedirs(outputDirPath)
-            reset_stats()
 
             for filename in os.listdir(dirPath):
                 filePath = os.path.join(dirPath, filename)
@@ -611,6 +609,9 @@ def main(argv):
                         award_end_time = datetime.now()
                         award_duration_in_seconds = (award_end_time - award_start_time).total_seconds()
                         tbfy.statistics.update_stats_add(stats_reconciliation, "award_releases_processed_duration_in_seconds", award_duration_in_seconds)
+
+                        # Reset suppliers lookup table for processing new award release
+                        reset_suppliers_lookup_dict()
                     else:
                         if not config.opencorporates["country_name_codes_simulation"]:
                             shutil.copy(filePath, outputFilePath)
@@ -619,11 +620,11 @@ def main(argv):
                 except:
                     pass
 
-            process_end_time = datetime.now()
-            duration_in_seconds = (process_end_time - process_start_time).total_seconds()
-
-            tbfy.statistics.update_stats_value(stats_reconciliation, "releases_processed_duration_in_seconds", duration_in_seconds)
-            write_stats(outputDirPath) # Write statistics
+        process_end_time = datetime.now()
+        duration_in_seconds = (process_end_time - process_start_time).total_seconds()
+        tbfy.statistics.update_stats_value(stats_reconciliation, "releases_processed_duration_in_seconds", duration_in_seconds)
+        write_stats(outputDirPath) # Write statistics
+        reset_stats() # Reset statistics for next folder date
 
         start = start + timedelta(days=1) # Increase date by one day
 

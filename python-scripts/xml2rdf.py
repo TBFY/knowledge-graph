@@ -15,6 +15,8 @@
 
 import config
 
+import tbfy.statistics
+
 import logging
 
 import requests
@@ -29,6 +31,30 @@ import time
 import datetime
 from datetime import datetime
 from datetime import timedelta
+
+
+# **********
+# Statistics
+# **********
+
+stats_xml2rdf = tbfy.statistics.xml2rdf_statistics_count.copy()
+
+def write_stats(output_folder):
+    global stats_xml2rdf
+
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    sfile = open(os.path.join(output_folder, 'STATISTICS.TXT'), 'w+')
+    for key in stats_xml2rdf.keys():
+        sfile.write(str(key) + " = " + str(stats_xml2rdf[key]) + "\n")
+    sfile.close()
+
+
+def reset_stats():
+    global stats_xml2rdf
+
+    stats_xml2rdf = tbfy.statistics.xml2rdf_statistics_count.copy()
 
 
 # ****************
@@ -51,7 +77,10 @@ def is_opencorporates_json(filename):
 # *************
 # Main function
 # *************
+
 def main(argv):
+    global stats_xml2rdf
+
     logging.basicConfig(level=config.logging["level"])
     
     start_date = ""
@@ -106,8 +135,9 @@ def main(argv):
     stop = datetime.strptime(end_date, "%Y-%m-%d")
 
     while start <= stop:
-        release_date = datetime.strftime(start, "%Y-%m-%d")
+        process_start_time = datetime.now()
 
+        release_date = datetime.strftime(start, "%Y-%m-%d")
         dirname = release_date
         dirPath = os.path.join(input_folder, dirname)
         outputDirPath = os.path.join(output_folder, dirname)
@@ -121,19 +151,45 @@ def main(argv):
 
                 rmlInputFilePath = os.path.join(rml_folder, filename)
                 if is_openopps_json(filename):
-                    shutil.copy(filePath, rml_folder)
-                    shutil.copyfile(rmlInputFilePath, rmlOpenOppsInputFilePath)
+                    release_start_time = datetime.now()
+
+                    shutil.copy(filePath, rml_folder) # Copy release file to RML folder
+                    shutil.copyfile(rmlInputFilePath, rmlOpenOppsInputFilePath) # Copy/rename relase file to input file for RML
                     os.chdir(rml_folder)
                     os.system('java -jar ' + rml_filename + ' -m ' + openopps_mapping_filename + ' -o ' + rml_output_filename)
-                    shutil.copyfile(rmlOutputFilePath, outputFilePath)
-                    os.remove(rmlOpenOppsInputFilePath)
+                    shutil.copyfile(rmlOutputFilePath, outputFilePath) # Copy output file from RML to output folder
+                    os.remove(rmlInputFilePath) # Remove release file in RML folder
+                    os.remove(rmlOpenOppsInputFilePath) # Remove input file from RML
+                    os.remove(rmlOutputFilePath) # Remove output file from RML
+
+                    release_end_time = datetime.now()
+                    release_duration_in_seconds = (release_end_time - release_start_time).total_seconds()
+                    tbfy.statistics.update_stats_add(stats_xml2rdf, "release_files_processed_duration_in_seconds", release_duration_in_seconds)
+                    tbfy.statistics.update_stats_count(stats_xml2rdf, "number_of_release_files")
+                    tbfy.statistics.update_stats_count(stats_xml2rdf, "number_of_files")
                 if is_opencorporates_json(filename):
-                    shutil.copy(filePath, rml_folder)
-                    shutil.copyfile(rmlInputFilePath, rmlOpenCorporatesInputFilePath)
+                    company_start_time = datetime.now()
+                    
+                    shutil.copy(filePath, rml_folder) # Copy company file to RML folder
+                    shutil.copyfile(rmlInputFilePath, rmlOpenCorporatesInputFilePath) # Copy/rename company file to input file for RML Mapper
                     os.chdir(rml_folder)
                     os.system('java -jar ' + rml_filename + ' -m ' + opencorporates_mapping_filename + ' -o ' + rml_output_filename)
-                    shutil.copyfile(rmlOutputFilePath, outputFilePath)
-                    os.remove(rmlOpenCorporatesInputFilePath)
+                    shutil.copyfile(rmlOutputFilePath, outputFilePath) # Copy output file from RML to output folder
+                    os.remove(rmlInputFilePath) # Remove company file in RML folder
+                    os.remove(rmlOpenCorporatesInputFilePath) # Remove input file from RML
+                    os.remove(rmlOutputFilePath) # Remove output file from RML
+
+                    company_end_time = datetime.now()
+                    company_duration_in_seconds = (release_end_time - release_start_time).total_seconds()
+                    tbfy.statistics.update_stats_add(stats_xml2rdf, "company_files_processed_duration_in_seconds", release_duration_in_seconds)
+                    tbfy.statistics.update_stats_count(stats_xml2rdf, "number_of_company_files")
+                    tbfy.statistics.update_stats_count(stats_xml2rdf, "number_of_files")
+
+        process_end_time = datetime.now()
+        duration_in_seconds = (process_end_time - process_start_time).total_seconds()
+        tbfy.statistics.update_stats_value(stats_xml2rdf, "files_processed_duration_in_seconds", duration_in_seconds)
+        write_stats(outputDirPath) # Write statistics
+        reset_stats() # Reset statistics for next folder date
 
         start = start + timedelta(days=1) # Increase date by one day
 
@@ -141,4 +197,5 @@ def main(argv):
 # *****************
 # Run main function
 # *****************
+
 if __name__ == "__main__": main(sys.argv[1:])
