@@ -46,7 +46,7 @@ def print_stats():
     global stats_performance
 
     print("*********************************************************")
-    print("JSON 2 XML statistics - performance (aggregated)         ")
+    print("XML 2 RDF statistics - performance (aggregated)          ")
     print("*********************************************************")
     for key in stats_performance.keys():
         if not "list_" in key:
