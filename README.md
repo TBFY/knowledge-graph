@@ -9,7 +9,7 @@
 
 # About
 
-This is the repository where all the work towards the creation of the TheyBuyForYou knowledge graph (KG) will be done. This repository is mostly related to activities that are being done in the context of Work Packages 1 and 2. In this repository we will keep:
+This is the repository where all source code, information and documentation for creating, deploying and using the TheyBuyForYou knowledge graph (KG) are found. The repository contains the following modules:
 
 * Ontology model file that defines the schema for the TBFY knowledge graph:
   * TBFY ontology [ [.ttl file](https://github.com/TBFY/knowledge-graph/blob/master/model/tbfy-ontology.ttl) ]
