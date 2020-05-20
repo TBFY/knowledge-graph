@@ -31,5 +31,13 @@ In order to use the service you have to set the following variables in the `kg-i
 ### Dockerfile
 Command line:
 ```
-docker build -t tbfy/kg-ingestion-service:0.1 -f docker-image/Dockerfile .
+docker build -t tbfy/kg-ingestion-service:latest -f docker-image/Dockerfile .
+```
+
+### Push to Docker Hub
+Command line:
+```
+docker tag <imageid> <yourhubusername>/kg-ingestion-service:<newtag>
+docker login --username=<yourhubusername> --email=<youremail@company.com>
+docker push <yourhubusername>/kg-ingestion-service
 ```

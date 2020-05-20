@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   fuseki:
-    image: stain/jena-fuseki
+    image: stain/jena-fuseki:3.13.1
     container_name: fuseki
     ports:
       - "3030:3030"
@@ -46,7 +46,7 @@ services:
     depends_on:
       - fuseki
 #  kg-ingestion-service:
-#    image: tbfy/kg-ingestion-service:0.1
+#    image: tbfy/kg-ingestion-service
 #    container_name: kg-ingestion-service
 #    volumes:
 #      - /data/ingestion:/ingestion

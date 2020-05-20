@@ -69,16 +69,16 @@ jena_fuseki_dataset = os.getenv("TBFY_FUSEKI_DATASET") or config.jena_fuseki["da
 # ***************************
 
 def read_rdf_data(rdf_file):
-    global stats_publish
-
-    rdf_contents = ""
-    with open(rdf_file) as f:
-        for line in f:
-            rdf_contents += f.readline()
-            tbfy.statistics.update_stats_count(stats_publish, "number_of_triples")
-        tbfy.statistics.update_stats_count(stats_publish, "number_of_files")
-
+    rdf_contents = open(rdf_file, encoding='utf-8').read()
     return rdf_contents.encode('utf-8')
+    
+
+def number_of_triples(rdf_file):
+    no_triples = 0
+    with open(rdf_file, encoding='utf-8') as f:
+        for line in f:
+            no_triples += 1
+    return no_triples
 
 
 # ****************************************
@@ -154,6 +154,10 @@ def main(argv):
                 ext = os.path.splitext(filePath)[-1].lower()
                 if (ext == ".nt"):
                     rdf_data = rdf_data + read_rdf_data(filePath)
+                    
+                    # Update statistics
+                    tbfy.statistics.update_stats_count(stats_publish, "number_of_files")
+                    tbfy.statistics.update_stats_add(stats_publish, "number_of_triples", number_of_triples(filePath))
 
         logging.info("publish_rdf.py: release_date = " + release_date)
 

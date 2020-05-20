@@ -17,6 +17,8 @@ ENV TBFY_FUSEKI_DATASET=tbfy
  
 # Add Python and RML files
 ADD python-scripts /home/python-scripts
+RUN rm /home/python-scripts/__pycache__/*
+RUN rm /home/python-scripts/shelve/*
 ADD rml-mappings /home/rml-mappings
 ADD https://github.com/RMLio/rmlmapper-java/releases/download/v4.6.0/rmlmapper.jar /home/rml-mappings
 
