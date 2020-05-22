@@ -88,12 +88,12 @@ def main(argv):
         logging.info("kg_ingestion_service.py: wait_date = " + wait_date.strftime("%Y-%m-%d %H:%M"))
         wait_until(wait_date)
         
-        # Set release date to process
-        release_date = datetime.strftime(start, "%Y-%m-%d") 
-        logging.info("kg_ingestion_service.py: release_date = " + release_date)
+        # Set date to process
+        created_date = datetime.strftime(start, "%Y-%m-%d") 
+        logging.info("kg_ingestion_service.py: date = " + created_date)
 
         # Run ingestion script
-        ingest_data_argv = ["ingest_data.py", "-u", openopps_username, "-p", openopps_password, "-a", opencorporates_api_key, "-r", rml_folder, "-s", release_date, "-e", release_date, "-o", output_folder]
+        ingest_data_argv = ["ingest_data.py", "-u", openopps_username, "-p", openopps_password, "-a", opencorporates_api_key, "-r", rml_folder, "-s", created_date, "-e", created_date, "-o", output_folder]
         ingest_data.main(ingest_data_argv[1:])
 
         start = start + timedelta(days=1) # Increase date by one day

@@ -51,21 +51,21 @@ output_folder = os.environ["OUTPUT_FOLDER"]
 # ****************
 # Helper functions
 # ****************
-def generate_slurm_script(openopps_username, openopps_password, opencorporates_api_key, rml_folder, release_date, output_folder, script_file):
+def generate_slurm_script(openopps_username, openopps_password, opencorporates_api_key, rml_folder, date, output_folder, script_file):
     slurm_script = "#!/bin/bash\n"
     slurm_script += "#SBATCH --output /home/bre/jobs/ingest_data-%j.out\n"
     slurm_script += "#SBATCH --job-name INGEST_DATA\n"
     slurm_script += "#SBATCH --partition sintef\n"
     slurm_script += "#SBATCH --ntasks 1\n"
     slurm_script += "#SBATCH --cpus-per-task=2\n"
-    slurm_script += "#SBATCH --mem=8GB\n"
-    slurm_script += "#SBATCH --time 7-00:00:00\n"
+    slurm_script += "#SBATCH --mem=16GB\n"
+    slurm_script += "#SBATCH --time 1-00:00:00\n"
     slurm_script += "\n"
     slurm_script += "homedir=/home/bre/knowledge-graph/python-scripts\n"
     slurm_script += "\n"
     slurm_script += "cd $homedir\n"
     slurm_script += "export DATE=`date +%F_%H%M`\n"
-    slurm_script += "srun python -u ingest_data.py -u '" + openopps_username + "' -p '" + openopps_password + "' -a '" + opencorporates_api_key + "' -r '" + rml_folder + "' -s '" + release_date + "' -e '" + release_date + "' -o '" + output_folder + "' > /home/bre/jobs/job_$DATE.log 2>&1'\n"
+    slurm_script += "srun python -u ingest_data.py -u '" + openopps_username + "' -p '" + openopps_password + "' -a '" + opencorporates_api_key + "' -r '" + rml_folder + "' -s '" + date + "' -e '" + date + "' -o '" + output_folder + "' > /home/bre/jobs/job_$DATE.log 2>&1'\n"
 
     sfile = open(script_file, 'w+')
     sfile.write(slurm_script)
@@ -99,10 +99,10 @@ def main(argv):
     logging.debug("generate_submit_slurm_job.py: days_delayed = " + days_delayed)
     logging.debug("generate_submit_slurm_job.py: output_folder = " + output_folder)
 
-    release_date = datetime.strftime((datetime.now() - timedelta(days=int(days_delayed))), "%Y-%m-%d")
-    logging.info("generate_submit_slurm_job.py: release_date = " + release_date)
+    created_date = datetime.strftime((datetime.now() - timedelta(days=int(days_delayed))), "%Y-%m-%d")
+    logging.info("generate_submit_slurm_job.py: date = " + created_date)
 
-    generate_slurm_script(openopps_username, openopps_password, opencorporates_api_key, rml_folder, release_date, output_folder, script_file)
+    generate_slurm_script(openopps_username, openopps_password, opencorporates_api_key, rml_folder, created_date, output_folder, script_file)
     submit_slurm_script(script_file)
 
 

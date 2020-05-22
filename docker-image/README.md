@@ -20,7 +20,7 @@ In order to use the service you have to set the following variables in the `kg-i
 * `RML_FOLDER:` Folder location for RML inside the Docker container. Use the default value `/home/rml-mappings` that is configured for the Docker image.
 * `START_DATE:` Start date for data to be ingested. The default value is `2020-01-01`. Change this accordingly.
 * `END_DATE:` End date for data to no longer be ingested. The service terminates at this date (+ days delayed). The default value is `2020-12-31`. Change this accordingly.
-* `DAYS_DELAYED:` Number of days to wait before ingestion the data at a certain date. The default value is `3`. Change this accordingly. One reason to delay the data ingestion in this manner is due to the fact that data are not neccessarily available at the source at the exact date.
+* `DAYS_DELAYED:` Number of days to wait before ingesting the data at a specific date. The default value is `1`, which means that the service ingests the data from the day before. Change this accordingly.
 * `DAILY_SCHEDULE:` Time to run the daily ingestion. The default value is `03:00`. Change this accordingly.
 * `OUTPUT_FOLDER:` Folder location for the ingested data to be stored inside the Docker container. Use the default value `/ingestion` that is configured for the Docker image. It is suggested that you map this to a e.g. a local folder on the Ubuntu server running the Docker container. The Docker compose file uses the `volmues:` configuration setting `/data/ingestion:/ingestion` to redirect to a folder `/data/ingestion` that must be created on the Ubuntu server.
 * `TBFY_FUSEKI_URL:` The URL of the Apache Fuseki server that you are running.
