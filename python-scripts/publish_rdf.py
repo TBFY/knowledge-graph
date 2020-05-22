@@ -142,8 +142,8 @@ def main(argv):
     while start <= stop:
         process_start_time = datetime.now()
 
-        release_date = datetime.strftime(start, "%Y-%m-%d")
-        dirname = release_date
+        created_date = datetime.strftime(start, "%Y-%m-%d")
+        dirname = created_date
         dirPath = os.path.join(input_folder, dirname)
         
         rdf_data = b''
@@ -159,7 +159,7 @@ def main(argv):
                     tbfy.statistics.update_stats_count(stats_publish, "number_of_files")
                     tbfy.statistics.update_stats_add(stats_publish, "number_of_triples", number_of_triples(filePath))
 
-        logging.info("publish_rdf.py: release_date = " + release_date)
+        logging.info("publish_rdf.py: date = " + created_date)
 
         publish_rdf(rdf_data)
 

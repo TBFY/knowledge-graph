@@ -153,9 +153,9 @@ def get_releases(date, username, password, token):
     url = openopps_api_url + "tbfy/ocds/"
     params = {
         "page_size": openopps_page_size,
-        "min_releasedate": date,
-        "max_releasedate": date,
-        "ordering": "releasedate",
+        "date_created__lte": date,
+        "date_created__gte": date,
+        "ordering": "date_created",
         "format": "json"
     }
     headers = {
@@ -282,12 +282,12 @@ def main(argv):
     stop = datetime.strptime(end_date, "%Y-%m-%d")
 
     while start <= stop:
-        release_date = datetime.strftime(start, "%Y-%m-%d")
-        logging.info("openopps.py: release_date = " + release_date)
-        outputDirPath = os.path.join(output_folder, release_date)
+        created_date = datetime.strftime(start, "%Y-%m-%d")
+        logging.info("openopps.py: date = " + created_date)
+        outputDirPath = os.path.join(output_folder, created_date)
 
         download_start_time = datetime.now()
-        get_and_write_releases(release_date, username, password, token, outputDirPath)
+        get_and_write_releases(created_date, username, password, token, outputDirPath)
         download_end_time = datetime.now()
 
         compute_stats_performance(download_start_time, download_end_time) # Compute performance statistics

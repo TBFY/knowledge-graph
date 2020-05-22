@@ -12,16 +12,16 @@ The mapping accepts one XML file named `input.xml` and produces one output file 
 ### openopps_mapping.ttl
 Command line:
 ```
-java -jar rmlmapper-4.5.1.jar -m openopps_mapping.ttl -o output.nt
+java -jar rmlmapper.jar -m openopps_mapping.ttl -o output.nt
 ```
 
 ### opencorporates_mapping.ttl
 Command line: 
 ```
-java -jar rmlmapper-v4.5.1.jar -m opencorporates_mapping.ttl -o output.nt
+java -jar rmlmapper.jar -m opencorporates_mapping.ttl -o output.nt
 ```
 
 ## Prerequisites
-You need to download the RML Mapper from https://github.com/RMLio/rmlmapper-java/releases and store it in the same repository as the RML mappings and JSON files. We currently use version 4.5.1 here, but later versions will probably work just as well. 
+You need to download the RML Mapper from https://github.com/RMLio/rmlmapper-java/releases and place it in the same folder as the RML mapping files. We currently use version [v4.6.0](https://github.com/RMLio/rmlmapper-java/releases/tag/v4.6.0), but later versions will probably work just as well. 
 
 The RML mapper runs on Java, so you also need to have Java installed on your machine.

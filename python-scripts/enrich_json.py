@@ -101,8 +101,8 @@ def main(argv):
     while start <= stop:
         process_start_time = datetime.now()
 
-        release_date = datetime.strftime(start, "%Y-%m-%d")
-        dirname = release_date
+        created_date = datetime.strftime(start, "%Y-%m-%d")
+        dirname = created_date
         dirPath = os.path.join(input_folder, dirname)
         outputDirPath = os.path.join(output_folder, dirname)
         if os.path.isdir(dirPath):
