@@ -19,7 +19,7 @@ The instructions here assumes that you are planning to deploy the TBFY knowledge
 ### Run docker-compose
 Command line:
 ```
-docker-compose up &
+docker-compose up -d
 ```
 ### Create dataset and load data files into Fuseki
 * Log into the Fuseki administration GUI, e.g. [http://52.19.213.234:3030](http://52.19.213.234:3030), using the admin password that you set in the `fuseki.env` file.

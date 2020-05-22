@@ -10,7 +10,9 @@ To use this service you must first acquire:
 by contacting OpenOpps and OpenCorporates.
 
 ## Using the service
-The service definition is commented out in the Docker compose file in the [Docker scripts](https://github.com/TBFY/knowledge-graph/tree/master/docker-scripts) module. The reason is that the service is quite CPU intensive. It takes between 2 and 4 hours to process 1 day of procurement data running the [Python data ingestion scripts](https://github.com/TBFY/knowledge-graph/tree/master/python-scripts) and the [RML mapper](https://github.com/TBFY/knowledge-graph/tree/master/rml-mappings). Thus, we do not run the service on the Amazon EC2 instance where we are running the other [TBFY services](https://github.com/TBFY/knowledge-graph/tree/master/docker-scripts). Instead we are generating [Slurm scripts](https://github.com/TBFY/knowledge-graph/tree/master/slurm-scripts) that issues daily jobs on a local server for processing. However, if you intend to run all the TBFY service on a local machine, then you are free to also deploy the ingestion service by removing the comment chars `#` in the Docker compose file.
+The service definition is commented out in the Docker compose file in the [Docker scripts](https://github.com/TBFY/knowledge-graph/tree/master/docker-scripts) module. The reason is that the service is quite CPU intensive. It can take up to 2 hours to process 1 day of procurement data running the [Python data ingestion scripts](https://github.com/TBFY/knowledge-graph/tree/master/python-scripts) and the [RML mapper](https://github.com/TBFY/knowledge-graph/tree/master/rml-mappings). Thus, we do not run the service on the Amazon EC2 instance where we are running the other [TBFY services](https://github.com/TBFY/knowledge-graph/tree/master/docker-scripts). Instead we are generating [Slurm scripts](https://github.com/TBFY/knowledge-graph/tree/master/slurm-scripts) that issues daily jobs on a local server for processing. 
+
+If you intend to run all the TBFY service on a local machine, then you are free to also deploy the ingestion service by removing the comment chars `#` in the Docker compose file. However, before deploying the ingestion service you first have to run the Fuseki service and [create the TBFY knowledge graph dataset and load data files into Fuseki](https://github.com/TBFY/knowledge-graph/tree/master/docker-scripts#create-dataset-and-load-data-files-into-fuseki).
 
 ### Environment variables
 In order to use the service you have to set the following variables in the `kg-ingestion-service.env` file in the [Docker scripts](https://github.com/TBFY/knowledge-graph/tree/master/docker-scripts) module:
@@ -24,7 +26,7 @@ In order to use the service you have to set the following variables in the `kg-i
 * `DAILY_SCHEDULE:` Time to run the daily ingestion. The default value is `03:00`. Change this accordingly.
 * `OUTPUT_FOLDER:` Folder location for the ingested data to be stored inside the Docker container. Use the default value `/ingestion` that is configured for the Docker image. It is suggested that you map this to a e.g. a local folder on the Ubuntu server running the Docker container. The Docker compose file uses the `volmues:` configuration setting `/data/ingestion:/ingestion` to redirect to a folder `/data/ingestion` that must be created on the Ubuntu server.
 * `TBFY_FUSEKI_URL:` The URL of the Apache Fuseki server that you are running.
-* `TBFY_FUSEKI_DATASET:` Name of the dataset that you create in your Apache Fuseki server.
+* `TBFY_FUSEKI_DATASET:` Name of the TBFY knowledge graph dataset that you created in your Apache Fuseki server.
 
 ## Build the Docker image
 
