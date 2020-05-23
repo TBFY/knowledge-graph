@@ -65,7 +65,7 @@ def generate_slurm_script(openopps_username, openopps_password, opencorporates_a
     slurm_script += "\n"
     slurm_script += "cd $homedir\n"
     slurm_script += "export DATE=`date +%F_%H%M`\n"
-    slurm_script += "srun python -u ingest_data.py -u '" + openopps_username + "' -p '" + openopps_password + "' -a '" + opencorporates_api_key + "' -r '" + rml_folder + "' -s '" + date + "' -e '" + date + "' -o '" + output_folder + "' > /home/bre/jobs/job_$DATE.log 2>&1'\n"
+    slurm_script += "srun python -u ingest_data.py -u '" + openopps_username + "' -p '" + openopps_password + "' -a '" + opencorporates_api_key + "' -r '" + rml_folder + "' -s '" + date + "' -e '" + date + "' -o '" + output_folder + "' > /home/bre/jobs/job_$DATE.log 2>&1\n"
 
     sfile = open(script_file, 'w+')
     sfile.write(slurm_script)
