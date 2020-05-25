@@ -61,6 +61,7 @@ def generate_slurm_script(openopps_username, openopps_password, opencorporates_a
     slurm_script += "#SBATCH --mem=16GB\n"
     slurm_script += "#SBATCH --time 1-00:00:00\n"
     slurm_script += "\n"
+    slurm_script += ". \"/opt/miniconda3/etc/profile.d/conda.sh\"\n"
     slurm_script += "homedir=/home/bre/knowledge-graph/python-scripts\n"
     slurm_script += "\n"
     slurm_script += "cd $homedir\n"
