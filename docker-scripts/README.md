@@ -1,7 +1,7 @@
 # Docker scripts
 This module contains Docker scripts for deploying the TBFY knowledge graph.
 
-## Docker and environment files
+## Docker environment files
 * `docker-compose.yml`: Docker Compose file for running the services required to host the TBFY knowledge graph.
 * `fuseki.env`: Environment file for the [Apache Jena Fuseki](https://jena.apache.org/documentation/fuseki2/index.html) service defined in the Docker Compose file. Here you must set the admin password for the Fuseki administration GUI.
 * `yasgui.env`: Environment file for the [YASGUI](https://github.com/TriplyDB/Yasgui) service defined in the Docker Compose file. Here you must set the SPARQL endpoint for the TBFY knowledge graph.

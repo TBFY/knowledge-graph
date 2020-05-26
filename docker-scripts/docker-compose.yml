@@ -1,4 +1,4 @@
-version: '3.7'
+version: '2.1'
 services:
   fuseki:
     image: stain/jena-fuseki:3.13.1
@@ -22,14 +22,14 @@ services:
       - "3040:80"
     env_file:
       - ./yasgui.env
+    depends_on:
+      - fuseki
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
         labels: "yasgui-log"
-    depends_on:
-      - fuseki
   kg-api:
     image: tbfy/kg-api:0.3
     container_name: kg-api
@@ -37,16 +37,73 @@ services:
       - "7777:7777"
     env_file:
       - ./kg-api.env
+    depends_on:
+      - fuseki
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
         labels: "kg-api-log"
+  kong:
+    image: "${KONG_DOCKER_TAG:-kong:0.13.0}"
+    user: "${KONG_USER:-root}"
+    ports:
+      - "8000:8000/tcp"
+      - "8001:8001/tcp"
+      - "8443:8443/tcp"
+      - "8444:8444/tcp"
+    environment:
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: '0.0.0.0:8001'
+      KONG_CASSANDRA_CONTACT_POINTS: kg-gateway
+      KONG_DATABASE: postgres
+      KONG_PG_DATABASE: ${KONG_PG_DATABASE:-kong}
+      KONG_PG_HOST: kg-gateway
+      KONG_PG_PASSWORD: ${KONG_PG_PASSWORD:-kong}
+      KONG_PG_USER: ${KONG_PG_USER:-kong}
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr    
     depends_on:
-      - fuseki
+      kg-gateway:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "kong-log"
+  kg-gateway:
+    image: tbfy/kg-gateway:latest
+    environment:
+      POSTGRES_DB: ${KONG_PG_DATABASE:-kong}
+      POSTGRES_PASSWORD: ${KONG_PG_PASSWORD:-kong}
+      POSTGRES_USER: ${KONG_PG_USER:-kong}
+    depends_on:
+      - kg-api
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${KONG_PG_USER:-kong}"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    restart: always
+    stdin_open: false   
+    tty: false
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "kg-gateway-log"
 #  kg-ingestion-service:
-#    image: tbfy/kg-ingestion-service
+#    image: tbfy/kg-ingestion-service:latest
 #    container_name: kg-ingestion-service
 #    volumes:
 #      - /data/ingestion:/ingestion
