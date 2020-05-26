@@ -203,3 +203,19 @@ Example:
 ```
 python validate_rdf.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\5_RDF_TBFY'
 ```
+
+## 3rd party Python modules
+The Python scripts use the following Python modules:
+* [requests](https://pypi.org/project/requests/): Requests allows you to send HTTP/1.1 requests extremely easily.
+* [xmltodict](https://pypi.org/project/xmltodict/): Python module that makes working with XML feel like you are working with JSON.
+* [python-dotenv](https://pypi.org/project/python-dotenv/): Reads the key-value pair from .env file and adds them to environment variable.
+
+### Installing the modules
+
+#### pip install
+Command line:
+```
+pip install requests
+pip install xmltodict
+pip install python-dotenv
+```

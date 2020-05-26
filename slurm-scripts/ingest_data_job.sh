@@ -3,7 +3,7 @@
 #SBATCH --job-name INGEST_DATA
 #SBATCH --partition sintef
 #SBATCH --ntasks 1
-#SBATCH --cpus-per-task=2
+#SBATCH --cpus-per-task=1
 #SBATCH --mem=16GB
 #SBATCH --time 7-00:00:00
 

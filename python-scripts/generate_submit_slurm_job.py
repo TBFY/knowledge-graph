@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 #####################################################################################################
 # Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
 # 
@@ -11,8 +14,6 @@
 # Funding  : TheyBuyForYou has received funding from the European Union's Horizon 2020
 #            research and innovation programme under grant agreement No 780247
 #####################################################################################################
-
-#!/usr/bin/python
 
 import config
 
@@ -57,7 +58,7 @@ def generate_slurm_script(openopps_username, openopps_password, opencorporates_a
     slurm_script += "#SBATCH --job-name INGEST_DATA\n"
     slurm_script += "#SBATCH --partition sintef\n"
     slurm_script += "#SBATCH --ntasks 1\n"
-    slurm_script += "#SBATCH --cpus-per-task=2\n"
+    slurm_script += "#SBATCH --cpus-per-task=1\n"
     slurm_script += "#SBATCH --mem=16GB\n"
     slurm_script += "#SBATCH --time 1-00:00:00\n"
     slurm_script += "\n"

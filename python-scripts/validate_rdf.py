@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 #####################################################################################################
 # Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
 # 
@@ -10,8 +13,6 @@
 # Funding  : TheyBuyForYou has received funding from the European Union's Horizon 2020
 #            research and innovation programme under grant agreement No 780247
 #####################################################################################################
-
-#!/usr/bin/python
 
 import config
 

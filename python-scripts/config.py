@@ -1,4 +1,6 @@
-#####################################################################################################
+# -*- coding: utf-8 -*-
+
+# #####################################################################################################
 # Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
 # 
 # This file contains configuration parameters for the data ingestion process.
