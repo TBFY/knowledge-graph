@@ -181,8 +181,8 @@ def main(argv):
                     os.remove(rmlOutputFilePath) # Remove output file from RML
 
                     company_end_time = datetime.now()
-                    company_duration_in_seconds = (release_end_time - release_start_time).total_seconds()
-                    tbfy.statistics.update_stats_add(stats_xml2rdf, "company_files_processed_duration_in_seconds", release_duration_in_seconds)
+                    company_duration_in_seconds = (company_end_time - company_start_time).total_seconds()
+                    tbfy.statistics.update_stats_add(stats_xml2rdf, "company_files_processed_duration_in_seconds", company_duration_in_seconds)
                     tbfy.statistics.update_stats_count(stats_xml2rdf, "number_of_company_files")
                     tbfy.statistics.update_stats_count(stats_xml2rdf, "number_of_files")
 
