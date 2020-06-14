@@ -25,7 +25,7 @@ openopps = {
 
 opencorporates = {
     "reconcile_api_url": "https://opencorporates.com/reconcile",
-    "reconcile_score": 70,
+    "reconcile_score": 60,
     "companies_api_url": "http://api.opencorporates.com",
     "smart_address_check": False,
     "country_name_codes_simulation": False,
