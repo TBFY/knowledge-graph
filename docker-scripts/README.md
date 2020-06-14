@@ -9,7 +9,6 @@ This module contains Docker scripts for deploying the TBFY knowledge graph.
 * `kg-ingestion-service.env`: Environment file for the [Knowledge Graph Ingestion Service](https://github.com/TBFY/knowledge-graph-API) defined in the Docker Compose file. This service is commented out. See the [docker-image](https://github.com/TBFY/knowledge-graph/tree/master/docker-image) module for further details.
 
 ## Prerequisites
-
 The instructions here assumes that you are planning to deploy the TBFY knowledge graph on an [Ubuntu Server 18.04.4 LTS](https://ubuntu.com/download/server) virtual machine. After setting up the Ubuntu server please follow the instructions on [www.docker.com](https://www.docker.com/) to install Docker and Docker Compose:
 * [Install Docker on Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 * [Install Docker Compose](https://docs.docker.com/compose/install/)
