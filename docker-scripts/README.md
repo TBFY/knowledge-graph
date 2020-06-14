@@ -20,6 +20,13 @@ Command line:
 ```
 docker-compose up -d
 ```
+
+### Check docker-compose log
+Command line:
+```
+docker-compose logs -f
+```
+
 ### Create dataset and load data files into Fuseki
 * Log into the Fuseki administration GUI, e.g. [http://52.19.213.234:3030](http://52.19.213.234:3030), using the admin password that you set in the `fuseki.env` file.
 * Create a new dataset `tbfy` with the dataset type `Persistent (TDB2)`.
