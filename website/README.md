@@ -7,7 +7,7 @@ The instructions here assumes that you have the Apache HTTP Server 2.4 [installe
 ## Configuration
 
 ### /var/html/
-Copy the files in the folder `website/html/` to the folder `/var/html/` on your server (replacing any existing files).
+Copy the files in the folder `website/html/` to the folder `/var/www/html/` on your server (replacing any existing files).
 
 ### /etc/apache/sites-available/
 Copy the files in the folder `website/conf/` to the folder `/etc/apache2/sites-available/` on your server (replacing any existing files).
