@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<base target="_top">
+<link rel="stylesheet" href="/css/tbfy.css">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+<link rel="stylesheet" href="/sgvizler2/lib/bootstrap-select/css/bootstrap-select.min.css">
+<script src="/sgvizler2/lib/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script src="/sgvizler2/lib/bootstrap-select/js/i18n/defaults-fr_FR.min.js"></script>
+<script src="/sgvizler2/lib/bootstrap-select/js/i18n/defaults-en_US.min.js"></script>
+<script src="/sgvizler2/sgvizler2.js"></script>
+</head>
+
+<body>
+<div class="tbfy-div-header">
+	<img src="/images/tbfy-logo.svg" alt="" height="60"/>	Knowledge Graph: Supplier statistics
+</div>
+	
+<hr>
+
+<h3>Matched suppliers per jurisdiction</h3>
+
+<form>
+	<input type="hidden" value="http://data.tbfy.eu/sparql" id="endpoint">
+	<div class="form-group row">
+		<label for="query" class="col-1 col-form-label">SPARQL</label>
+		<div class="col-10">
+			<textarea class="form-control" id="query" rows="8" lang="sparql" style="font-size:10px">
+PREFIX rov: <http://www.w3.org/ns/regorg#>
+PREFIX db: <http://dbpedia.org/ontology/>
+
+SELECT DISTINCT ?country (COUNT(?country) AS ?count) WHERE { 
+	?regorg a rov:RegisteredOrganization.
+	?regorg db:jurisdiction ?jurisdiction
+	BIND(UCASE(?jurisdiction) AS ?country)
+}
+GROUP BY ?country
+ORDER BY ASC(?country)
+		</textarea>
+	</div>
+	</div>
+	<div class="form-group row">
+		<label for="chart" class="col-1 col-form-label">Chart</label>
+		<div class="col-10">
+			<select class="custom-select" id="chart">
+				<option value="google.visualization.GeoChart" selected>google.visualization.GeoChart</option>
+				<option value="google.visualization.Table">google.visualization.Table</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="endpoint" class="col-1 col-form-label">Action</label>
+		<div class="col-10">
+			<button id="execQuery" type="button" class="btn btn-primary">Execute the query</button> &nbsp; (~5 seconds)
+		</div>
+	</div>
+	<input type="hidden" value="region=150" id="options">
+	<input type="hidden" value="2" id="logsLevel">
+</form>
+
+<ul class="nav nav-tabs" role="tablist">
+	<li class="nav-item">
+			<a class="nav-link active" data-toggle="tab" href="#resultTab" role="tab">Result</a>
+	</li>
+	<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#htmlTab" role="tab">HTML</a>
+	</li>
+	<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#scriptTab" role="tab">Javascript</a>
+	</li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+	<div class="tab-pane active" id="resultTab" role="tabpanel">
+			<div id="example" style="padding: 25px;"><div id="result"></div></div>
+	</div>
+	<div class="tab-pane" id="htmlTab" role="tabpanel">
+			<div class="bg-faded" style="padding: 25px;"><pre lang="html" id="consoleHtml"></pre></div>
+	</div>
+	<div class="tab-pane" id="scriptTab" role="tabpanel">
+			<div class="bg-faded" style="padding: 25px;"><pre lang="html" id="consoleScript"></pre></div>
+	</div>
+</div>
+
+<script  type="text/javascript">
+	$(this).on('load', function (event) {
+		$("#execQuery").click(function(event) {
+			$("#result").html("")
+			$("#console").html("")
+
+			sgvizler2.create(
+					'result',
+					$('#endpoint').val(),
+					$('#query').val(),
+					$('#chart').val(),
+					$('#options').val(),
+					$('#logsLevel').val()
+			)
+
+			sgvizler2.giveHTMLAndScript('result',"consoleHtml","consoleScript");
+
+			//Draw a chart
+			sgvizler2.containerDraw('result',options)
+				.done(
+					function() {
+							console.log("Success!");
+					}
+				)
+				.fail(
+					function() {
+							console.log("There is a problem");
+					}
+				);
+		});
+
+		$("#loadOption").click(function() {
+				console.log(sgvizler2.getChartOptions('result'))
+				$('#options').val(sgvizler2.getChartOptions('result'));
+		});
+	})
+</script>
+
+<hr>
+
+<div class="tbfy-div-footer">
+	<img src="/images/eu-flag.jpg" height="20"/>
+	<a href="https://theybuyforyou.eu">TheyBuyForYou</a> has received funding from the European Union's 
+		<a href="https://ec.europa.eu/programmes/horizon2020">Horizon 2020 research and innovation programme</a> under grant agreement 
+		<a href="https://cordis.europa.eu/project/rcn/213115/en">No 780247</a>
+</div>
+</body>
+
+</html>

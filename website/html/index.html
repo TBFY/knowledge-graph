@@ -1,215 +1,178 @@
+<!DOCTYPE html>
+<html>
+
 <head>
-<style type="text/css">
-.BodyText {
-	color: #000000;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: medium;
-}
-.Title {
-	text-align: left;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: xx-large;
-	color: #2B42A2;
-	font-weight: bold;
-}
-.TableContent {
-	border: 1px solid #000000;
-	font-family: Arial, Helvetica, sans-serif;
-}
-.TableHeading {
-	border: 1px solid #000000;
-	font-family: Arial, Helvetica, sans-serif;
-	background-color: #C0C0C0;
-	font-weight: bold;
-}
-.Heading1 {
-	font-family: Arial, Helvetica, sans-serif;
-}
-</style>
+<base target="_top">
+<link rel="stylesheet" href="/css/tbfy.css">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+<link rel="stylesheet" href="/sgvizler2/lib/bootstrap-select/css/bootstrap-select.min.css">
+<script src="/sgvizler2/lib/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script src="/sgvizler2/lib/bootstrap-select/js/i18n/defaults-fr_FR.min.js"></script>
+<script src="/sgvizler2/lib/bootstrap-select/js/i18n/defaults-en_US.min.js"></script>
+<script src="/sgvizler2/sgvizler2.js"></script>
 </head>
 
-<base target="_top">
-
-<table style="width: 40%">
-	<tr>
-		<td><img src="images/tbfy-logo.svg" alt="" height="60" /></td>
-		<td class="Title">Knowledge Graph</td>
-	</tr>
-</table>
+<body>
+<div class="tbfy-div-header">
+	<img src="/images/tbfy-logo.svg" alt="" height="60"/>	Norwegian Knowledge Graph
+</div>
 
 <hr>
 
-<p><span class="BodyText">The TBFY Knowledge Graph (KG) integrates procurement and 
-company data. The KG covers data from January 2019 onwards. New data is 
-onboarded every night. </span>
-</p>
-<p><span class="BodyText">On September 2020 the KG consisted of over 129 million 
-triples and contained information about</span></p>
+<h1>About</h1>
+
+<p>The TBFY Knowledge Graph (KG) integrates procurement and company data. The KG covers data from January 2019 onwards. New data is onboarded every night.</p>
+<p>On September 2020 the KG consisted of over 129 million triples and contained information about:</p>
 <ul>
-	<li><span class="BodyText">1.35 million tenders, </span></li>
-	<li><span class="BodyText">1.58 million awards, and</span></li>
-	<li><span class="BodyText">100 thousand companies (for matching suppliers in 
-	awards).</span></li>
+	<li>more than 1.35 million tenders, </span></li>
+	<li>more than 1.58 million awards, and</span></li>
+	<li>around 100 thousand companies (for matching suppliers in awards).</span></li>
 </ul>
 
-<span class="BodyText">The data is represented as an RDF graph data model which uses the</span>
+<p>The data is represented as an RDF graph data model which uses the</p>
 <ul>
-	<li><span class="BodyText"><a href="https://github.com/TBFY/ocds-ontology">OCDS ontology</a>, 
-	developed by the <a href="https://theybuyforyou.eu/">TBFY project</a>, providing a semantic model to
-	capture procurement data throughout the contracting 
-	process according to the
-	<a href="https://standard.open-contracting.org/latest/en/">Open Contracting 
-	Data Standard</a>; and the</span></li>
-	<li><span class="BodyText">
-	<a href="https://github.com/euBusinessGraph/eubg-data">euBusinessGraph ontology</a>, 
-developed by the <a href="https://www.eubusinessgraph.eu/">euBusinessGraph 
-	project</a>, providing a common semantic model for 
-company data.</span></li>
+	<li><a href="https://github.com/TBFY/ocds-ontology">OCDS ontology</a>, developed by the 
+		<a href="https://theybuyforyou.eu/">TBFY project</a>, providing a semantic model to	capture procurement data throughout the contracting process according to the
+		<a href="https://standard.open-contracting.org/latest/en/">Open Contracting Data Standard</a>; and the</li>
+	<li><a href="https://github.com/euBusinessGraph/eubg-data">euBusinessGraph ontology</a>, developed by the 
+		<a href="https://www.eubusinessgraph.eu/">euBusinessGraph project</a>, providing a common semantic model for company data.</li>
 </ul>
 
-<span class="BodyText">The graph capitalises on data from two market leaders in their fields:</span> 
+<p>The graph capitalises on data from two market leaders in their fields:</p> 
 <ul>
-	<li><span class="BodyText"><a href="https://theybuyforyou.eu/openopps-api/">OpenOpps</a> for 
-	procurement data (planning, tender and award releases); and</span></li>
-	<li><span style="font-weight: 400;" class="BodyText">
-	<a href="https://theybuyforyou.eu/opencorporates-api/">OpenCorporates</a></span><span class="BodyText"> 
-	for company data.</span></li>
+	<li><a href="https://theybuyforyou.eu/openopps-api/">OpenOpps</a> for procurement data (planning, tender and award releases); and</li>
+	<li><a href="https://theybuyforyou.eu/opencorporates-api/">OpenCorporates</a>	for company data.</li>
 </ul>
 
-<h1 class="Heading1">Users</h1>
-<span class="BodyText">The Knowledge Graph (KG) is available as <strong>Open Data</strong>. The 
-data is available online and can be explored through several services. We also 
-provide monthly data dumps of the KG in N-Triples format, as well as the source 
-data files (from OpenOpps and OpenCorporates) in JSON format that is used to 
-create the KG.</span><br><br>
+<h2>Statistics</h2>
 
-<table class="Table" style="width: 100%" cellpadding="2">
+<p>More detailed statistics about the KG can be found on the <a href="/statistics/">statistics page.</a></p>
+
+<h1>Usage</h1>
+
+<h2>Users</h2>
+
+<p>The Knowledge Graph (KG) is available as <strong>Open Data</strong>. The data is available online and can be explored through several services. We also 
+provide monthly data dumps of the KG in N-Triples format, as well as the source data files (from OpenOpps and OpenCorporates) in JSON format that is used to 
+create the KG.</p>
+
+<table class="tbfy-table" style="width: 100%" cellpadding="2">
 	<tr>
-		<td class="TableHeading" style="width: 200px"><strong>Service</strong></td>
-		<td class="TableHeading" style="width: 271px"><strong>URL</strong></td>
-		<td class="TableHeading"><strong>Description</strong></td>
+		<th style="width: 200px">Service</th>
+		<th style="width: 300px">URL</th>
+		<th>Description</th>
 	</tr>
 	<tr>
-		<td class="TableContent" style="width: 200px">KG SPARQL endpoint</td>
-		<td class="TableContent" style="width: 271px">
-		<a href="http://data.tbfy.eu/sparql">http://data.tbfy.eu/sparql</a></td>
-		<td class="TableContent">
-		<p>SPARQL endpoint that allows users to query the 
-		Knowledge Graph using SPARQL. We are using
-		<a href="https://jena.apache.org/documentation/fuseki2/">Apache Jena 
-		Fuseki</a> as the SPARQL server and
-		<a href="https://jena.apache.org/documentation/tdb/">Apache Jena TDB</a> 
-		as the underlying database.
-		</p>
-		<p>Example:</p>
-		<ul>
-			<li>
-			<a href="http://data.tbfy.eu/sparql?query=PREFIX%20ocds:%20%3Chttp://data.tbfy.eu/ontology/ocds%23%3EPREFIX%20dct:%20%3Chttp://purl.org/dc/terms/%3ESELECT%20?tender%20?tenderTitle%20?tenderDescription%20WHERE%20{?tender%20a%20ocds:Tender.?tender%20dct:title%20?tenderTitle.?tender%20dct:description%20?tenderDescription}%20LIMIT%205">
-			SPARQL query that lists 5 tenders</a></li>
-		</ul>
+		<td style="width: 200px">KG SPARQL endpoint</td>
+		<td style="width: 300px"><a href="http://data.tbfy.eu/sparql">http://data.tbfy.eu/sparql</a></td>
+		<td>SPARQL endpoint that allows users to query the Knowledge Graph using SPARQL. We are using
+			<a href="https://jena.apache.org/documentation/fuseki2/">Apache Jena Fuseki</a> as the SPARQL server and
+			<a href="https://jena.apache.org/documentation/tdb/">Apache Jena TDB</a> as the underlying database.
+			<br><br>Example:
+			<ul>
+				<li><a href="http://data.tbfy.eu/sparql?query=PREFIX%20ocds:%20%3Chttp://data.tbfy.eu/ontology/ocds%23%3EPREFIX%20dct:%20%3Chttp://purl.org/dc/terms/%3ESELECT%20?tender%20?tenderTitle%20?tenderDescription%20WHERE%20{?tender%20a%20ocds:Tender.?tender%20dct:title%20?tenderTitle.?tender%20dct:description%20?tenderDescription}%20LIMIT%205">
+					SPARQL query that lists 5 tenders</a></li>
+			</ul>
 		</td>
 	</tr>
 	<tr>
-		<td class="TableContent" style="width: 200px; height: 21px">KG API</td>
-		<td class="TableContent" style="width: 271; height: 21px">
-		<a href="http://data.tbfy.eu/kg-api/">http://data.tbfy.eu/kg-api</a> </td>
-		<td class="TableContent" style="height: 21px">REST API that allows you 
-		to query the Knowledge Graph. See
-		<a href="https://github.com/TBFY/knowledge-graph-API/wiki">https://github.com/TBFY/knowledge-graph-API/wiki</a> for more info.<br>
-		<br>Examples:
-		<ul>
-			<li><a href="http://data.tbfy.eu/kg-api/tender?size=5">
-			http://data.tbfy.eu/kg-api/tender?size=5</a></li>
-			<li><a href="http://data.tbfy.eu/kg-api/award?size=5">
-			http://data.tbfy.eu/kg-api/award?size=5</a></li>
-			<li><a href="http://data.tbfy.eu/kg-api/organisation?size=5">
-			http://data.tbfy.eu/kg-api/organisation?size=5</a></li>
-		</ul> </td>
+		<td style="width: 200px">KG API</td>
+		<td style="width: 300px"><a href="http://data.tbfy.eu/kg-api/">http://data.tbfy.eu/kg-api</a></td>
+		<td>REST API that allows you to query the Knowledge Graph. See
+			<a href="https://github.com/TBFY/knowledge-graph-API/wiki">https://github.com/TBFY/knowledge-graph-API/wiki</a> for more info.
+			<br><br>Examples:
+			<ul>
+				<li><a href="http://data.tbfy.eu/kg-api/tender?size=5">http://data.tbfy.eu/kg-api/tender?size=5</a></li>
+				<li><a href="http://data.tbfy.eu/kg-api/award?size=5">http://data.tbfy.eu/kg-api/award?size=5</a></li>
+				<li><a href="http://data.tbfy.eu/kg-api/organisation?size=5">http://data.tbfy.eu/kg-api/organisation?size=5</a></li>
+			</ul> 
+		</td>
 	</tr>
 	<tr>
-		<td class="TableContent" style="width: 200px">KG data dump</td>
-		<td class="TableContent" style="width: 271px">
-		<a href="http://dump.tbfy.eu">http://dump.tbfy.eu</a> </td>
-		<td class="TableContent">Monthly data dump of the Knowledge Graph in RDF 
-		format containing procurement data and company data (for matching 
-		suppliers) for the period January 2019 onwards. In addition to the KG 
-		data dump in RDF, we have also made available the source data input for 
-		the KG, i.e., procurement release data from OpenOpps and company data 
-		(for matching suppliers) from OpenCorporates in JSON format. </td>
+		<td style="width: 200px">KG data dump</td>
+		<td style="width: 300px"><a href="http://dump.tbfy.eu">http://dump.tbfy.eu</a></td>
+		<td>Monthly data dump of the Knowledge Graph in RDF format containing procurement data and company data (for matching suppliers) 
+			for the period January 2019 onwards. In addition to the KG data dump in RDF, we have also made available the source data input for 
+			the KG, i.e., procurement release data from OpenOpps and company data (for matching suppliers) from OpenCorporates in JSON format.</td>
 	</tr>
 	<tr>
-		<td class="TableContent" style="width: 200px">YASGUI for KG</td>
-		<td class="TableContent" style="width: 271px">
-		<a href="http://yasgui.tbfy.eu">http://yasgui.tbfy.eu</a> </td>
-		<td class="TableContent"><a href="https://github.com/TriplyDB/Yasgui">YASGUI</a> 
-		(Yet Another SPARQL GUI) is a 3rd party web application that we have set 
-		up that allows users to query the Knowledge Graph using SPARQL.</td>
+		<td style="width: 200px">YASGUI for KG</td>
+		<td style="width: 300px"><a href="http://yasgui.tbfy.eu">http://yasgui.tbfy.eu</a></td>
+		<td><a href="https://github.com/TriplyDB/Yasgui">YASGUI</a> (Yet Another SPARQL GUI) is a 3rd party web application that we have set 
+			up that allows users to query the Knowledge Graph using SPARQL.</td>
 	</tr>
 </table>
 
-<h1 class="Heading1">Developers</h1>
-<span class="BodyText">The Knowledge Graph (KG) is available as <strong>Open Source 
-Software</strong>. All software components and ontologies developed in the TBFY 
-project to create the Knowledge Graph have been released as open source on 
-GitHub.</span><br><br>
+<h2>Developers</h2>
 
-<table class="Table" style="width: 100%" cellpadding="2">
+<p>The Knowledge Graph (KG) is available as <strong>Open Source Software</strong>. All software components and ontologies 
+	developed in the TBFY project to create the Knowledge Graph have been released as open source on GitHub.</p>
+
+<table class="tbfy-table" style="width: 100%" cellpadding="2">
 	<tr>
-		<td class="TableHeading" style="width: 200px; height: 23px"><strong>Repository</strong></td>
-		<td class="TableHeading" style="width: 300px; height: 23px"><strong>URL</strong></td>
-		<td class="TableHeading" style="height: 23px"><strong>Description</strong></td>
+		<th style="width: 200px">Repository</th>
+		<th style="width: 300px">URL</th>
+		<th>Description</th>
 	</tr>
 	<tr>
-		<td class="TableContent" style="width: 200px">Knowledge Graph (KG)</td>
-		<td class="TableContent" style="width: 300px">
-		<a href="https://github.com/TBFY/knowledge-graph">
-		https://github.com/TBFY/knowledge-graph</a> </td>
-		<td class="TableContent">Repository where all source code, information 
-		and documentation for creating, deploying and using the Knowledge Graph 
-		are found. </td>
+		<td style="width: 200px">Knowledge Graph (KG)</td>
+		<td style="width: 300px"><a href="https://github.com/TBFY/knowledge-graph">https://github.com/TBFY/knowledge-graph</a></td>
+		<td class="TableContent">Repository where all source code, information and documentation for creating, deploying and using 
+			the Knowledge Graph are found.</td>
 	</tr>
 	<tr>
-		<td class="TableContent" style="width: 200px">OCDS Ontology</td>
-		<td class="TableContent" style="width: 300px">
-		<a href="https://github.com/TBFY/ocds-ontology">
-		https://github.com/TBFY/ocds-ontology</a> </td>
-		<td class="TableContent">Repository for the OCDS ontology.</td>
+		<td style="width: 200px">OCDS Ontology</td>
+		<td style="width: 300px"><a href="https://github.com/TBFY/ocds-ontology">https://github.com/TBFY/ocds-ontology</a></td>
+		<td>Repository for the OCDS ontology.</td>
 	</tr>
 	<tr>
-		<td class="TableContent" style="width: 200px">KG API</td>
-		<td class="TableContent" style="width: 300px">
-		<a href="https://github.com/TBFY/knowledge-graph-API">
-		https://github.com/TBFY/knowledge-graph-API</a> </td>
-		<td class="TableContent">Repository for the core API. It also contains 
-		the API documentation and SPARQL queries of the TheyBuyForYou project.</td>
+		<td style="width: 200px">KG API</td>
+		<td style="width: 300px"><a href="https://github.com/TBFY/knowledge-graph-API">https://github.com/TBFY/knowledge-graph-API</a></td>
+		<td>Repository for the core API. It also contains the API documentation and SPARQL queries of the TheyBuyForYou project.</td>
 	</tr>
 	<tr>
-		<td class="TableContent" style="width: 200px">KG API Gateway</td>
-		<td class="TableContent" style="width: 300px">
-		<a href="https://github.com/TBFY/api-gateway">
-		https://github.com/TBFY/api-gateway</a> </td>
-		<td class="TableContent">Repository for the API Gateway. It provides a 
-		flexible abstraction layer and a single entry point that securely 
-		manages communication between TBFY clients and online tools via API.</td>
+		<td style="width: 200px">KG API Gateway</td>
+		<td style="width: 300px"><a href="https://github.com/TBFY/api-gateway">https://github.com/TBFY/api-gateway</a></td>
+		<td>Repository for the API Gateway. It provides a flexible abstraction layer and a single entry point that securely manages 
+			communication between TBFY clients and online tools via API.</td>
 	</tr>
 </table>
 
-<h1><span class="Heading1">Admins&nbsp;</span></h1>
-<span class="BodyText">The following services are only available to the TBFY 
-Knowledge Graph 
-administrators:</span><br><br>
+<h2>Admins</h2>
 
-<table class="Table" style="width: 100%" cellpadding="2">
+<p>The following services are only available to the TBFY Knowledge Graph administrators:</p>
+
+<table class="tbfy-table" style="width: 100%" cellpadding="2">
 	<tr>
-		<td class="TableHeading" style="width: 200px"><strong>Service</strong></td>
-		<td class="TableHeading" style="width: 300px"><strong>URL</strong></td>
-		<td class="TableHeading"><strong>Description</strong></td>
+		<th style="width: 200px">Service</th>
+		<th style="width: 300px">URL</th>
+		<th>Description</th>
 	</tr>
 	<tr>
-		<td class="TableContent" style="width: 200px">Fuseki admin UI</td>
-		<td class="TableContent" style="width: 300px"><a href="http://fuseki.tbfy.eu">
-		http://fuseki.tbfy.eu</a> </td>
-		<td class="TableContent">Apache Jena Fuseki admin UI that allows 
-		adminstrators to manage the TBFY Knowledge Graph.</td>
+		<td style="width: 200px">Fuseki admin UI</td>
+		<td style="width: 300px"><a href="http://fuseki.tbfy.eu">http://fuseki.tbfy.eu</a></td>
+		<td class="TableContent">Apache Jena Fuseki admin UI that allows adminstrators to manage the TBFY Knowledge Graph.</td>
 	</tr>
 </table>
+
+<p>
+
+<hr>
+
+<table style="width: 80%">
+	<tr>
+		<td><img src="/images/eu-flag.jpg" alt="" height="20"/></td>
+		<td><span class="BodyText"><a href="https://theybuyforyou.eu/">TheyBuyForYou</a> has received funding from the European Union's 
+			<a href="https://ec.europa.eu/programmes/horizon2020/">Horizon 2020 research and innovation programme under grant agreement 
+			<a href="https://cordis.europa.eu/project/rcn/213115/en">No 780247</a></span></td>
+	</tr>
+</table>
+</body>
+
+</html>

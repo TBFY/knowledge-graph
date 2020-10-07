@@ -1,0 +1,134 @@
+PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+
+SELECT ?releaseType (COUNT(?releaseType) AS ?count) WHERE { 
+  ?contractingProcess a ocds:ContractingProcess.
+  ?contractingProcess ocds:hasRelease ?release.
+  ?release tbfy:releaseTag ?releaseType
+} 
+GROUP BY ?releaseType
+
+--------------------------------------------------------------------------------
+
+PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+
+SELECT ?tenderStatus (COUNT(?tenderStatus) AS ?count) WHERE { 
+  ?contractingProcess a ocds:ContractingProcess.
+  ?contractingProcess ocds:ocid ?ocid.
+  ?contractingProcess ocds:hasRelease ?release.
+  ?release tbfy:releaseDate ?releaseDate.
+  ?release tbfy:releaseTag ?releaseTag.
+  ?contractingProcess ocds:hasTender ?tender.
+  ?tender dct:title ?tenderTitle.
+  ?tender ocds:tenderStatus ?tenderStatus.
+  ?buyer ocds:isBuyerFor ?contractingProcess.
+  ?buyer ocds:legalName ?buyerName.
+  ?buyer ocds:hasAddress ?address.
+  ?address schema:addressCountry ?country.
+  FILTER(?country = "Norway").
+} 
+GROUP BY ?tenderStatus
+
+--------------------------------------------------------------------------------
+
+PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+
+SELECT * WHERE {
+  {
+    SELECT ?tenderStatus (COUNT(?tenderStatus) AS ?count) WHERE { 
+      ?contractingProcess a ocds:ContractingProcess.
+      ?contractingProcess ocds:ocid ?ocid.
+      ?contractingProcess ocds:hasRelease ?release.
+      ?release tbfy:releaseDate ?releaseDate.
+      ?release tbfy:releaseTag ?releaseTag.
+      ?contractingProcess ocds:hasTender ?tender.
+      ?tender dct:title ?tenderTitle.
+      ?tender ocds:tenderStatus ?tenderStatus.
+      ?buyer ocds:isBuyerFor ?contractingProcess.
+      ?buyer ocds:legalName ?buyerName.
+      ?buyer ocds:hasAddress ?address.
+      ?address schema:addressCountry ?country.
+      FILTER(?country = "Norway").
+    }
+    GROUP BY ?tenderStatus
+  }
+  UNION 
+  {
+    SELECT ?tenderStatus (COUNT(?tender) AS ?count) WHERE { 
+      ?contractingProcess a ocds:ContractingProcess.
+      ?contractingProcess ocds:ocid ?ocid.
+      ?contractingProcess ocds:hasRelease ?release.
+      ?release tbfy:releaseDate ?releaseDate.
+      ?release tbfy:releaseTag ?releaseTag.
+      ?contractingProcess ocds:hasTender ?tender.
+      ?tender dct:title ?tenderTitle.
+      FILTER(NOT EXISTS { ?tender ocds:tenderStatus ?tenderStatus. })
+      ?buyer ocds:isBuyerFor ?contractingProcess.
+      ?buyer ocds:legalName ?buyerName.
+      ?buyer ocds:hasAddress ?address.
+      ?address schema:addressCountry ?country.
+      FILTER(?country = "Norway").
+    }
+    GROUP BY ?tenderStatus
+  }
+} 
+
+--------------------------------------------------------------------------------
+
+PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?classification (COUNT(?classification) AS ?count) WHERE { 
+  ?contractingProcess a ocds:ContractingProcess.
+  ?contractingProcess ocds:ocid ?ocid.
+  ?contractingProcess ocds:hasRelease ?release.
+  ?release tbfy:releaseDate ?releaseDate.
+  ?release tbfy:releaseTag ?releaseTag.
+  ?contractingProcess ocds:hasTender ?tender.
+  ?tender dct:title ?tenderTitle.
+  ?tender ocds:tenderStatus ?tenderStatus.
+  ?tender ocds:hasItemToBeProcured ?item.
+  ?item ocds:hasClassificaton ?classification.
+  ?buyer ocds:isBuyerFor ?contractingProcess.
+  ?buyer ocds:legalName ?buyerName.
+  ?buyer ocds:hasAddress ?address.
+  ?address schema:addressCountry ?country.
+  FILTER(?country = "Norway").
+} 
+GROUP BY ?classification
+ORDER BY DESC(?count)
+LIMIT 10
+
+--------------------------------------------------------------------------------
+
+
+PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?TenderStatus (COUNT(?TenderStatus) AS ?Count) WHERE { 
+  ?contractingProcess a ocds:ContractingProcess.
+  ?contractingProcess ocds:ocid ?ocid.
+  ?contractingProcess ocds:hasRelease ?release.
+  ?release tbfy:releaseDate ?releaseDate.
+  ?release tbfy:releaseTag ?releaseTag.
+  ?contractingProcess ocds:hasTender ?tender.
+  ?tender dct:title ?tenderTitle.
+  ?tender ocds:tenderStatus ?TenderStatus.
+  ?buyer ocds:isBuyerFor ?contractingProcess.
+  ?buyer ocds:legalName ?buyerName.
+  ?buyer ocds:hasAddress ?address.
+  ?address schema:addressCountry ?country.
+  FILTER(?country = "Norway").
+} GROUP BY ?TenderStatus

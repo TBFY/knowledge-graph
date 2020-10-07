@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<base target="_top">
+<link rel="stylesheet" href="/css/tbfy.css">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+<link rel="stylesheet" href="/sgvizler2/lib/bootstrap-select/css/bootstrap-select.min.css">
+<script src="/sgvizler2/lib/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script src="/sgvizler2/lib/bootstrap-select/js/i18n/defaults-fr_FR.min.js"></script>
+<script src="/sgvizler2/lib/bootstrap-select/js/i18n/defaults-en_US.min.js"></script>
+<script src="/sgvizler2/sgvizler2.js"></script>
+</head>
+
+<body>
+<div class="tbfy-div-header">
+	<img src="/images/tbfy-logo.svg" alt="" height="60"/>	Norwegian Knowledge Graph: Supplier statistics
+</div>
+	
+<hr>
+
+<h2>Suppliers</h2>
+
+<h3>Matched suppliers per jurisdiction (geochart)</h3>
+
+<div id="result1"
+	data-sgvizler-query="
+	PREFIX rov: <http://www.w3.org/ns/regorg#>
+	PREFIX db: <http://dbpedia.org/ontology/>
+	
+	SELECT DISTINCT ?country (COUNT(?country) AS ?count) WHERE { 
+		?regorg a rov:RegisteredOrganization.
+		?regorg db:jurisdiction ?jurisdiction.
+		BIND(UCASE(?jurisdiction) AS ?country)
+	}
+	GROUP BY ?country
+		"
+	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
+	data-sgvizler-chart="google.visualization.GeoChart"
+	data-sgvizler-chart-options="region=150"
+	data-sgvizler-log="2">
+</div>
+
+<h3>Matched suppliers per jurisdiction (column chart)</h3>
+
+<div id="result2"
+	data-sgvizler-query="
+		PREFIX rov: <http://www.w3.org/ns/regorg#>
+		PREFIX db: <http://dbpedia.org/ontology/>
+
+		SELECT DISTINCT ?jurisdiction (COUNT(?jurisdiction) AS ?count) WHERE { 
+			?regorg a rov:RegisteredOrganization.
+			?regorg db:jurisdiction ?jurisdiction
+		}
+		GROUP BY ?jurisdiction
+		ORDER BY DESC(?count)
+	"
+	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
+	data-sgvizler-chart="google.visualization.ColumnChart"
+	data-sgvizler-chart-options="width=80%|title=Matched suppliers per jurisdiction|hAxis.title=jurisdiction"
+	data-sgvizler-log="2">
+</div>
+
+<!--SCRIPT-->
+<script>
+	sgvizler2.showTabHtmlAndScript("result1");
+	sgvizler2.showTabHtmlAndScript("result2");
+
+	$(function() {
+			sgvizler2.containerDrawAll();
+	});
+</script>
+
+<hr>
+
+<div class="tbfy-div-footer">
+	<img src="/images/eu-flag.jpg" height="20"/>
+	<a href="https://theybuyforyou.eu">TheyBuyForYou</a> has received funding from the European Union's 
+		<a href="https://ec.europa.eu/programmes/horizon2020">Horizon 2020 research and innovation programme</a> under grant agreement 
+		<a href="https://cordis.europa.eu/project/rcn/213115/en">No 780247</a>
+</div>
+</body>
+
+</html>

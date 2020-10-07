@@ -1,0 +1,46 @@
+PREFIX rov: <http://www.w3.org/ns/regorg#>
+PREFIX db: <http://dbpedia.org/ontology/>
+
+SELECT DISTINCT ?jurisdiction (COUNT(?jurisdiction) AS ?count) WHERE { 
+  ?regorg a rov:RegisteredOrganization.
+  ?regorg db:jurisdiction ?jurisdiction
+}
+GROUP BY ?jurisdiction
+ORDER BY ASC(?jurisdiction)
+
+--------------------------------------------------------------------------------
+
+PREFIX rov: <http://www.w3.org/ns/regorg#>
+PREFIX db: <http://dbpedia.org/ontology/>
+
+SELECT DISTINCT ?country (COUNT(?country) AS ?count) WHERE { 
+  ?regorg a rov:RegisteredOrganization.
+  ?regorg db:jurisdiction ?jurisdiction.
+  BIND(UCASE(?jurisdiction) AS ?country)
+}
+GROUP BY ?country
+
+--------------------------------------------------------------------------------
+
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX q: <http://www.wikidata.org/prop/qualifier/>
+PREFIX v: <http://www.wikidata.org/prop/statement/>
+
+SELECT ?countryLabel (count(*) as ?count) WHERE {
+  ?city wdt:P31/wdt:P279* wd:Q515 .
+  ?city p:P6 ?statement .
+  ?statement v:P6 ?mayor .
+  ?mayor wdt:P21 wd:Q6581072 .
+  FILTER NOT EXISTS { ?statement q:P582 ?x }
+  ?city wdt:P17 ?country  .
+  SERVICE wikibase:label {
+    bd:serviceParam wikibase:language "en" .
+  }
+} 
+GROUP BY ?country ?countryLabel 
+ORDER BY DESC(?count) 
+LIMIT 100

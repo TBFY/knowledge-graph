@@ -1,0 +1,51 @@
+* {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+	margin: 20px 20px 20px 20px;
+}
+
+table {
+	margin-bottom: 20px;
+}
+
+.tbfy-div-header {
+	font-size: xx-large;
+	text-align:left;
+	color: #2B42A2;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.tbfy-div-header img {
+	padding-top: 0px;
+	padding-right: 20px;
+}
+
+.tbfy-div-footer {
+	text-align:left;
+	vertical-align: middle;
+}
+
+.tbfy-div-footer img {
+	padding-top: 0px;
+	padding-right: 5px;
+}
+
+.tbfy-table {
+	border: 1px solid #000000;
+	padding: 2px;
+}
+
+.tbfy-table th {
+	border: 1px solid #000000;
+	padding: 4px;
+	background-color: #C0C0C0;
+	font-weight: bold;
+}
+
+.tbfy-table td {
+	border: 1px solid #000000;
+	padding: 4px;
+}

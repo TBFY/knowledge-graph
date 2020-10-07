@@ -1,0 +1,117 @@
+PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?tenderStatus (COUNT(?tenderStatus) AS ?count) WHERE { 
+  ?contractingProcess a ocds:ContractingProcess.
+  ?contractingProcess ocds:ocid ?ocid.
+  ?contractingProcess ocds:hasRelease ?release.
+  ?release tbfy:releaseDate ?releaseDate.
+  ?release tbfy:releaseTag ?releaseTag.
+  ?contractingProcess ocds:hasTender ?tender.
+  ?tender dct:title ?tenderTitle.
+  ?tender ocds:tenderStatus ?tenderStatus.
+  ?buyer ocds:isBuyerFor ?contractingProcess.
+  ?buyer ocds:legalName ?buyerName.
+  ?buyer ocds:hasAddress ?address.
+  ?address schema:addressCountry ?country.
+  FILTER(?country = "Norway").
+}
+GROUP BY ?tenderStatus
+
+--------------------------------------------------------------------------------
+
+PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?buyerName ?tenderTitle ?releaseDate ?tenderURL WHERE { 
+  ?contractingProcess a ocds:ContractingProcess.
+  ?contractingProcess ocds:ocid ?ocid.
+  ?contractingProcess ocds:hasRelease ?release.
+  ?release tbfy:releaseDate ?releaseDate.
+  ?release tbfy:releaseTag ?releaseTag.
+  ?release tbfy:releaseURI ?releaseURI.
+  ?release tbfy:releaseDate ?releaseDate.
+  ?contractingProcess ocds:hasTender ?tender.
+  ?tender dct:title ?tenderTitle.
+  ?tender ocds:tenderStatus ?tenderStatus.
+  ?buyer ocds:isBuyerFor ?contractingProcess.
+  ?buyer ocds:legalName ?buyerName.
+  ?buyer ocds:hasAddress ?address.
+  ?address schema:addressCountry ?country.
+  FILTER(?country = "Norway").
+  FILTER(?tenderStatus = "planned" || ?tenderStatus = "active").
+  FILTER(regex(lcase(str(?tenderTitle)), "covid.*19")).
+  BIND(IRI(STR(?releaseURI)) AS ?tenderURL)
+}
+
+--------------------------------------------------------------------------------
+
+PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?awardURL ?awardTitle ?tender ?tenderTitle ?buyerName WHERE { 
+  ?contractingProcess a ocds:ContractingProcess.
+  ?contractingProcess ocds:ocid ?ocid.
+  ?contractingProcess ocds:hasRelease ?release.
+  ?release tbfy:releaseDate ?releaseDate.
+  ?release tbfy:releaseTag ?releaseTag.
+  ?release tbfy:releaseURI ?releaseURI.
+  ?contractingProcess ocds:hasAward ?award.
+  ?award dct:title ?awardTitle.
+  ?contractingProcess ocds:hasTender ?tender.
+  ?tender dct:title ?tenderTitle.
+  ?buyer ocds:isBuyerFor ?contractingProcess.
+  ?buyer ocds:legalName ?buyerName.
+  ?buyer ocds:hasAddress ?address.
+  ?address schema:addressCountry ?country.
+  FILTER(?country = "Norway").
+  FILTER(regex(lcase(str(?tenderTitle)), "covid.*19")).
+  BIND(IRI(STR(?releaseURI)) AS ?awardURL)
+}
+
+--------------------------------------------------------------------------------
+
+PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX adms: <http://www.w3.org/ns/adms#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?supplierName ?supplierURL ?award ?awardTitle ?buyerName WHERE { 
+	?contractingProcess a ocds:ContractingProcess.
+	?contractingProcess ocds:ocid ?ocid.
+	?contractingProcess ocds:hasRelease ?release.
+	?release tbfy:releaseDate ?releaseDate.
+	?release tbfy:releaseTag ?releaseTag.
+	?contractingProcess ocds:hasAward ?award.
+	?award dct:title ?awardTitle.
+	?supplier a ocds:Organisation.
+	?supplier ocds:legalName ?supplierName.
+	?supplier ocds:isSupplierFor ?award.
+	?supplier owl:sameAs ?matchedSupplier.
+	?matchedSupplier adms:identifier ?identifier.
+ 	?identifier skos:notation ?notation.
+ 	?contractingProcess ocds:hasTender ?tender.
+ 	?tender dct:title ?tenderTitle.
+	?buyer ocds:isBuyerFor ?contractingProcess.
+	?buyer ocds:legalName ?buyerName.
+	?buyer ocds:hasAddress ?address.
+	?address schema:addressCountry ?country.
+	FILTER(?country = "Norway").
+	FILTER(regex(lcase(str(?tenderTitle)), "covid.*19")).
+ 	BIND(IRI(CONCAT(STR("https://opencorporates.com/companies/"), STR(?notation))) AS ?supplierURL)
+}
+
+--------------------------------------------------------------------------------
