@@ -23,6 +23,10 @@ table {
 	padding-right: 20px;
 }
 
+.tbfy-div-header a {
+	color: #2B42A2;
+}
+
 .tbfy-div-footer {
 	text-align:left;
 	vertical-align: middle;
