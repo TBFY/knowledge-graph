@@ -21,12 +21,12 @@
 <body>
 <div class="tbfy-div-header">
 	<img src="/images/tbfy-logo.svg" alt="" height="60"/>
-	<a href="/">Knowledge Graph</a> &raquo; <a href="/statistics/">Statistics</a> &raquo; Award
+	<a href="/">Knowledge Graph</a> &raquo; <a href="/statistics/">Statistics</a> &raquo; Contract
 </div>
 	
 <hr>
 
-<h3>Awards per jurisdiction (based on country of buyer)</h3>
+<h3>Contracts per jurisdiction (based on country of buyer)</h3>
 
 <form>
 	<input type="hidden" value="http://data.tbfy.eu/sparql" id="endpoint">
@@ -40,7 +40,7 @@ PREFIX schema: <http://schema.org/>
 
 SELECT DISTINCT ?country (COUNT(?country) AS ?count) WHERE { 
 	?contractingProcess a ocds:ContractingProcess.
-	?contractingProcess ocds:hasAward ?award.
+	?contractingProcess ocds:hasContract ?contract.
 	?buyer ocds:isBuyerFor ?contractingProcess.
 	?buyer ocds:hasAddress ?address.
 	?address schema:addressCountry ?country.

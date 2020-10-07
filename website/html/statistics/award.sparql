@@ -1,0 +1,13 @@
+PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+PREFIX schema: <http://schema.org/>
+
+SELECT DISTINCT ?country (COUNT(?country) AS ?count) WHERE { 
+	?contractingProcess a ocds:ContractingProcess.
+	?contractingProcess ocds:hasAward ?award.
+	?buyer ocds:isBuyerFor ?contractingProcess.
+	?buyer ocds:hasAddress ?address.
+	?address schema:addressCountry ?country.
+} 
+GROUP BY ?country
+ORDER BY ASC(?country)

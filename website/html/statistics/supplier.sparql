@@ -1,0 +1,10 @@
+PREFIX rov: <http://www.w3.org/ns/regorg#>
+PREFIX db: <http://dbpedia.org/ontology/>
+
+SELECT DISTINCT ?country (COUNT(?country) AS ?count) WHERE { 
+	?regorg a rov:RegisteredOrganization.
+	?regorg db:jurisdiction ?jurisdiction
+	BIND(UCASE(?jurisdiction) AS ?country)
+}
+GROUP BY ?country
+ORDER BY ASC(?country)

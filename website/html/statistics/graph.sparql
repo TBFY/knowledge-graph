@@ -1,0 +1,10 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?class (COUNT(?class) AS ?count) 
+WHERE {
+	?s a ?type.
+	FILTER(STRSTARTS(STR(?type), "http://data.tbfy.eu/ontology/ocds#")).
+	BIND(REPLACE(STR(?type), "http://data.tbfy.eu/ontology/ocds#", "") AS ?class)
+}
+GROUP BY ?class 
+ORDER BY ASC(?class)

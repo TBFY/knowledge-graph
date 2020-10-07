@@ -20,57 +20,37 @@
 
 <body>
 <div class="tbfy-div-header">
-	<img src="/images/tbfy-logo.svg" alt="" height="60"/>	Norwegian Knowledge Graph: Supplier statistics
+	<img src="/images/tbfy-logo.svg" alt="" height="60"/>
+	<a href="/">Knowledge Graph</a>	&raquo; <a href="/norway/">Norway</a> &raquo; <a href="/norway/statistics/">Statistics</a> &raquo; Release
 </div>
-	
+
 <hr>
 
-<h2>Suppliers</h2>
+<h3>Type of releases</h3>
 
-<h3>Matched suppliers per jurisdiction (geochart)</h3>
-
-<div id="result1"
+<div id="result"
 	data-sgvizler-query="
-	PREFIX rov: <http://www.w3.org/ns/regorg#>
-	PREFIX db: <http://dbpedia.org/ontology/>
-	
-	SELECT DISTINCT ?country (COUNT(?country) AS ?count) WHERE { 
-		?regorg a rov:RegisteredOrganization.
-		?regorg db:jurisdiction ?jurisdiction.
-		BIND(UCASE(?jurisdiction) AS ?country)
-	}
-	GROUP BY ?country
-		"
-	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
-	data-sgvizler-chart="google.visualization.GeoChart"
-	data-sgvizler-chart-options="region=150"
-	data-sgvizler-log="2">
-</div>
-
-<h3>Matched suppliers per jurisdiction (column chart)</h3>
-
-<div id="result2"
-	data-sgvizler-query="
-		PREFIX rov: <http://www.w3.org/ns/regorg#>
-		PREFIX db: <http://dbpedia.org/ontology/>
-
-		SELECT DISTINCT ?jurisdiction (COUNT(?jurisdiction) AS ?count) WHERE { 
-			?regorg a rov:RegisteredOrganization.
-			?regorg db:jurisdiction ?jurisdiction
-		}
-		GROUP BY ?jurisdiction
-		ORDER BY DESC(?count)
+		PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+		PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+		
+		SELECT ?releaseType (COUNT(?releaseType) AS ?count) WHERE { 
+			?contractingProcess a ocds:ContractingProcess.
+			?contractingProcess ocds:hasRelease ?release.
+			?release tbfy:releaseTag ?releaseType
+		} 
+		GROUP BY ?releaseType
 	"
 	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
-	data-sgvizler-chart="google.visualization.ColumnChart"
-	data-sgvizler-chart-options="width=80%|title=Matched suppliers per jurisdiction|hAxis.title=jurisdiction"
+	data-sgvizler-chart="google.visualization.BarChart"
+	data-sgvizler-chart-options="height=20%|width=80%|title=Number of releases by type|vAxis.title=type"
 	data-sgvizler-log="2">
 </div>
 
+<hr>
+				
 <!--SCRIPT-->
 <script>
-	sgvizler2.showTabHtmlAndScript("result1");
-	sgvizler2.showTabHtmlAndScript("result2");
+	sgvizler2.showTabHtmlAndScript("result");
 
 	$(function() {
 			sgvizler2.containerDrawAll();

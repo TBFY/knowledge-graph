@@ -20,62 +20,60 @@
 
 <body>
 <div class="tbfy-div-header">
-	<img src="/images/tbfy-logo.svg" alt="" height="60"/>	Norwegian Knowledge Graph: Release statistics
+	<img src="/images/tbfy-logo.svg" alt="" height="60"/>
+	<a href="/">Knowledge Graph</a>	&raquo; <a href="/norway/">Norway</a> &raquo; <a href="/norway/statistics/">Statistics</a> &raquo; Tender
 </div>
-
+	
 <hr>
 
-<h2>Releases</h2>
+<h3>Status of tenders</h3>
 
-<h3>Type of releases</h3>
-
-<div id="result"
+<div id="result1"
 	data-sgvizler-query="
-		PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
-		PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
-		
-		SELECT ?releaseType (COUNT(?releaseType) AS ?count) WHERE { 
-			?contractingProcess a ocds:ContractingProcess.
-			?contractingProcess ocds:hasRelease ?release.
-			?release tbfy:releaseTag ?releaseType
-		} 
-		GROUP BY ?releaseType
-	"
-	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
-	data-sgvizler-chart="google.visualization.BarChart"
-	data-sgvizler-chart-options="height=20%|width=80%|title=Number of releases by type|vAxis.title=type"
-	data-sgvizler-log="2">
-</div>
-
-<hr>
-
-<h2 class="Heading">Tenders</h2>
-
-<h3 class="Heading">Status of tenders</h3>
-
-<div id="result2"
-	data-sgvizler-query="
-		PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
-		PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
-		PREFIX dct: <http://purl.org/dc/terms/>
-		PREFIX schema: <http://schema.org/>
-		
-		SELECT ?tenderStatus (COUNT(?tenderStatus) AS ?count) WHERE { 
-			?contractingProcess a ocds:ContractingProcess.
-			?contractingProcess ocds:ocid ?ocid.
-			?contractingProcess ocds:hasRelease ?release.
-			?release tbfy:releaseDate ?releaseDate.
-			?release tbfy:releaseTag ?releaseTag.
-			?contractingProcess ocds:hasTender ?tender.
-			?tender dct:title ?tenderTitle.
-			?tender ocds:tenderStatus ?tenderStatus.
-			?buyer ocds:isBuyerFor ?contractingProcess.
-			?buyer ocds:legalName ?buyerName.
-			?buyer ocds:hasAddress ?address.
-			?address schema:addressCountry ?country.
-			FILTER(?country = &quot;Norway&quot;).
-		} 
-		GROUP BY ?tenderStatus
+	PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+	PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+	PREFIX dct: <http://purl.org/dc/terms/>
+	PREFIX schema: <http://schema.org/>
+	
+	SELECT * WHERE {
+		{
+			SELECT ?tenderStatus (COUNT(?tenderStatus) AS ?count) WHERE { 
+				?contractingProcess a ocds:ContractingProcess.
+				?contractingProcess ocds:ocid ?ocid.
+				?contractingProcess ocds:hasRelease ?release.
+				?release tbfy:releaseDate ?releaseDate.
+				?release tbfy:releaseTag ?releaseTag.
+				?contractingProcess ocds:hasTender ?tender.
+				?tender dct:title ?tenderTitle.
+				?tender ocds:tenderStatus ?tenderStatus.
+				?buyer ocds:isBuyerFor ?contractingProcess.
+				?buyer ocds:legalName ?buyerName.
+				?buyer ocds:hasAddress ?address.
+				?address schema:addressCountry ?country.
+				FILTER(?country = &quot;Norway&quot;).
+			}
+			GROUP BY ?tenderStatus
+		}
+		UNION 
+		{
+			SELECT ?tenderStatus (COUNT(?tender) AS ?count) WHERE { 
+				?contractingProcess a ocds:ContractingProcess.
+				?contractingProcess ocds:ocid ?ocid.
+				?contractingProcess ocds:hasRelease ?release.
+				?release tbfy:releaseDate ?releaseDate.
+				?release tbfy:releaseTag ?releaseTag.
+				?contractingProcess ocds:hasTender ?tender.
+				?tender dct:title ?tenderTitle.
+				FILTER(NOT EXISTS { ?tender ocds:tenderStatus ?tenderStatus. })
+				?buyer ocds:isBuyerFor ?contractingProcess.
+				?buyer ocds:legalName ?buyerName.
+				?buyer ocds:hasAddress ?address.
+				?address schema:addressCountry ?country.
+				FILTER(?country = &quot;Norway&quot;).
+			}
+			GROUP BY ?tenderStatus
+		}
+	} 
 	"
 	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
 	data-sgvizler-chart="google.visualization.BarChart"
@@ -83,7 +81,33 @@
 	data-sgvizler-log="2">
 </div>
 
-<h3 class="Heading">Top 10 classification of items to be procured</h3>
+<h3>Top 20 locations of tender buyers</h3>
+
+<div id="result2"
+	data-sgvizler-query="
+	PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+	PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+	PREFIX schema: <http://schema.org/>
+	
+	SELECT DISTINCT ?location (COUNT(?location) AS ?count) WHERE { 
+		?contractingProcess a ocds:ContractingProcess.
+		?contractingProcess ocds:hasTender ?tender.
+		?buyer ocds:isBuyerFor ?contractingProcess.
+		?buyer ocds:hasAddress ?address.
+		?address schema:addressLocality ?location.
+		?address schema:addressCountry ?country.
+	} 
+	GROUP BY ?location
+	ORDER BY DESC(?count)
+	LIMIT 20
+	"
+	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
+	data-sgvizler-chart="google.visualization.BarChart"
+	data-sgvizler-chart-options="height=700px|width=80%|title=Top 20 locations of tender buyers|vAxis.title=location"
+	data-sgvizler-log="2">
+</div>
+
+<h3>Top 20 classification of items to be procured</h3>
 
 <p>See <a href="https://www.publictendering.com/cpv-codes/list-of-the-cpv-codes">https://www.publictendering.com/cpv-codes/list-of-the-cpv-codes</a> 
 	for a description of the CPV classification codes.</p>
@@ -115,17 +139,17 @@
 		} 
 		GROUP BY ?classification
 		ORDER BY DESC(?count)
-		LIMIT 10
+		LIMIT 20
 	"
 	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
 	data-sgvizler-chart="google.visualization.BarChart"
-	data-sgvizler-chart-options="height=100%|width=80%|title=Top 10 classification of items to be procured|vAxis.title=CPV code"
+	data-sgvizler-chart-options="height=700px|width=80%|title=Top 20 classification of items to be procured|vAxis.title=CPV code"
 	data-sgvizler-log="2">
 </div>
-				
+
 <!--SCRIPT-->
 <script>
-	sgvizler2.showTabHtmlAndScript("result");
+	sgvizler2.showTabHtmlAndScript("result1");
 	sgvizler2.showTabHtmlAndScript("result2");
 	sgvizler2.showTabHtmlAndScript("result3");
 

@@ -20,16 +20,17 @@
 
 <body>
 <div class="tbfy-div-header">
-	<img src="/images/tbfy-logo.svg" alt="" height="60"/>	Norwegian Knowledge Graph: COVID-19 statistics
+	<img src="/images/tbfy-logo.svg" alt="" height="60"/>
+	<a href="/">Knowledge Graph</a>	&raquo; <a href="/norway/">Norway</a> &raquo; <a href="/norway/statistics/">Statistics</a> &raquo; COVID-19
 </div>
 	
 <hr>
 
-<div>
-<h2 class="Heading">Tenders</h2>
-<h3 class="Heading">Status of tenders related to COVID-19</h3>
-<p>
-<div id="result"
+<h2>Tenders</h2>
+
+<h3>Status of tenders related to COVID-19</h3>
+
+<div id="result1"
 	data-sgvizler-query="
 		PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
 		PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
@@ -61,11 +62,10 @@
 	data-sgvizler-log="2">
 </div>
 
-<p>
+<h3>Planned and active tenders related to COVID-19</h3>
 
-<h3 class="Heading">Planned and active tenders related to COVID-19</h3>
-<span class="BodyText">Click the <i>tenderURL</i> to retrieve the OCDS tender release document from OpenOpps, which contains more details about the tender.</span>
-<p>
+<p>Click the <i>tenderURL</i> to retrieve the OCDS tender release document from OpenOpps, which contains more details about the tender.</p>
+
 <div id="result2"
 	data-sgvizler-query="
 		PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
@@ -103,10 +103,12 @@
 
 <hr>
 	
-<h2 class="Heading">Awards</h2>
-<h3 class="Heading">Awards related to COVID-19</h3>
-<span class="BodyText">Click the <i>awardURL</i> to retrieve the OCDS award release document from OpenOpps, which contains more details about the award.</span>
-<p>
+<h2>Awards</h2>
+
+<h3>Awards related to COVID-19</h3>
+
+<p>Click the <i>awardURL</i> to retrieve the OCDS award release document from OpenOpps, which contains more details about the award.</p>
+
 <div id="result3"
 	data-sgvizler-query="
 		PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
@@ -143,10 +145,12 @@
 	
 <hr>
 	
-<h2 class="Heading">Suppliers</h2>
-<h3 class="Heading">Matched suppliers related to COVID-19</h3>
-<span class="BodyText">Click the <i>supplierURL</i> to get more information about the supplier from the OpenCorporates registry.</span>
-<p>
+<h2>Suppliers</h2>
+
+<h3>Matched suppliers related to COVID-19</h3>
+
+<p>Click the <i>supplierURL</i> to get more information about the supplier from the OpenCorporates registry.</p>
+
 <div id="result4"
 	data-sgvizler-query="
 		PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
@@ -190,7 +194,7 @@
 
 <!--SCRIPT-->
 <script>
-	sgvizler2.showTabHtmlAndScript("result");
+	sgvizler2.showTabHtmlAndScript("result1");
 	sgvizler2.showTabHtmlAndScript("result2");
 	sgvizler2.showTabHtmlAndScript("result3");
 	sgvizler2.showTabHtmlAndScript("result4");
@@ -199,9 +203,6 @@
 			sgvizler2.containerDrawAll();
 	});
 </script>
-</div>
-
-<p>
 
 <hr>
 

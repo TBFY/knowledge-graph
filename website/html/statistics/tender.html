@@ -33,7 +33,7 @@
 	<div class="form-group row">
 		<label for="query" class="col-1 col-form-label">SPARQL</label>
 		<div class="col-10">
-			<textarea class="form-control" id="query" rows="8" lang="sparql" style="font-size:10px">
+<textarea class="form-control" id="query" rows="8" lang="sparql" style="font-size:10px">
 PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
 PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
 PREFIX schema: <http://schema.org/>
@@ -47,7 +47,7 @@ SELECT DISTINCT ?country (COUNT(?country) AS ?count) WHERE {
 } 
 GROUP BY ?country
 ORDER BY ASC(?country)
-			</textarea>
+</textarea>
 		</div>
 	</div>
 	<div class="form-group row">
@@ -62,7 +62,7 @@ ORDER BY ASC(?country)
 	<div class="form-group row">
 		<label for="endpoint" class="col-1 col-form-label">Action</label>
 		<div class="col-10">
-			<button id="execQuery" type="button" class="btn btn-primary">Execute the query</button> &nbsp; (~2 minutes)
+			<button id="execQuery" type="button" class="btn btn-primary">Execute the query</button> &nbsp; (~1 minute)
 		</div>
 	</div>
 	<input type="hidden" value="region=150" id="options">
