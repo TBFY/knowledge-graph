@@ -1,7 +1,7 @@
 version: '3'
 services:
   fuseki:
-    image: stain/jena-fuseki:3.13.1
+    image: stain/jena-fuseki:3.14.0
     container_name: fuseki
     ports:
       - "3030:3030"
