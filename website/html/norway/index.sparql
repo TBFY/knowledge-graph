@@ -1,0 +1,21 @@
+PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+
+SELECT DISTINCT (COUNT(?tender) AS ?tenders) WHERE {
+	?tender a ocds:Tender
+}
+
+--------------------------------------------------------------------------------
+
+PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+
+SELECT DISTINCT (COUNT(?award) AS ?awards) WHERE {
+	?award a ocds:Award
+}
+
+--------------------------------------------------------------------------------
+
+PREFIX rov: <http://www.w3.org/ns/regorg#>
+
+SELECT DISTINCT (COUNT(?supplier) AS ?suppliers) WHERE {
+	?supplier a rov:RegisteredOrganization
+}
