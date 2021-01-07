@@ -35,7 +35,7 @@ from datetime import timedelta
 # Global variables
 # ****************
 
-jena_fuseki_url = "http://3.251.75.41:3030"
+jena_fuseki_url = "http://54.76.151.143:3030"
 jena_fuseki_dataset = "tbfy"
 
 

@@ -1,3 +1,9 @@
+SELECT (COUNT(*) as ?triples) WHERE 
+{ 
+	?s ?p ?o
+}
+
+--------------------------------------------------------------------------------
 PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
 
 SELECT DISTINCT (COUNT(?tender) AS ?tenders) WHERE {

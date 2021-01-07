@@ -15,6 +15,13 @@ The instructions here assumes that you are planning to deploy the TBFY knowledge
 
 ## Deploying the TBFY knowledge graph
 
+### Create local data folders for Fuseki
+Command line:
+```
+sudo mkdir /data
+sudo mkdir /data/fuseki
+```
+
 ### Run docker-compose
 Command line:
 ```
