@@ -21,41 +21,112 @@
 <body>
 <div class="tbfy-div-header">
 	<img src="/images/tbfy-logo.svg" alt="" height="60"/>
-	<a href="/">Knowledge Graph</a>	&raquo; <a href="/statistics/">Statistics</a> &raquo; Release
+	<a href="/">Knowledge Graph</a> &raquo; <a href="/statistics/">Statistics</a> &raquo; KG
 </div>
-
+	
 <hr>
 
 <h3>Type of releases</h3>
 
-<div id="result"
-	data-sgvizler-query="
-		PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
-		PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
-		
-		SELECT ?releaseType (COUNT(?releaseType) AS ?count) WHERE { 
-			?contractingProcess a ocds:ContractingProcess.
-			?contractingProcess ocds:hasRelease ?release.
-			?release tbfy:releaseTag ?releaseType
-		} 
-		GROUP BY ?releaseType
-		ORDER BY DESC(?count)
-	"
-	data-sgvizler-endpoint="http://data.tbfy.eu/sparql"
-	data-sgvizler-chart="google.visualization.BarChart"
-	data-sgvizler-chart-options="height=20%|width=80%|title=Number of releases by type|vAxis.title=type"
-	data-sgvizler-log="2">
+<form>
+	<input type="hidden" value="http://data.tbfy.eu/sparql" id="endpoint">
+	<div class="form-group row">
+		<label for="query" class="col-1 col-form-label">SPARQL</label>
+		<div class="col-10">
+<textarea class="form-control" id="query" rows="8" lang="sparql" style="font-size:10px">
+PREFIX ocds: <http://data.tbfy.eu/ontology/ocds#>
+PREFIX tbfy: <http://data.tbfy.eu/ontology/tbfy#>
+
+SELECT ?releaseType (COUNT(?releaseType) AS ?count) WHERE { 
+	?contractingProcess a ocds:ContractingProcess.
+	?contractingProcess ocds:hasRelease ?release.
+	?release tbfy:releaseTag ?releaseType
+} 
+GROUP BY ?releaseType
+ORDER BY DESC(?count)
+</textarea>
+	</div>
+	</div>
+	<div class="form-group row">
+		<label for="chart" class="col-1 col-form-label">Chart</label>
+		<div class="col-10">
+			<select class="custom-select" id="chart">
+				<option value="google.visualization.BarChart" selected>google.visualization.BarChart</option>
+				<option value="google.visualization.Table">google.visualization.Table</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="endpoint" class="col-1 col-form-label">Action</label>
+		<div class="col-10">
+			<button id="execQuery" type="button" class="btn btn-primary">Execute the query</button> &nbsp; (~1 minute)
+		</div>
+	</div>
+	<input type="hidden" value="region=150" id="options">
+	<input type="hidden" value="2" id="logsLevel">
+</form>
+
+<ul class="nav nav-tabs" role="tablist">
+	<li class="nav-item">
+			<a class="nav-link active" data-toggle="tab" href="#resultTab" role="tab">Result</a>
+	</li>
+	<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#htmlTab" role="tab">HTML</a>
+	</li>
+	<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#scriptTab" role="tab">Javascript</a>
+	</li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+	<div class="tab-pane active" id="resultTab" role="tabpanel">
+			<div id="example" style="padding: 25px;"><div id="result"></div></div>
+	</div>
+	<div class="tab-pane" id="htmlTab" role="tabpanel">
+			<div class="bg-faded" style="padding: 25px;"><pre lang="html" id="consoleHtml"></pre></div>
+	</div>
+	<div class="tab-pane" id="scriptTab" role="tabpanel">
+			<div class="bg-faded" style="padding: 25px;"><pre lang="html" id="consoleScript"></pre></div>
+	</div>
 </div>
 
-<hr>
-				
-<!--SCRIPT-->
-<script>
-	sgvizler2.showTabHtmlAndScript("result");
+<script  type="text/javascript">
+	$(this).on('load', function (event) {
+		$("#execQuery").click(function(event) {
+			$("#result").html("")
+			$("#console").html("")
 
-	$(function() {
-			sgvizler2.containerDrawAll();
-	});
+			sgvizler2.create(
+					'result',
+					$('#endpoint').val(),
+					$('#query').val(),
+					$('#chart').val(),
+					$('#options').val(),
+					$('#logsLevel').val()
+			)
+
+			sgvizler2.giveHTMLAndScript('result',"consoleHtml","consoleScript");
+
+			//Draw a chart
+			sgvizler2.containerDraw('result',options)
+				.done(
+					function() {
+							console.log("Success!");
+					}
+				)
+				.fail(
+					function() {
+							console.log("There is a problem");
+					}
+				);
+		});
+
+		$("#loadOption").click(function() {
+				console.log(sgvizler2.getChartOptions('result'))
+				$('#options').val(sgvizler2.getChartOptions('result'));
+		});
+	})
 </script>
 
 <hr>

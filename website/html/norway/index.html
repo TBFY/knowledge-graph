@@ -45,7 +45,7 @@
 <p>The Norwegian KG data is provided under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons BY-NC-SA 4.0 License</a>, 
 which allows you to use, share and adapt the data for <b>non-commercial uses</b> as long as you give appropriate credit and share any adapted data 
 under the same license as the original. If you wish to use the data for <b>commercial uses</b> please 
-<a href="https://theybuyforyou.eu/contact/">contact the TheyBuyForYou project</a>.</p>
+<a href="https://theybuyforyou.eu/about/">contact the TheyBuyForYou project</a>.</p>
 
 <h1>Usage</h1>
 
@@ -70,8 +70,7 @@ create the KG.</p>
 	</tr>
 	<tr>
 		<td style="width: 200px">KG SPARQL endpoint</td>
-		<td style="width: 300px">
-		<a href="http://54.76.151.143:3030/tbfy/query">http://54.76.151.143:3030/tbfy/query</a></td>
+		<td style="width: 300px"><a href="http://54.76.151.143:3030/tbfy/query?query=PREFIX%20ocds:%20%3Chttp://data.tbfy.eu/ontology/ocds%23%3EPREFIX%20dct:%20%3Chttp://purl.org/dc/terms/%3ESELECT%20?tender%20?tenderTitle%20?tenderDescription%20WHERE%20{?tender%20a%20ocds:Tender.?tender%20dct:title%20?tenderTitle.?tender%20dct:description%20?tenderDescription}%20LIMIT%205">http://54.76.151.143:3030/tbfy/query</a></td>
 		<td>SPARQL endpoint that allows users to query the Knowledge Graph using SPARQL. We are using 
 			<a href="https://jena.apache.org/documentation/fuseki2/">Apache Jena Fuseki</a> as the SPARQL server and 
 			<a href="https://jena.apache.org/documentation/tdb/">Apache Jena TDB</a> as the underlying database.
@@ -159,7 +158,7 @@ create the KG.</p>
 	<tr>
 		<td style="width: 200px">Fuseki admin UI</td>
 		<td style="width: 300px"><a href="http://norway-fuseki.tbfy.eu">http://norway-fuseki.tbfy.eu</a></td>
-		<td>Apache Jena Fuseki admin UI that allows adminstrators to manage the TBFY Knowledge Graph.</td>
+		<td>Apache Jena Fuseki admin UI that allows adminstrators to manage the TBFY Knowledge Graph. (Requires admin user and password.)</td>
 	</tr>
 </table>
 
