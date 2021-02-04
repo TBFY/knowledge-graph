@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 #####################################################################################################
-# Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
+# Data ingestion script for the TBFY Knowledge Graph (http://data.tbfy.eu/)
 # 
 # This file contains a script that generates and submits a daily Slurm job for ingesting data to the
 # TBFY knowledge graph.
 # 
-# Copyright: SINTEF 2017-2020
+# Copyright: SINTEF 2018-2020
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)

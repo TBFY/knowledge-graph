@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 
 #####################################################################################################
-# Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
+# Data ingestion script for the TBFY Knowledge Graph (http://data.tbfy.eu/)
 # 
 # This file contains a script that can be used to perform a simple string replace in the produced 
 # RDF (N-Triples) files. (E.g., correcting simple mistakes in the mapping rules without having to
 # reprocess the JSON/XML files with RML Mapper, which is quite time-consuming).
 # 
-# Copyright: SINTEF 2017-2020
+# Copyright: SINTEF 2018-2021
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)

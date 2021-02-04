@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 
 #####################################################################################################
-# Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
+# Data ingestion script for the TBFY Knowledge Graph (http://data.tbfy.eu/)
 # 
 # This file contains a script that aggregates and prints out the statistics from the 'STATISTICS.TXT'
 # file that are written in each release-date subfolder in the OpenOpps output folder when 
 # running the openopps.py script.
 # 
-# Copyright: SINTEF 2017-2019
+# Copyright: SINTEF 2018-2021
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)

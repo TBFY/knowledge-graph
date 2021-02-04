@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #####################################################################################################
-# Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
+# Data ingestion script for the TBFY Knowledge Graph (http://data.tbfy.eu/)
 # 
 # This file contains a script that runs a daily ingestion service that executes the full data 
 # ingestion process for a delayed date interval at a specific hour. E.g., one can configure the 
@@ -10,7 +10,7 @@
 # ingestion in this manner is due to the fact that data are not neccessarily available at the source 
 # at the exact date.
 # 
-# Copyright: SINTEF 2017-2020
+# Copyright: SINTEF 2018-2021
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)

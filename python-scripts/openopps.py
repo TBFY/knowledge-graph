@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 #########################################################################################################
-# Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
+# Data ingestion script for the TBFY Knowledge Graph (http://data.tbfy.eu/)
 #
 # This file contains a script that downloads OCDS JSON documents from the 
 # OpenOpps OCDS API (https://openopps.com/api/tbfy/ocds/)
 # 
-# Copyright: SINTEF 2017-2020
+# Copyright: SINTEF 2018-2021
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)
