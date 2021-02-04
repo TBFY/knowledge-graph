@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 #####################################################################################################
-# Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
+# Data ingestion script for the Norwegian Knowledge Graph (http://norway.tbfy.eu/)
 # 
-# This file contains a script that filters the Norwegian RDF data.
+# This file contains a script that filters the Norwegian JSON data.
 # 
-# Copyright: SINTEF 2017-2020
+# Copyright: SINTEF 2017-2021
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the Norwegian TBFY project.
@@ -15,6 +15,8 @@
 #####################################################################################################
 
 import config
+
+import tbfy.json_utils
 
 import logging
 
@@ -33,24 +35,11 @@ from datetime import timedelta
 # Helper function
 # ***************
 
-def is_openopps_rdf(filename):
-    if "-release" in str(filename):
-        return True
-    else:
-        return False
-
-
-def is_opencorporates_rdf(filename):
-    if "-supplier" in str(filename):
-        return True
-    else:
-        return False
-
-
 def is_norwegian_buyer(input_filePath):
-    found_index = open(input_filePath, 'r', encoding='utf-8').read().find('buyer/address> <http://schema.org/addressCountry> "Norway"')
-    
-    if found_index > 0:
+    release_data = tbfy.json_utils.read_jsonfile(input_filePath)
+    buyer_countryName = release_data['releases'][0]['buyer']['address']['countryName']
+
+    if buyer_countryName == "Norway":
         return True
     else:
         return False
@@ -82,11 +71,11 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "hs:e:r:i:o:")
     except getopt.GetoptError:
-        print("filter_norwegian_data_rdf.py -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>")
+        print("filter_norwegian_data_json.py -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>")
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("filter_norwegian_data_rdf.py -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>")
+            print("filter_norwegian_data_json.py -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>")
             sys.exit()
         elif opt in ("-s"):
             start_date = arg
@@ -97,10 +86,10 @@ def main(argv):
         elif opt in ("-o"):
             output_folder = arg
 
-    logging.debug("filter_norwegian_data_rdf.py: start_date = " + start_date)
-    logging.debug("filter_norwegian_data_rdf.py: end_date = " + end_date)
-    logging.debug("filter_norwegian_data_rdf.py: input_folder = " + input_folder)
-    logging.debug("filter_norwegian_data_rdf.py: output_folder = " + output_folder)
+    logging.debug("filter_norwegian_data_json.py: start_date = " + start_date)
+    logging.debug("filter_norwegian_data_json.py: end_date = " + end_date)
+    logging.debug("filter_norwegian_data_json.py: input_folder = " + input_folder)
+    logging.debug("filter_norwegian_data_json.py: output_folder = " + output_folder)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")
@@ -121,21 +110,21 @@ def main(argv):
                 inputFilePath = os.path.join(dirPath, filename)
                 outputFilePath = os.path.join(outputDirPath, filename)
                 ext = os.path.splitext(inputFilePath)[-1].lower()
-                if (ext == ".nt"):
+                if (ext == ".json"):
                     file_to_copy = False
                     # Check if buyer is Norwegian
-                    if is_openopps_rdf(filename):
+                    if tbfy.json_utils.is_openopps_json(filename):
                         if is_norwegian_buyer(inputFilePath):
                             file_to_copy = True
                             last_award_release_filename = filename
                     # Check if matched supplier
-                    if is_opencorporates_rdf(filename):
+                    if tbfy.json_utils.is_opencorporates_json(filename):
                         if is_matched_supplier(filename, last_award_release_filename):
                             file_to_copy = True
                     # Copy file
                     if (file_to_copy):
                         shutil.copy(inputFilePath, outputFilePath)
-                        logging.info("filter_norwegian_data_rdf.py: file = " + outputFilePath)
+                        logging.info("filter_norwegian_data_json.py: file = " + outputFilePath)
 
         start = start + timedelta(days=1) # Increase date by one day
 
