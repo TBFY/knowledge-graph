@@ -44,12 +44,12 @@ python openopps.py -u 'johndoe@tbfy.eu' -p 'password' -s '2019-01-01' -e '2019-0
 #### opencorporates.py
 Command line:
 ```
-python opencorporates.py -a <api_key> -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>
+python opencorporates.py -a <api_key_reconcile> -b <api_key_companies> -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>
 ```
 
 Example:
 ```
-python opencorporates.py -a 'secret' -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\1_JSON_OpenOpps' -o 'C:\TBFY\2_JSON_OpenCorporates'
+python opencorporates.py -a 'secret' -b 'secret' -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\1_JSON_OpenOpps' -o 'C:\TBFY\2_JSON_OpenCorporates'
 ```
 
 #### enrich_json.py
@@ -202,6 +202,46 @@ python validate_rdf.py -s <start_date> -e <end_date> -i <input_folder>
 Example:
 ```
 python validate_rdf.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\5_RDF_TBFY'
+```
+
+## Norwegian
+Scripts for processing Norwegian data:
+
+* `filter_json_norwegian.py`: Script that filters the Norwegian JSON data files.
+* `filter_rdf_norwegian.py`: Script that filters the Norwegian RDF data files.
+* `publish_rdf_norwegian.py`: Script that publishes the Norwegian RDF data files to the triplestore database.
+
+#### filter_json_norwegian.py
+Command line:
+```
+python filter_json_norwegian.py -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>
+```
+
+Example:
+```
+python filter_json_norwegian.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\2_JSON_OpenCorporates' -o 'C:\TBFY\NO_2_JSON_OpenCorporates'
+```
+
+#### filter_rdf_norwegian.py
+Command line:
+```
+python filter_rdf_norwegian.py -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>
+```
+
+Example:
+```
+python filter_rdf_norwegian.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\5_RDF_TBFY' -o 'C:\TBFY\NO_5_RDF_TBFY'
+```
+
+#### publish_rdf_norwegian.py
+Command line:
+```
+python publish_rdf_norwegian.py -s <start_date> -e <end_date> -i <input_folder>
+```
+
+Example:
+```
+python publish_rdf_norwegian.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\NO_5_RDF_TBFY'
 ```
 
 ## 3rd party Python modules
