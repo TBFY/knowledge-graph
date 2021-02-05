@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #####################################################################################################
-# Data ingestion script for the TBFY Knowledge Graph (https://theybuyforyou.eu/tbfy-knowledge-graph/)
+# Data ingestion script for the TBFY Knowledge Graph (http://data.tbfy.eu/)
 # 
 # This file contains a script that reconciles award suppliers with companies using the OpenCorporates 
 # Reconciliation API (https://api.opencorporates.com/documentation/Open-Refine-Reconciliation-API)
@@ -10,7 +10,7 @@
 # Company data for matching companies are downloaded as JSON documents from the
 # OpenCorporates Company API (https://api.opencorporates.com/documentation/API-Reference)
 # 
-# Copyright: SINTEF 2017-2020
+# Copyright: SINTEF 2018-2021
 # Author   : Brian Elvesæter (brian.elvesater@sintef.no)
 # License  : Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 # Project  : Developed as part of the TheyBuyForYou project (https://theybuyforyou.eu/)
@@ -175,7 +175,7 @@ def country_name_2_code_jurisdiction(country_name):
 # Reconcile company
 # *****************
 
-def reconcile_company(company_name, jurisdiction_code):
+def reconcile_company(company_name, jurisdiction_code, api_token_reconcile):
     global stats_reconciliation
 
     if config.opencorporates["country_name_codes_simulation"]:
@@ -185,8 +185,10 @@ def reconcile_company(company_name, jurisdiction_code):
 
     url = opencorporates_reconcile_api_url
     params = {
-        "query": company_name,
-        "jurisdiction_code": jurisdiction_code
+#        "query": company_name,
+#        "jurisdiction_code": jurisdiction_code
+        "queries": "{\"q0\": {\"query\": \"" + company_name + "\",  \"properties\": [{\"pid\": \"jurisdiction_code\", \"v\": \"" + jurisdiction_code + "\"}]}}",
+        "api_token": api_token_reconcile
     }
     headers = {
         "Content-Type": "application/json"
@@ -208,7 +210,7 @@ def reconcile_company(company_name, jurisdiction_code):
 # Get company
 # ***********
 
-def get_company(company_id, api_token):
+def get_company(company_id, api_token_companies):
     global stats_reconciliation
 
     if config.opencorporates["country_name_codes_simulation"]:
@@ -218,7 +220,7 @@ def get_company(company_id, api_token):
 
     url = opencorporates_companies_api_url + company_id
     params = {
-        "api_token": api_token
+        "api_token": api_token_companies
     }
     headers = {
         "Content-Type": "application/json"
@@ -329,7 +331,7 @@ def write_company(ocid, response_company, output_folder):
 # Loop through suppliers, reconcile and and write file for each candidate match
 # *****************************************************************************
 
-def process_suppliers(api_token, release_data, award_index, filename, output_folder):
+def process_suppliers(api_token_reconcile, api_token_companies, release_data, award_index, filename, output_folder):
     global stats_reconciliation
 
     logging.debug("process_suppliers(): tag_value = " + str(get_tag(release_data)))
@@ -358,8 +360,9 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
             reconcile_results_data = get_supplier_from_lookup_dict(supplier_name, supplier_jurisdiction_code)
             if not reconcile_results_data:
                 # Get result from reconcile API if no match is found in the lookup table 
-                response_reconcile_results = reconcile_company(supplier_name, supplier_jurisdiction_code)
-                reconcile_results_data = json.loads(json.dumps(response_reconcile_results.json()))
+                response_reconcile_results = reconcile_company(supplier_name, supplier_jurisdiction_code, api_token_reconcile)
+                reconcile_q0_data = json.loads(json.dumps(response_reconcile_results.json()))
+                reconcile_results_data = reconcile_q0_data['q0']
                 # Add new reconciliation results to lookup table
                 add_supplier_to_lookup_dict(supplier_name, supplier_jurisdiction_code, reconcile_results_data)
             else:
@@ -387,12 +390,12 @@ def process_suppliers(api_token, release_data, award_index, filename, output_fol
                     if opencorporates_use_cached_company_database:
                         response_company = get_company_from_database_dict(company_id)
                         if response_company == None:
-                            response_company = get_company(company_id, api_token)
+                            response_company = get_company(company_id, api_token_companies)
                             add_company_to_database_dict(company_id, date.today(), response_company)
                         else:
                             tbfy.statistics.update_stats_count(stats_reconciliation, "company_downloads_from_cache")
                     else:
-                        response_company = get_company(company_id, api_token)
+                        response_company = get_company(company_id, api_token_companies)
 
                     company_data = json.loads(json.dumps(response_company.json()))
 
@@ -538,23 +541,26 @@ def main(argv):
 
     logging.basicConfig(level=config.logging["level"])
     
-    api_token = ""
+    api_token_reconcile = ""
+    api_token_companies = ""
     start_date = ""
     end_date = ""
     input_folder = ""
     output_folder = ""
 
     try:
-        opts, args = getopt.getopt(argv, "ha:s:e:i:o:")
+        opts, args = getopt.getopt(argv, "ha:b:s:e:i:o:")
     except getopt.GetoptError:
-        print("opencorporates.py -a <api_token> -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>")
+        print("opencorporates.py -a <api_token_reconcile> -b <api_token_companies> -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>")
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("opencorporates.py -a <api_token> -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>")
+            print("opencorporates.py -a <api_token_reconcile> -b <api_token_companies> -s <start_date> -e <end_date> -i <input_folder> -o <output_folder>")
             sys.exit()
         elif opt in ("-a"):
-            api_token = arg
+            api_token_reconcile = arg
+        elif opt in ("-b"):
+            api_token_companies = arg
         elif opt in ("-s"):
             start_date = arg
         elif opt in ("-e"):
@@ -564,7 +570,8 @@ def main(argv):
         elif opt in ("-o"):
             output_folder = arg
 
-    logging.debug("opencorporates.py: api_token = " + api_token)
+    logging.debug("opencorporates.py: api_token_reconcile = " + api_token_reconcile)
+    logging.debug("opencorporates.py: api_token_companies = " + api_token_companies)
     logging.debug("opencorporates.py: start_date = " + start_date)
     logging.debug("opencorporates.py: end_date = " + end_date)
     logging.debug("opencorporates.py: input_folder = " + input_folder)
@@ -604,7 +611,7 @@ def main(argv):
                         if awards_data:
                             award_index = 0
                             for award_data in awards_data:
-                                process_suppliers(api_token, release_data, award_index, filename, outputDirPath)
+                                process_suppliers(api_token_reconcile, api_token_companies, release_data, award_index, filename, outputDirPath)
                                 award_index += 1
 
                         award_end_time = datetime.now()

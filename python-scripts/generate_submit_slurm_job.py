@@ -43,7 +43,8 @@ load_dotenv(env_file)
 
 openopps_username = os.environ["OPENOPPS_USERNAME"]
 openopps_password = os.environ["OPENOPPS_PASSWORD"]
-opencorporates_api_key = os.environ["OPENCORPORATES_API_KEY"]
+opencorporates_reconcile_api_key = os.environ["OPENCORPORATES_RECONCILE_API_KEY"]
+opencorporates_companies_api_key = os.environ["OPENCORPORATES_COMPANIES_API_KEY"]
 rml_folder = os.environ["RML_FOLDER"]
 days_delayed = os.environ["DAYS_DELAYED"]
 output_folder = os.environ["OUTPUT_FOLDER"]
@@ -52,7 +53,7 @@ output_folder = os.environ["OUTPUT_FOLDER"]
 # ****************
 # Helper functions
 # ****************
-def generate_slurm_script(openopps_username, openopps_password, opencorporates_api_key, rml_folder, date, output_folder, script_file):
+def generate_slurm_script(openopps_username, openopps_password, opencorporates_reconcile_api_key, opencorporates_companies_api_key, rml_folder, date, output_folder, script_file):
     slurm_script = "#!/bin/bash\n"
     slurm_script += "#SBATCH --output /home/bre/jobs/ingest_data-%j.out\n"
     slurm_script += "#SBATCH --job-name INGEST_DATA\n"
@@ -72,7 +73,7 @@ def generate_slurm_script(openopps_username, openopps_password, opencorporates_a
     slurm_script += "\n"
     slurm_script += "cd $homedir\n"
     slurm_script += "export DATE=`date +%F_%H%M`\n"
-    slurm_script += "srun python -u ingest_data.py -u '" + openopps_username + "' -p '" + openopps_password + "' -a '" + opencorporates_api_key + "' -r '" + rml_folder + "' -s '" + date + "' -e '" + date + "' -o '" + output_folder + "' > /home/bre/jobs/job_$DATE.log 2>&1\n"
+    slurm_script += "srun python -u ingest_data.py -u '" + openopps_username + "' -p '" + openopps_password + "' -a '" + opencorporates_reconcile_api_key + "' -b '" + opencorporates_companies_api_key + "' -r '" + rml_folder + "' -s '" + date + "' -e '" + date + "' -o '" + output_folder + "' > /home/bre/jobs/job_$DATE.log 2>&1\n"
 
     sfile = open(script_file, 'w+')
     sfile.write(slurm_script)
@@ -101,7 +102,8 @@ def main(argv):
 
     logging.debug("generate_submit_slurm_job.py: openopps_username = " + openopps_username)
     logging.debug("generate_submit_slurm_job.py: openopps_password = " + openopps_password)
-    logging.debug("generate_submit_slurm_job.py: opencorporates_api_key = " + opencorporates_api_key)
+    logging.debug("generate_submit_slurm_job.py: opencorporates_reconcile_api_key = " + opencorporates_reconcile_api_key)
+    logging.debug("generate_submit_slurm_job.py: opencorporates_companies_api_key = " + opencorporates_companies_api_key)
     logging.debug("generate_submit_slurm_job.py: rml_folder = " + rml_folder)
     logging.debug("generate_submit_slurm_job.py: days_delayed = " + days_delayed)
     logging.debug("generate_submit_slurm_job.py: output_folder = " + output_folder)
@@ -109,7 +111,7 @@ def main(argv):
     created_date = datetime.strftime((datetime.now() - timedelta(days=int(days_delayed))), "%Y-%m-%d")
     logging.info("generate_submit_slurm_job.py: date = " + created_date)
 
-    generate_slurm_script(openopps_username, openopps_password, opencorporates_api_key, rml_folder, created_date, output_folder, script_file)
+    generate_slurm_script(openopps_username, openopps_password, opencorporates_reconcile_api_key, opencorporates_companies_api_key, rml_folder, created_date, output_folder, script_file)
     submit_slurm_script(script_file)
 
 

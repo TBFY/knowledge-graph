@@ -39,27 +39,30 @@ def main(argv):
     
     openopps_username = ""
     openopps_password = ""
-    opencorporates_api_key = ""
+    opencorporates_reconcile_api_key = ""
+    opencorporates_companies_api_key = ""
     rml_folder = ""
     start_date = ""
     end_date = ""
     output_folder = ""
 
     try:
-        opts, args = getopt.getopt(argv, "hu:p:a:r:s:e:o:")
+        opts, args = getopt.getopt(argv, "hu:p:a:b:r:s:e:o:")
     except getopt.GetoptError:
-        print("ingest_data.py -u <openopps_username> -p <openopps_password> -a <opencorporates_api_key> -r <rml_folder> -s <start_date> -e <end_date> -o <output_folder>")
+        print("ingest_data.py -u <openopps_username> -p <openopps_password> -a <opencorporates_reconcile_api_key> -b <opencorporates_companies_api_key> -r <rml_folder> -s <start_date> -e <end_date> -o <output_folder>")
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("ingest_data.py -u <openopps_username> -p <openopps_password> -a <opencorporates_api_key> -r <rml_folder> -s <start_date> -e <end_date> -o <output_folder>")
+            print("ingest_data.py -u <openopps_username> -p <openopps_password> -a <opencorporates_reconcile_api_key> -b <opencorporates_companies_api_key> -r <rml_folder> -s <start_date> -e <end_date> -o <output_folder>")
             sys.exit()
         elif opt in ("-u"):
             openopps_username = arg
         elif opt in ("-p"):
             openopps_password = arg
         elif opt in ("-a"):
-            opencorporates_api_key = arg
+            opencorporates_reconcile_api_key = arg
+        elif opt in ("-b"):
+            opencorporates_companies_api_key = arg
         elif opt in ("-r"):
             rml_folder = arg
         elif opt in ("-s"):
@@ -71,7 +74,8 @@ def main(argv):
 
     logging.debug("ingest_data.py: openopps_username = " + openopps_username)
     logging.debug("ingest_data.py: openopps_password = " + openopps_password)
-    logging.debug("ingest_data.py: opencorporates_api_key = " + opencorporates_api_key)
+    logging.debug("ingest_data.py: opencorporates_reconcile_api_key = " + opencorporates_reconcile_api_key)
+    logging.debug("ingest_data.py: opencorporates_companies_api_key = " + opencorporates_companies_api_key)
     logging.debug("ingest_data.py: rml_folder = " + rml_folder)
     logging.debug("ingest_data.py: start_date = " + start_date)
     logging.debug("ingest_data.py: end_date = " + end_date)
@@ -82,7 +86,7 @@ def main(argv):
     openopps.main(openopps_argv[1:])
 
     opencorporates_folder = os.path.join(output_folder, "2_JSON_OpenCorporates")
-    opencorporates_argv = ["opencorporates.py", "-a", opencorporates_api_key, "-s", start_date, "-e", end_date, "-i", openopps_folder, "-o", opencorporates_folder]
+    opencorporates_argv = ["opencorporates.py", "-a", opencorporates_reconcile_api_key, "-b", opencorporates_companies_api_key, "-s", start_date, "-e", end_date, "-i", openopps_folder, "-o", opencorporates_folder]
     opencorporates.main(opencorporates_argv[1:])
 
     enrich_json_folder = os.path.join(output_folder, "3_JSON_Enriched")
