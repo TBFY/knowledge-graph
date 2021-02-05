@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<base target="_top">
+<link rel="stylesheet" href="/css/tbfy.css">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+<link rel="stylesheet" href="/sgvizler2/lib/bootstrap-select/css/bootstrap-select.min.css">
+<script src="/sgvizler2/lib/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script src="/sgvizler2/lib/bootstrap-select/js/i18n/defaults-fr_FR.min.js"></script>
+<script src="/sgvizler2/lib/bootstrap-select/js/i18n/defaults-en_US.min.js"></script>
+<script src="/sgvizler2/sgvizler2.js"></script>
+</head>
+
+<body>
+<div class="tbfy-div-header">
+	<img src="/images/tbfy-logo.svg" alt="" height="60"/>
+	<a href="/">Knowledge Graph</a>	&raquo; <a href="/norway/">Norway</a> &raquo; <a href="/norway/statistics/">Statistics</a> &raquo; Release
+</div>
+
+<hr>
+
+<h3>Instances of OCDS classes in the Knowledge Graph</h3>
+
+<div id="result"
+	data-sgvizler-query="
+		PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+		SELECT DISTINCT ?class (COUNT(?class) AS ?count) 
+		WHERE {
+			?s a ?type.
+			FILTER(STRSTARTS(STR(?type), &quot;http://data.tbfy.eu/ontology/ocds#&quot;)).
+			BIND(REPLACE(STR(?type), &quot;http://data.tbfy.eu/ontology/ocds#&quot;, &quot;&quot;) AS ?class)
+		}
+		GROUP BY ?class 
+		ORDER BY ASC(?class)	
+	"
+	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
+	data-sgvizler-chart="google.visualization.BarChart"
+	data-sgvizler-chart-options="height=500px|width=80%|title=Instances of OCDS classes in the Knowledge Graph|vAxis.title=type"
+	data-sgvizler-log="2">
+</div>
+
+<hr>
+				
+<!--SCRIPT-->
+<script>
+	sgvizler2.showTabHtmlAndScript("result");
+
+	$(function() {
+			sgvizler2.containerDrawAll();
+	});
+</script>
+
+<hr>
+
+<div class="tbfy-div-footer">
+	<img src="/images/eu-flag.jpg" height="20"/>
+	<a href="https://theybuyforyou.eu">TheyBuyForYou</a> has received funding from the European Union's 
+		<a href="https://ec.europa.eu/programmes/horizon2020">Horizon 2020 research and innovation programme</a> under grant agreement 
+		<a href="https://cordis.europa.eu/project/rcn/213115/en">No 780247</a>
+</div>
+</body>
+
+</html>
