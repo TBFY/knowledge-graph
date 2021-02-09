@@ -59,8 +59,8 @@ def main(argv):
     logging.debug("ingest_data_norwegian.py: end_date = " + end_date)
     logging.debug("ingest_data_norwegian.py: output_folder = " + output_folder)
 
-    filter_json_norwegian_input_folder = os.path.join(output_folder, "2_JSON_OpenCorporates")
-    filter_json_norwegian_output_folder = os.path.join(output_folder, "NO_2_JSON_OpenCorporates")
+    filter_json_norwegian_input_folder = os.path.join(output_folder, "3_JSON_Enriched")
+    filter_json_norwegian_output_folder = os.path.join(output_folder, "NO_3_JSON_Enriched")
     filter_json_norwegian_argv = ["filter_json_norwegian.py", "-s", start_date, "-e", end_date, "-i", filter_json_norwegian_input_folder, "-o", filter_json_norwegian_output_folder]
     filter_json_norwegian.main(filter_json_norwegian_argv[1:])
 

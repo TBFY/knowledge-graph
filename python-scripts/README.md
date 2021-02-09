@@ -190,7 +190,7 @@ python replace_string_rdf.py -a <old_string> -b <new_string> -s <start_date> -e 
 
 Example:
 ```
-python replace_string_rdf.py -a 'data.tbfy.org' -b 'data.tbfy.eu' -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\5_RDF_TBFY' -o 'C:\TBFY\5_RDF_TFY_REPLACED'
+python replace_string_rdf.py -a 'data.tbfy.org' -b 'data.tbfy.eu' -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\5_RDF_TBFY' -o 'C:\TBFY\5_RDF_TBFY_REPLACED'
 ```
 
 #### validate_rdf.py
@@ -219,7 +219,7 @@ python filter_json_norwegian.py -s <start_date> -e <end_date> -i <input_folder> 
 
 Example:
 ```
-python filter_json_norwegian.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\2_JSON_OpenCorporates' -o 'C:\TBFY\NO_2_JSON_OpenCorporates'
+python filter_json_norwegian.py -s '2019-01-01' -e '2019-01-31' -i 'C:\TBFY\3_JSON_Enriched' -o 'C:\TBFY\NO_3_JSON_Enriched'
 ```
 
 #### filter_rdf_norwegian.py

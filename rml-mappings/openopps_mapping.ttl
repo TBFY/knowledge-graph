@@ -47,7 +47,7 @@
     rr:template "http://data.tbfy.eu/contractingProcess/{releases/ocid}/release/{releases/id}" ;
     rr:class tbfy:Release
   ];
-  
+
   rr:predicateObjectMap [
     rr:predicate tbfy:releaseURI ;
     rr:objectMap [
@@ -750,7 +750,7 @@
     rr:template "http://data.tbfy.eu/tender/{../../ocid}_{../id}/item/{id}" ;
     rr:class ocds:Item
   ];
-     
+
   rr:predicateObjectMap [
     rr:predicate ocds:itemId ;
     rr:objectMap [
@@ -768,26 +768,26 @@
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:hasClassificaton ;
+    rr:predicate ocds:hasClassification ;
     rr:objectMap [
       rml:reference "classification/id"
     ]
   ];
-      
+
   rr:predicateObjectMap [
     rr:predicate ocds:classificationScheme ;
     rr:objectMap [
       rml:reference "classification/scheme"
     ]
   ];
-        
+
   rr:predicateObjectMap [
-    rr:predicate ocds:hasAdditionalItemClassificaton ;
+    rr:predicate ocds:hasAdditionalItemClassification ;
     rr:objectMap [
       rml:reference "additionalClassifications/id"
     ]
   ];
-      
+
   rr:predicateObjectMap [
     rr:predicate ocds:additionalItemClassificationScheme ;
     rr:objectMap [
@@ -1460,28 +1460,28 @@
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:hasClassificaton ;
+    rr:predicate ocds:hasClassification ;
     rr:objectMap [
       rml:reference "classification/id"
     ]
   ];
       
   rr:predicateObjectMap [
-    rr:predicate ocds:classificatonScheme ;
+    rr:predicate ocds:classificationScheme ;
     rr:objectMap [
       rml:reference "classification/scheme"
     ]
   ];
         
   rr:predicateObjectMap [
-    rr:predicate ocds:hasAdditionalItemClassificaton ;
+    rr:predicate ocds:hasAdditionalItemClassification ;
     rr:objectMap [
       rml:reference "additionalClassifications/id"
     ]
   ];
       
   rr:predicateObjectMap [
-    rr:predicate ocds:additionalItemClassificatonScheme ;
+    rr:predicate ocds:additionalItemClassificationScheme ;
     rr:objectMap [
       rml:reference "additionalClassifications/scheme"
     ]
@@ -1834,28 +1834,28 @@
   ];
 
   rr:predicateObjectMap [
-    rr:predicate ocds:hasClassificaton ;
+    rr:predicate ocds:hasClassification ;
     rr:objectMap [
       rml:reference "classification/id"
     ]
   ];
       
   rr:predicateObjectMap [
-    rr:predicate ocds:classificatonScheme ;
+    rr:predicate ocds:classificationScheme ;
     rr:objectMap [
       rml:reference "classification/scheme"
     ]
   ];
         
   rr:predicateObjectMap [
-    rr:predicate ocds:hasAdditionalItemClassificaton ;
+    rr:predicate ocds:hasAdditionalItemClassification ;
     rr:objectMap [
       rml:reference "additionalClassifications/id"
     ]
   ];
       
   rr:predicateObjectMap [
-    rr:predicate ocds:additionalItemClassificatonScheme ;
+    rr:predicate ocds:additionalItemClassificationScheme ;
     rr:objectMap [
       rml:reference "additionalClassifications/scheme"
     ]
