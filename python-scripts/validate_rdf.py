@@ -62,15 +62,15 @@ def main(argv):
         elif opt in ("-i"):
             input_folder = arg
 
-    logging.info("main(): start_date = " + start_date)
-    logging.info("main(): end_date = " + end_date)
-    logging.info("main(): input_folder = " + input_folder)
+    logging.info("validate_rdf.py: start_date = " + start_date)
+    logging.info("validate_rdf.py: end_date = " + end_date)
+    logging.info("validate_rdf.py: input_folder = " + input_folder)
 
     if sys.platform.lower().startswith("win"):
         global riot_command
         riot_command = riot_command + ".bat"
 
-    logging.info("main(): riot_command = " + riot_command)
+    logging.info("validate_rdf.py: riot_command = " + riot_command)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")
@@ -83,7 +83,7 @@ def main(argv):
         if os.path.isdir(dirPath):
             for filename in os.listdir(dirPath):
                 filePath = os.path.join(dirPath, filename)
-                logging.info("main(): filePath = " + filePath)
+                logging.info("validate_rdf.py: file = " + filePath)
                 subprocess.call([riot_command, "--validate", filePath])
  
         start = start + timedelta(days=1) # Increase date by one day

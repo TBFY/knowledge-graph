@@ -54,7 +54,8 @@ def main(argv):
     
     openopps_username = os.environ["OPENOPPS_USERNAME"]
     openopps_password = os.environ["OPENOPPS_PASSWORD"]
-    opencorporates_api_key = os.environ["OPENCORPORATES_API_KEY"]
+    opencorporates_reconcile_api_key = os.environ["OPENCORPORATES_RECONCILE_API_KEY"]
+    opencorporates_companies_api_key = os.environ["OPENCORPORATES_COMPANIES_API_KEY"]
     rml_folder = os.environ["RML_FOLDER"]
     start_date = os.environ["START_DATE"]
     end_date = os.environ["END_DATE"]
@@ -66,7 +67,8 @@ def main(argv):
 
     logging.debug("kg_ingestion_service.py: openopps_username = " + openopps_username)
     logging.debug("kg_ingestion_service.py: openopps_password = " + openopps_password)
-    logging.debug("kg_ingestion_service.py: opencorporates_api_key = " + opencorporates_api_key)
+    logging.debug("kg_ingestion_service.py: opencorporates_reconcile_api_key = " + opencorporates_reconcile_api_key)
+    logging.debug("kg_ingestion_service.py: opencorporates_companies_api_key = " + opencorporates_companies_api_key)
     logging.debug("kg_ingestion_service.py: rml_folder = " + rml_folder)
     logging.debug("kg_ingestion_service.py: start_date = " + start_date)
     logging.debug("kg_ingestion_service.py: end_date = " + end_date)
@@ -94,7 +96,7 @@ def main(argv):
         logging.info("kg_ingestion_service.py: date = " + created_date)
 
         # Run ingestion script
-        ingest_data_argv = ["ingest_data.py", "-u", openopps_username, "-p", openopps_password, "-a", opencorporates_api_key, "-r", rml_folder, "-s", created_date, "-e", created_date, "-o", output_folder]
+        ingest_data_argv = ["ingest_data.py", "-u", openopps_username, "-p", openopps_password, "-a", opencorporates_reconcile_api_key, "-b", opencorporates_companies_api_key, "-r", rml_folder, "-s", created_date, "-e", created_date, "-o", output_folder]
         ingest_data.main(ingest_data_argv[1:])
 
         start = start + timedelta(days=1) # Increase date by one day

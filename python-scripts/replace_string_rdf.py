@@ -92,8 +92,8 @@ def main(argv):
     else:
         copy_command = "copy"
 
-    logging.info("main(): platform = " + sys.platform.lower())
-    logging.info("main(): copy_command = " + copy_command)
+    logging.info("replace_string_rdf.py: platform = " + sys.platform.lower())
+    logging.info("replace_string_rdf.py: copy_command = " + copy_command)
 
     start = datetime.strptime(start_date, "%Y-%m-%d")
     stop = datetime.strptime(end_date, "%Y-%m-%d")
@@ -108,9 +108,9 @@ def main(argv):
             if not os.path.exists(outputDirPath):
                 os.makedirs(outputDirPath)
             for filename in os.listdir(dirPath):
-                logging.info("main(): filename = " + filename)
                 filePath = os.path.join(dirPath, filename)
                 outputFilePath = os.path.join(outputDirPath, filename)
+                logging.info("replace_string_rdf.py: file = " + outputFilePath)
                 os.system(copy_command + ' ' + filePath + ' ' + outputFilePath)
                 inplace_change(outputFilePath, old_string, new_string)
  

@@ -18,7 +18,8 @@ If you intend to run all the TBFY service on a local machine, then you are free 
 In order to use the service you have to set the following variables in the `kg-ingestion-service.env` file in the [Docker scripts](https://github.com/TBFY/knowledge-graph/tree/master/docker-scripts) module:
 * `OPENOPPS_USERNAME:` OpenOpps API username.
 * `OPENOPPS_PASSWORD:` OpenOpps API password.
-* `OPENCORPORATES_API_KEY:` OpenCorporates API key.
+* `OPENCORPORATES_RECONCILE_API_KEY:` OpenCorporates API key for the reconciliation service.
+* `OPENCORPORATES_COMPANIES_API_KEY:` OpenCorporates API key for the companies service.
 * `RML_FOLDER:` Folder location for RML inside the Docker container. Use the default value `/home/rml-mappings` that is configured for the Docker image.
 * `START_DATE:` Start date for data to be ingested. The default value is `2020-01-01`. Change this accordingly.
 * `END_DATE:` End date for data to no longer be ingested. The service terminates at this date (+ days delayed). The default value is `2020-12-31`. Change this accordingly.
