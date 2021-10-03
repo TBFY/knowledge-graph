@@ -29,11 +29,11 @@
 <h1>About</h1>
 
 <p>The TheyBuyForYou (TBFY) Knowledge Graph (KG) integrates procurement and company data. The KG covers data from January 2019 onwards. New data is onboarded every night.</p>
-<p>As of May 2021 the KG consisted of more than 189 million triples and contained information about:</p>
+<p>On September 2021 the KG consisted of 224 million triples and contained information about:</p>
 <ul>
-	<li>1.92 million tenders, </li>
-	<li>2.51 million awards, and </li>
-	<li>133 thousand companies (reconciled suppliers).</li>
+	<li>2.25 million tenders, </li>
+	<li>3.05 million awards, and </li>
+	<li>151 thousand companies (for reconciled suppliers in awards).</li>
 </ul>
 
 <p>The data is represented as an RDF graph data model which uses the</p>
@@ -49,6 +49,18 @@
 <ul>
 	<li><a href="https://theybuyforyou.eu/openopps-api/">OpenOpps</a> for procurement data (planning, tender and award releases); and</li>
 	<li><a href="https://theybuyforyou.eu/opencorporates-api/">OpenCorporates</a>	for company data.</li>
+</ul>
+
+<h4>TBFY KG and services no longer available</h4>
+<p><i><font color="#ff0000">As of October 2021 the TBFY KG and its services are no longer available. The AWS EC2 instances running the services have been stopped/terminated. The source code and data dumps are however still available on GitHub and Zenodo. See links in the usage section below for further details. This website is kept online for archival/documentation purposes only. If you are interested in the results of the TBFY project and would like a demonstration, please see the following page for contact details:</font></i></p>
+<ul>
+	<li><a href="https://www.sintef.no/en/projects/2018/theybuyforyou/">https://www.sintef.no/en/projects/2018/theybuyforyou/</a></li>
+</ul>
+
+<h4>Norwegian Knowledge Graph (KG)</h4>
+<p><i><font color="#0000ff">The Norwegian Knowledge Graph (KG) is a subset of the full TBFY Knowledge Graph that covers Norwegian procurement data. The Norwegian KG and its services will be available online until December 2021. See the following page for more details and statistics:</font></i></p>
+<ul>
+	<li><a href="http://data.tbfy.eu/norway">http://data.tbfy.eu/norway</a></li>
 </ul>
 
 <h2>Statistics</h2>
@@ -96,14 +108,14 @@ create the KG.</p>
 	</tr>
 	<tr>
 		<td style="width: 200px">KG API</td>
-		<td style="width: 300px"><a href="http://data.tbfy.eu/kg-api/">http://data.tbfy.eu/kg-api</a></td>
+		<td style="width: 300px"><a href="">http://data.tbfy.eu/kg-api</a></td>
 		<td>REST API that allows you to query the Knowledge Graph. See
 			<a href="https://github.com/TBFY/knowledge-graph-API/wiki">https://github.com/TBFY/knowledge-graph-API/wiki</a> for more info.
 			<br><br>Examples:
 			<ul>
-				<li><a href="http://data.tbfy.eu/kg-api/tender?size=5">http://data.tbfy.eu/kg-api/tender?size=5</a></li>
-				<li><a href="http://data.tbfy.eu/kg-api/award?size=5">http://data.tbfy.eu/kg-api/award?size=5</a></li>
-				<li><a href="http://data.tbfy.eu/kg-api/organisation?size=5">http://data.tbfy.eu/kg-api/organisation?size=5</a></li>
+				<li><a href="">http://data.tbfy.eu/kg-api/tender?size=5</a></li>
+				<li><a href="">http://data.tbfy.eu/kg-api/award?size=5</a></li>
+				<li><a href="">http://data.tbfy.eu/kg-api/organisation?size=5</a></li>
 			</ul> 
 		</td>
 	</tr>
@@ -116,7 +128,7 @@ create the KG.</p>
 	</tr>
 	<tr>
 		<td style="width: 200px">YASGUI for KG</td>
-		<td style="width: 300px"><a href="http://yasgui.tbfy.eu">http://yasgui.tbfy.eu</a></td>
+		<td style="width: 300px"><a href="">http://yasgui.tbfy.eu</a></td>
 		<td><a href="https://github.com/TriplyDB/Yasgui">YASGUI</a> (Yet Another SPARQL GUI) is a 3rd party web application that we have set 
 			up that allows users to query the Knowledge Graph using SPARQL.</td>
 	</tr>
@@ -169,7 +181,7 @@ create the KG.</p>
 	</tr>
 	<tr>
 		<td style="width: 200px">Fuseki admin UI</td>
-		<td style="width: 300px"><a href="http://fuseki.tbfy.eu">http://fuseki.tbfy.eu</a></td>
+		<td style="width: 300px"><a href="">http://fuseki.tbfy.eu</a></td>
 		<td class="TableContent">Apache Jena Fuseki admin UI that allows adminstrators to manage the TBFY Knowledge Graph. (Requires admin user and password.)</td>
 	</tr>
 </table>
