@@ -29,12 +29,18 @@
 <h1>About</h1>
 
 <p>The Norwegian Knowledge Graph (KG) is a subset of the full <a href="/">TBFY Knowledge Graph</a> that covers Norwegian procurement data.</p>
-<p>On February 2021 the Norwegian KG consisted of more than 2.57 million triples and contained information about:</p>
+<p>On September 2021 the Norwegian KG consisted of more than 3.50 million triples and contained information about:</p>
 <ul>
-	<li>more than 43 000 tenders, </li>
-	<li>more than 10 000 awards, and </li>
-	<li>more than 3 000 companies (for reconciled suppliers in awards).</li>
+	<li>59 000 tenders, </li>
+	<li>14 000 awards, and </li>
+	<li>3 000 companies (for reconciled suppliers in awards).</li>
 </ul>
+
+<!--<h4>Norwegian KG and its online services are no longer available</h4>
+<p><i><font color="#ff0000">As of October 2021 the Norwegian KG and its online services are no longer available. The AWS EC2 instances running the services have been stopped/terminated. The source code and data dumps are however still available on GitHub and Zenodo, respectively. See links in the usage section below for further details. This website is kept online for archival/documentation purposes only. If you are interested in the results of the TBFY project and would like a demonstration, please see the following page for contact details:</font></i></p>
+<ul>
+	<li><a href="https://www.sintef.no/en/projects/2018/theybuyforyou/">https://www.sintef.no/en/projects/2018/theybuyforyou/</a></li>
+</ul>-->
 
 <h2>Statistics</h2>
 
@@ -70,13 +76,13 @@ create the KG.</p>
 	</tr>
 	<tr>
 		<td style="width: 200px">KG SPARQL endpoint</td>
-		<td style="width: 300px"><a href="http://54.76.151.143:3030/tbfy/query?query=PREFIX%20ocds:%20%3Chttp://data.tbfy.eu/ontology/ocds%23%3EPREFIX%20dct:%20%3Chttp://purl.org/dc/terms/%3ESELECT%20?tender%20?tenderTitle%20?tenderDescription%20WHERE%20{?tender%20a%20ocds:Tender.?tender%20dct:title%20?tenderTitle.?tender%20dct:description%20?tenderDescription}%20LIMIT%205">http://54.76.151.143:3030/tbfy/query</a></td>
+		<td style="width: 300px"><a href="http://data.tbfy.eu/sparql?query=PREFIX%20ocds:%20%3Chttp://data.tbfy.eu/ontology/ocds%23%3EPREFIX%20dct:%20%3Chttp://purl.org/dc/terms/%3ESELECT%20?tender%20?tenderTitle%20?tenderDescription%20WHERE%20{?tender%20a%20ocds:Tender.?tender%20dct:title%20?tenderTitle.?tender%20dct:description%20?tenderDescription}%20LIMIT%205">http://data.tbfy.eu/sparql</a></td>
 		<td>SPARQL endpoint that allows users to query the Knowledge Graph using SPARQL. We are using 
 			<a href="https://jena.apache.org/documentation/fuseki2/">Apache Jena Fuseki</a> as the SPARQL server and 
 			<a href="https://jena.apache.org/documentation/tdb/">Apache Jena TDB</a> as the underlying database.
 			<br><br>Example:
 			<ul>
-				<li><a href="http://54.76.151.143:3030/tbfy/query?query=PREFIX%20ocds:%20%3Chttp://data.tbfy.eu/ontology/ocds%23%3EPREFIX%20dct:%20%3Chttp://purl.org/dc/terms/%3ESELECT%20?tender%20?tenderTitle%20?tenderDescription%20WHERE%20{?tender%20a%20ocds:Tender.?tender%20dct:title%20?tenderTitle.?tender%20dct:description%20?tenderDescription}%20LIMIT%205">
+				<li><a href="http://data.tbfy.eu/sparql?query=PREFIX%20ocds:%20%3Chttp://data.tbfy.eu/ontology/ocds%23%3EPREFIX%20dct:%20%3Chttp://purl.org/dc/terms/%3ESELECT%20?tender%20?tenderTitle%20?tenderDescription%20WHERE%20{?tender%20a%20ocds:Tender.?tender%20dct:title%20?tenderTitle.?tender%20dct:description%20?tenderDescription}%20LIMIT%205">
 					SPARQL query that lists 5 tenders</a></li>
 			</ul>
 		</td>
@@ -104,7 +110,7 @@ create the KG.</p>
 	</tr>
 	<tr>
 		<td style="width: 200px">YASGUI for KG</td>
-		<td style="width: 300px"><a href="http://norway-yasgui.tbfy.eu">http://norway-yasgui.tbfy.eu</a></td>
+		<td style="width: 300px"><a href="http://yasgui.tbfy.eu">http://yasgui.tbfy.eu</a></td>
 		<td><a href="https://github.com/TriplyDB/Yasgui">YASGUI</a> (Yet Another SPARQL GUI) is a 3rd party web application that we have set 
 			up that allows users to query the Knowledge Graph using SPARQL.</td>
 	</tr>
@@ -157,7 +163,7 @@ create the KG.</p>
 	</tr>
 	<tr>
 		<td style="width: 200px">Fuseki admin UI</td>
-		<td style="width: 300px"><a href="http://norway-fuseki.tbfy.eu">http://norway-fuseki.tbfy.eu</a></td>
+		<td style="width: 300px"><a href="http://fuseki.tbfy.eu">http://fuseki.tbfy.eu</a></td>
 		<td>Apache Jena Fuseki admin UI that allows adminstrators to manage the TBFY Knowledge Graph. (Requires admin user and password.)</td>
 	</tr>
 </table>

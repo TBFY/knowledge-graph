@@ -40,13 +40,13 @@
 	}
 	GROUP BY ?country
 		"
-	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
+	data-sgvizler-endpoint="http://data.tbfy.eu/sparql"
 	data-sgvizler-chart="google.visualization.GeoChart"
 	data-sgvizler-chart-options="region=150"
 	data-sgvizler-log="2">
 </div>
 
-<h3>Matched suppliers per jurisdiction (column chart)</h3>
+<h3>Reconciled suppliers per jurisdiction (column chart)</h3>
 
 <div id="result2"
 	data-sgvizler-query="
@@ -60,9 +60,9 @@
 		GROUP BY ?jurisdiction
 		ORDER BY DESC(?count)
 	"
-	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
+	data-sgvizler-endpoint="http://data.tbfy.eu/sparql"
 	data-sgvizler-chart="google.visualization.ColumnChart"
-	data-sgvizler-chart-options="width=80%|title=Matched suppliers per jurisdiction|hAxis.title=jurisdiction"
+	data-sgvizler-chart-options="width=80%|title=Reconciled suppliers per jurisdiction|hAxis.title=jurisdiction"
 	data-sgvizler-log="2">
 </div>
 

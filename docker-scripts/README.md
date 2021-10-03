@@ -34,6 +34,11 @@ Command line:
 docker-compose logs -f
 ```
 
+### Fuseki tdb.lock files
+Check the docker-compose log to see that Fuseki has started successfully. If you experience any problems with Fuseki, then stop the services using docker-compose and remove the following tdb.lock files, before starting up the services again using docker-compose.
+* /data/fuseki/system/tdb.lock
+* /data/fuseki/databases/tbfy/tdb.lock
+
 ### Create dataset and load data files into Fuseki
 * Log into the Fuseki administration GUI, e.g. [http://52.19.213.234:3030](http://52.19.213.234:3030), using the admin password that you set in the `fuseki.env` file.
 * Create a new dataset `tbfy` with the dataset type `Persistent (TDB2)`.

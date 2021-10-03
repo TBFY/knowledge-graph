@@ -24,7 +24,6 @@ openopps = {
 }
 
 opencorporates = {
-#    "reconcile_api_url": "https://opencorporates.com/reconcile",
     "reconcile_api_url": "https://reconcile.opencorporates.com",
     "reconcile_score": 60,
     "companies_api_url": "http://api.opencorporates.com",
@@ -44,10 +43,12 @@ rml = {
 }
 
 jena_tools = {
-    "riot_command": "riot",
+    "riot_command": "riot"
 }
 
 jena_fuseki = {
     "fuseki_url": "http://52.19.213.234:3030", 
-    "dataset": "tbfy"
+    "dataset": "tbfy",
+    "fuseki_url_norwegian": "http://52.19.213.234:3030", 
+    "dataset_norwegian": "tbfy"
 }

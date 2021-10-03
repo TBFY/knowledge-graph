@@ -56,7 +56,7 @@
 		} 
 		GROUP BY ?tenderStatus
 		"
-	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
+	data-sgvizler-endpoint="http://data.tbfy.eu/sparql"
 	data-sgvizler-chart="google.visualization.BarChart"
 	data-sgvizler-chart-options="height=200|title=Status of tenders related to COVID-19|vAxis.title=status"
 	data-sgvizler-log="2">
@@ -95,7 +95,7 @@
 			BIND(IRI(STR(?releaseURI)) AS ?tenderURL)
 		}
 	"
-	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
+	data-sgvizler-endpoint="http://data.tbfy.eu/sparql"
 	data-sgvizler-chart="bordercloud.visualization.DataTable"
 	data-sgvizler-chart-options=""
 	data-sgvizler-log="2">
@@ -137,7 +137,7 @@
 			BIND(IRI(STR(?releaseURI)) AS ?awardURL)
 		}
 	"
-	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
+	data-sgvizler-endpoint="http://data.tbfy.eu/sparql"
 	data-sgvizler-chart="bordercloud.visualization.DataTable"
 	data-sgvizler-chart-options=""
 	data-sgvizler-log="2">
@@ -187,7 +187,7 @@
 			BIND(IRI(CONCAT(STR(&quot;https://opencorporates.com/companies/&quot;), STR(?notation))) AS ?supplierURL)
 		}
 	"
-	data-sgvizler-endpoint="http://54.76.151.143:3030/tbfy/query"
+	data-sgvizler-endpoint="http://data.tbfy.eu/sparql"
 	data-sgvizler-chart="bordercloud.visualization.DataTable"
 	data-sgvizler-chart-options=""
 	data-sgvizler-log="2"></div>

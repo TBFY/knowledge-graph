@@ -35,8 +35,8 @@ from datetime import timedelta
 # Global variables
 # ****************
 
-jena_fuseki_url = "http://54.76.151.143:3030"
-jena_fuseki_dataset = "tbfy"
+jena_fuseki_url = os.getenv("TBFY_FUSEKI_URL_NORWEGIAN") or config.jena_fuseki["fuseki_url_norwegian"]
+jena_fuseki_dataset = os.getenv("TBFY_FUSEKI_DATASET_NORWEGIAN") or config.jena_fuseki["dataset_norwegian"]
 
 
 # ***************************
